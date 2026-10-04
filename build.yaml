@@ -1,0 +1,80 @@
+targets:
+  $default:
+    builders:
+      # freezed:
+      #   # enabled: true
+      #   # enabled: false
+      #   options:
+      #     format: false
+      #     json: false
+      #     toJson: false
+      #     fromJson: false
+
+      #     map: true
+      #     mapOrNull: false
+      #     maybeMap: false
+
+      #     when: true
+      #     whenOrNull: false
+      #     maybeWhen: false
+
+      #   generate_for:
+      #     - lib/features/**/presentation/bloc/*_bloc.dart
+      #     - lib/features/**/presentation/bloc/*_event.dart
+      #     - lib/features/**/presentation/bloc/*_state.dart
+
+      #     - lib/features/bottom_navigationbar/bloc/scaffold_with_navbar_state.dart
+      #     - lib/features/bottom_navigationbar/bloc/scaffold_with_navbar_bloc.dart
+      #     - lib/features/bottom_navigationbar/bloc/scaffold_with_navbar_event.dart
+
+      #     - lib/config/router/popup_route/app_popup_info.dart
+      #     - lib/config/router/page_route/app_route_info.dart
+
+      #     - lib/cores/auth/**/bloc/*.dart
+
+      #     - lib/app/app_bloc/*.dart
+      # # source_gen|combining_builder:
+      # #   options:
+      # #     build_extensions:
+      # #       ".dart":
+      # #         - "lib/features/login/data/data_sources/remote/gen/{{}}.g.dart"
+      # #       # "^lib/{{}}.dart": "{{}}.g.dart"
+      # #     output_location:
+      # #       output: source_gen/
+
+      # auto_route_generator:
+      #   enabled: false
+      # #   generate_for:
+      # #     - lib/config/router/app_route.dart
+      # #     - lib/features/**/*_page.dart
+      # #     - lib/features/setting/presentation/modules/**/*_page.dart
+      # injectable_generator:
+      #   enabled: false
+      # #   generate_for:
+      # #     - lib/config
+
+      slang_build_runner:
+        options:
+          enabled: false
+          # base_locale: en
+          fallback_strategy: base_locale
+          input_directory: assets/language
+          input_file_pattern: .json
+          output_directory: lib/gen/i18n
+          output_file_name: translations.g.dart
+          output_format: single_file
+          locale_handling: true
+          flutter_integration: true
+          namespaces: false
+          translate_var: t
+          enum_name: AppLocale
+          class_name: AppTranslations
+          translation_class_visibility: private
+          key_case: camel
+          key_map_case: camel
+          param_case: camel
+          string_interpolation: double_braces
+          flat_map: false
+          translation_overrides: false
+          timestamp: true
+          statistics: true

@@ -1,0 +1,5 @@
+bricks:
+  page:
+    path: mason/bricks/page
+  feature:
+    path: "mason\\bricks\\feature"

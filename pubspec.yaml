@@ -1,0 +1,167 @@
+name: eliezers
+description: A new Flutter project.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+version: 1.2.4+1
+
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  flutter_localizations:
+    sdk: flutter
+
+  # local storage and cached
+  cached_network_image: ^3.3.0
+  shared_preferences: ^2.0.15
+  flutter_native_splash: ^2.4.4
+
+  # environment
+  flutter_dotenv: ^5.0.2
+
+  # firebase library
+  firebase_auth: ^5.4.2
+  firebase_core: ^3.11.0
+  firebase_messaging: ^15.2.2
+  photo_view: ^0.15.0
+
+  # http client
+  dio: ^5.4.0
+  retrofit: ^4.1.0
+
+  # serialized
+  json_annotation: ^4.9.0
+
+  # utilities
+  share_plus: ^10.1.4
+  flutter_local_notifications: ^18.0.1
+  connectivity_plus: ^6.0.1
+  # gallery_saver: ^2.3.2
+  flutter_image_compress: ^2.1.0
+  # flutter_app_badger: ^1.5.0
+  image_picker: ^1.1.2
+  path_provider: ^2.1.5
+  url_launcher: ^6.3.0
+  # device_info_plus: ^11.2.2
+  reorderables: ^0.6.0
+  permission_handler: ^12.0.1
+
+  # google service
+  google_sign_in: ^6.1.5
+
+  # service locator
+  get_it: ^8.0.3
+  injectable: ^2.4.1
+
+  # router
+  auto_route: ^9.3.0+1
+
+  # class utils
+  freezed: ^2.5.2
+  freezed_annotation: ^2.4.1
+
+  # state management
+  bloc: ^9.0.0
+  flutter_bloc: ^9.0.0
+  get: ^4.6.5
+
+  # design and ui
+  moon_design: ^1.1.0
+
+  pinput: ^4.0.0
+  flutter_svg: ^2.0.9
+  # google_fonts: ^4.0.4
+  flutter_animate: ^4.5.0
+  gap: ^3.0.1
+  cupertino_icons: ^1.0.2
+  # firebase_analytics: ^11.4.4
+
+  # logger
+  logging: ^1.2.0
+
+  logger: ^2.3.0
+  lottie: ^3.0.0
+  flutter_logs: ^2.1.12
+  app_links: ^6.4.0
+  pull_to_refresh: ^2.0.0
+  async: ^2.11.0
+  hashids2: ^2.0.0
+
+  device_info_plus: ^11.3.0
+  image_cropper: ^9.0.0
+  image_gallery_saver_plus: ^4.0.0
+  timezone: ^0.10.1
+  intl: ^0.20.2
+  audioplayers: ^6.5.1
+  google_maps_flutter: ^2.18.1
+  geolocator: 14.0.2
+  geocoding: ^5.0.0
+
+  # image_cropper: ^9.0.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+  build_runner: ^2.4.9
+  flutter_gen_runner: ^5.4.0
+  slang: ^4.4.1
+  slang_flutter: ^4.4.0
+  slang_build_runner: ^4.4.2
+  injectable_generator: ^2.6.1
+  auto_route_generator: ^9.0.0
+
+  retrofit_generator: ^9.1.5
+  json_serializable: ^6.8.0
+  # enable_namespaces: true
+
+flutter_gen:
+  output: lib/gen/ # Optional (default: lib/gen/)
+  line_length: 80 # Optional (default: 80)
+
+  # Optional
+  integrations:
+    flutter_svg: true
+    # flare_flutter: true
+    # rive: true
+    lottie: true
+
+  # colors:
+  #   inputs:
+  #     - assets/color/colors.xml
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: SFPro
+      fonts:
+        - asset: assets/fonts/sfpro/SF-Pro-Display-Regular.otf
+          weight: 400
+        - asset: assets/fonts/sfpro/SF-Pro-Display-Medium.otf
+          weight: 500
+        - asset: assets/fonts/sfpro/SF-Pro-Display-Semibold.otf
+          weight: 700
+
+    - family: Kh_Bl_LazySmooth_Regular
+      fonts:
+        - asset: assets/fonts/Kh_Bl_LazySmooth_Regular.ttf
+
+  assets:
+    - assets/image/
+    - assets/svg/
+    - assets/svg/tabs/
+    - assets/animations/
+
+flutter_native_splash:
+  color: "#444444" # Background color for the splash screen
+  color_dark: "#444444" # Dark mode background color (black)
+  image: assets/image/logo.png # Path to the splash screen image
+  android: true # Enable for Android
+  ios: true # Enable for iOS
+  android_gravity: center # Position of the image
+  ios_content_mode: center # iOS equivalent of gravity
+  fullscreen: true # Enable fullscreen mode
+
