@@ -51,7 +51,7 @@ class _MusicsPageState extends BasePageBlocState<MusicsPage, MusicsBloc> {
                   MoonButton(
                     onTap: () {
                       // bloc.add(ClickCreateband());
-                    },
+                    }, 
                     leading: Icon(
                       MoonIcons.generic_search_24_regular,
                     ),

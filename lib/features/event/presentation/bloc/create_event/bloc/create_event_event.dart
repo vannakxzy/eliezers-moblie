@@ -66,3 +66,8 @@ class GetEndTime extends CreateEventEvent with _$GetEndTime {
 class SelectCoverImage extends CreateEventEvent with _$SelectCoverImage {
   const factory SelectCoverImage() = _SelectCoverImage;
 }
+
+@freezed
+class ClickClearImage extends CreateEventEvent with _$ClickClearImage {
+  const factory ClickClearImage(int index) = _ClickClearImage;
+}

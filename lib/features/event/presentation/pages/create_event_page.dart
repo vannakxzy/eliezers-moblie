@@ -319,17 +319,21 @@ class _CreateEventPageState
                         Gap(kPadding2),
                         MoonTextButton(
                           onTap: () async {
-                            await showMoonModalBottomSheet(
-                              height: MediaQuery.of(context).size.height * 0.8,
+                            final data = await showMoonModalBottomSheet(
+                              height: MediaQuery.of(context).size.height * 0.9,
                               enableDrag: false,
                               context: context,
                               builder: (context) {
                                 return SelectMusicPage();
                               },
+                              
                             );
+                            debugPrint("value $data");
                           },
                           label: Text("Music"),
                         ),
+
+                      
 
                         Gap(kPadding2),
                         const Text("Cover Image"),
@@ -354,9 +358,23 @@ class _CreateEventPageState
                               mainAxisSpacing: 8,
                             ),
                             itemBuilder: (context, index) {
-                              return Image.file(
-                                state.image[index],
-                                fit: BoxFit.cover,
+                              return Stack(
+                                children: [
+                                  Image.file(
+                                    state.image[index],
+                                    fit: BoxFit.cover,
+                                  ),
+                                  Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: IconButton(
+                                      icon: const Icon(Icons.close),
+                                      onPressed: () {
+                                        bloc.add(ClickClearImage(index));
+                                      },
+                                    ),
+                                  ),
+                                ],
                               );
                             },
                           ),

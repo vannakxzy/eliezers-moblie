@@ -4,4 +4,5 @@ abstract class MusicsRepository {
   Future<MusicsResposeEntity> getMusic(int page);
   Future<void> createFavorite(int id);
   Future<void> deleteFavorite(int id);
+  Future<MusicsResposeEntity> searchMusics(String text);
 }

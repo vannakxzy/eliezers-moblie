@@ -1,11 +1,9 @@
 import 'package:auto_route/annotations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:moon_design/moon_design.dart';
-import '../../../../config/router/page_route/app_route_info.dart';
 import '../../../../core/constants/constants.dart';
-import '../../../../gen/i18n/translations.g.dart';
 import '../../../../app/base/page/base_page_bloc_state.dart';
+import '../../../../core/utils/widgets/custome_musics_card.dart';
 import '../bloc/select_music_bloc.dart';
 
 @RoutePage()
@@ -27,10 +25,28 @@ class _SelectMusicPageState
             padding: kScreenPadding,
             child: Column(
               children: [
+                Row(
+                  children: [],
+                ),
                 TextFormField(
                   onChanged: (value) {
-                    bloc.add(Seaching(1));
+                    bloc.add(Seaching(value));  
                   },
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    itemCount: state.musics.length,
+                    itemBuilder: (context, index) {
+                      final music = state.musics[index];
+                      return CustomeMusicsCard(
+                        music: music,
+                        onTapSelect: (value) {
+                          bloc.add(ClickSelected(index));
+                        },
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

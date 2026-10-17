@@ -51,3 +51,10 @@ class LyricsChange extends CreateMusicEvent with _$LyricsChange {
 class DescriptionChange extends CreateMusicEvent with _$DescriptionChange {
   factory DescriptionChange(String value) = _DescriptionChange;
 }
+
+
+@freezed
+class UpdateSelectedMusics extends CreateMusicEvent
+    with _$UpdateSelectedMusics {
+  factory UpdateSelectedMusics(List<MusicsEntity> data) = _UpdateSelectedMusics;
+}

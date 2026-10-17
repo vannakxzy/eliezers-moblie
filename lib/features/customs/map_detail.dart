@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_collection_literals
 
 import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_google_places_sdk/flutter_google_places_sdk.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart' as maps;
 import 'package:moon_design/moon_design.dart';
 
 import '../../core/utils/widgets/custom_buttom.dart';
@@ -29,14 +31,106 @@ class MapDetail extends StatefulWidget {
 }
 
 class MapDetailState extends State<MapDetail> {
-  final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  final Completer<maps.GoogleMapController> _controller =
+      Completer<maps.GoogleMapController>();
 
-  LatLng location = LatLng(0, 0);
+  // Selected/current map location
+  maps.LatLng location = const maps.LatLng(0, 0);
+
+  // Google Places SDK
+  late final FlutterGooglePlacesSdk places;
+
   @override
   void initState() {
-    location = LatLng(widget.lat, widget.long);
     super.initState();
+
+    location = maps.LatLng(
+      widget.lat,
+      widget.long,
+    );
+    places = FlutterGooglePlacesSdk(
+      'AIzaSyD4b1bpXuW-4UlY4tt8MMgobrP77h50vNk',
+    );
+  }
+
+  Future<void> searchPlace(String query) async {
+    if (query.trim().isEmpty) {
+      return;
+    }
+    try {
+      final result = await places.findAutocompletePredictions(
+        query,
+      );
+      debugPrint(
+        'Predictions: ${result.predictions.length}',
+      );
+
+      for (final prediction in result.predictions) {
+        debugPrint(
+          'Place: ${prediction.primaryText}',
+        );
+
+        debugPrint(
+          'Place ID: ${prediction.placeId}',
+        );
+      }
+    } catch (e) {
+      debugPrint(
+        'Google Places error: $e',
+      );
+    }
+  }
+
+  /// Get selected place details
+  Future<void> selectPlace(String placeId) async {
+    try {
+      final response = await places.fetchPlace(
+        placeId,
+        fields: [
+          PlaceField.Address,
+          PlaceField.Location,
+          PlaceField.Name,
+        ],
+      );
+
+      final place = response.place;
+
+      if (place == null || place.latLng == null) {
+        return;
+      }
+
+      final lat = place.latLng!.lat;
+      final lng = place.latLng!.lng;
+
+      final newLocation = maps.LatLng(
+        lat,
+        lng,
+      );
+
+      setState(() {
+        location = newLocation;
+      });
+
+      final controller = await _controller.future;
+
+      await controller.animateCamera(
+        maps.CameraUpdate.newCameraPosition(
+          maps.CameraPosition(
+            target: newLocation,
+            zoom: 15,
+          ),
+        ),
+      );
+
+      debugPrint('Selected place: ${place.name}');
+      debugPrint('Address: ${place.address}');
+      debugPrint('Latitude: $lat');
+      debugPrint('Longitude: $lng');
+    } catch (e) {
+      debugPrint(
+        'Get place details error: $e',
+      );
+    }
   }
 
   @override
@@ -55,45 +149,81 @@ class MapDetailState extends State<MapDetail> {
                   style: context.moonTypography!.body.text18,
                 ),
               ),
+
+              // ---------------------------------------------------------
+              // TEST GOOGLE PLACES
+              // ---------------------------------------------------------
+
+              ElevatedButton(
+                onPressed: () async {
+                  await searchPlace('Koh kong');
+                },
+                child: const Text(
+                  'Search Place',
+                ),
+              ),
+
               Expanded(
                 child: Stack(
                   children: [
-                    GoogleMap(
-                      mapType: MapType.normal,
-                      initialCameraPosition: CameraPosition(
-                          target: LatLng(widget.lat, widget.long), zoom: 14.23),
-                      onMapCreated: (GoogleMapController controller) {
-                        _controller.complete(controller);
+                    maps.GoogleMap(
+                      mapType: maps.MapType.normal,
+                      initialCameraPosition: maps.CameraPosition(
+                        target: maps.LatLng(
+                          widget.lat,
+                          widget.long,
+                        ),
+                        zoom: 14.23,
+                      ),
+                      onMapCreated: (maps.GoogleMapController controller) {
+                        if (!_controller.isCompleted) {
+                          _controller.complete(controller);
+                        }
                       },
-                      onCameraMove: (position) {
+
+                      onCameraMove: (maps.CameraPosition position) {
                         location = position.target;
                       },
+
                       zoomControlsEnabled: false,
+
                       myLocationEnabled: true,
+
                       mapToolbarEnabled: false,
+
                       myLocationButtonEnabled: false,
+
                       markers: {
                         if (widget.isSeletcLocation == false)
-                          Marker(
-                            markerId: const MarkerId("userLocation"),
-                            position: LatLng(
+                          maps.Marker(
+                            markerId: const maps.MarkerId(
+                              "userLocation",
+                            ),
+                            position: maps.LatLng(
                               widget.lat,
                               widget.long,
                             ),
-                            infoWindow: const InfoWindow(
+                            infoWindow: const maps.InfoWindow(
                               title: "Current Location",
                             ),
-                            icon: BitmapDescriptor.defaultMarkerWithHue(
-                                BitmapDescriptor.hueRose),
+                            icon: maps.BitmapDescriptor.defaultMarkerWithHue(
+                              maps.BitmapDescriptor.hueRose,
+                            ),
                           ),
                       },
                     ),
+
+                    // ---------------------------------------------------
+                    // CENTER LOCATION PIN
+                    // ---------------------------------------------------
                     if (widget.isSeletcLocation == true)
                       const IgnorePointer(
                         ignoring: true,
                         child: Center(
                           child: Padding(
-                            padding: EdgeInsets.only(bottom: 20),
+                            padding: EdgeInsets.only(
+                              bottom: 20,
+                            ),
                             child: Icon(
                               Icons.location_on,
                               size: 40,
@@ -101,31 +231,56 @@ class MapDetailState extends State<MapDetail> {
                             ),
                           ),
                         ),
-                      )
+                      ),
                   ],
                 ),
               ),
             ],
           ),
         ),
+
+        // ---------------------------------------------------------------
+        // TOP + BOTTOM CONTROLS
+        // ---------------------------------------------------------------
         Container(
-          margin:
-              const EdgeInsets.only(bottom: 10, top: 60, left: 20, right: 20),
+          margin: const EdgeInsets.only(
+            bottom: 10,
+            top: 60,
+            left: 20,
+            right: 20,
+          ),
           width: double.infinity,
           child: Column(
             children: [
               Row(
                 children: [
                   const Spacer(),
+
+                  // -----------------------------------------------------
+                  // RETURN TO ORIGINAL LOCATION
+                  // -----------------------------------------------------
                   GestureDetector(
                     onTap: () async {
-                      final GoogleMapController controller =
+                      final maps.GoogleMapController controller =
                           await _controller.future;
+
+                      final originalLocation = maps.LatLng(
+                        widget.lat,
+                        widget.long,
+                      );
+
+                      setState(() {
+                        location = originalLocation;
+                      });
+
                       await controller.animateCamera(
-                          CameraUpdate.newCameraPosition(CameraPosition(
-                        target: LatLng(widget.lat, widget.long),
-                        zoom: 14.4746,
-                      )));
+                        maps.CameraUpdate.newCameraPosition(
+                          maps.CameraPosition(
+                            target: originalLocation,
+                            zoom: 14.4746,
+                          ),
+                        ),
+                      );
                     },
                     child: Container(
                       height: 30,
@@ -134,7 +289,6 @@ class MapDetailState extends State<MapDetail> {
                         border: Border.all(
                           color: context.moonColors!.piccolo,
                         ),
-                        // color: AppColor.backgroundColor,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Icon(
@@ -145,37 +299,35 @@ class MapDetailState extends State<MapDetail> {
                   ),
                 ],
               ),
+
               const Spacer(),
+
+              // ---------------------------------------------------------
+              // DROP BUTTON
+              // ---------------------------------------------------------
               CustomButtom(
                 colors: context.moonColors!.piccolo,
-                // white: MediaQuery.sizeOf(context).width * 0.6,
+
                 title: widget.isSeletcLocation == false
                     ? "Get Directions"
                     : "Drop",
+
                 onTap: () {
                   if (widget.isSeletcLocation == false) {
-                    // openGoogleMap(
-                    //   lat: widget.lat,
-                    //   lng: widget.long,
-                    //   context: context,
-                    //   title: widget.title,
-                    // );
+                    // Get directions
                   } else {
-                    // widget.ontap!(CameraPosition(
-                    //   target: LatLng(
-                    //     lat,
-                    //     lng,
-                    //   ),
-                    //   zoom: 14.4746,
-                    // ));
-                    // appRou.pop(lat, lng);
+                    // Return selected location
                   }
-                  Navigator.pop(context, location);
+
+                  Navigator.pop(
+                    context,
+                    location,
+                  );
                 },
               ),
             ],
           ),
-        )
+        ),
       ],
     );
   }

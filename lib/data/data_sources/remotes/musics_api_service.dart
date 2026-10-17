@@ -21,4 +21,8 @@ abstract class MusicsApiServie {
 
   @DELETE("${ApiEndpoints.favoriteMusics}/{id}")
   Future<void> deletefavorite(@Path("id") int id);
+
+  @GET("${ApiEndpoints.baseapi}/search?type=musics")
+  Future<MusicsResposeModel> searchMusic(@Query("q") String q);
+
 }

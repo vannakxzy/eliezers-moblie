@@ -16,6 +16,7 @@ import '../../../../../../app/base/bloc/base_event.dart';
 import '../../../../../../app/base/bloc/base_state.dart';
 import '../../../../../../core/helper/fuction.dart';
 import '../../../../../../data/data_sources/remotes/event_api_service.dart';
+import '../../../../../musics/domain/entities/musics_entity.dart';
 import '../../../../domain/usecase/create_event_use_case.dart';
 part 'create_event_event.dart';
 part 'create_event_state.dart';
@@ -35,6 +36,7 @@ class CreateEventBloc extends BaseBloc<CreateEventEvent, CreateEventState> {
     on<GetStartTime>(_getStartTime);
     on<GetEndTime>(_getEndTime);
     on<SelectCoverImage>(_selectCoverImage);
+    on<ClickClearImage>(_clickclearImage);
   }
   final CreateEventUsecase _createEventUsecase;
 
@@ -89,7 +91,12 @@ class CreateEventBloc extends BaseBloc<CreateEventEvent, CreateEventState> {
     emit(state.copyWith(title: event.value));
     _validarButton();
   }
-
+  FutureOr<void> _clickclearImage(
+      ClickClearImage event, Emitter<CreateEventState> emit) {
+    List<File> images = [...state.image];
+    images.removeAt(event.index);
+    emit(state.copyWith(image: images));
+  }
   FutureOr<void> _coverChange(
       CoverChange event, Emitter<CreateEventState> emit) {
     // emit(state.copyWith(cover: event.value));

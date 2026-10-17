@@ -1,4 +1,6 @@
 // ignore_for_file: constant_identifier_names, unused_field
+import '../../app/bloc/bloc/common_bloc.dart';
+
 class BaseUrls {
   BaseUrls._();
 
@@ -13,7 +15,7 @@ class BaseUrls {
 
 class ApiEndpoints {
   ApiEndpoints._();
-
+  static const baseapi = "/api";
   /// Home Endpoints
   static const question = '/api/question';
   static const getMySubject = '/api/subject/user';

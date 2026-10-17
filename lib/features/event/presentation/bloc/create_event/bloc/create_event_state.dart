@@ -11,7 +11,7 @@ class CreateEventState extends BaseState with _$CreateEventState {
     @Default(false) bool isloading,
     @Default(0.0) double lat,
     @Default(0.0) double long,
-
+    @Default([]) List<MusicsEntity> selectMusie,
     //--------------------------------
     DateTime? startDate,
     TimeOfDay? startTime,

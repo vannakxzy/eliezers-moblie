@@ -8,6 +8,7 @@ import 'package:injectable/injectable.dart';
 import '../../../../app/base/bloc/base_bloc.dart';
 import '../../../../app/base/bloc/base_event.dart';
 import '../../../../app/base/bloc/base_state.dart';
+import '../../domain/entities/musics_entity.dart';
 
 part 'create_music_event.dart';
 part 'create_music_state.dart';

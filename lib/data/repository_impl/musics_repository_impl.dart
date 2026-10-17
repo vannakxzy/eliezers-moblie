@@ -27,4 +27,10 @@ class MusicsRepositoryImpl implements MusicsRepository {
   Future<void> deleteFavorite(int id) async {
     await _apiServie.deletefavorite(id);
   }
+
+  @override
+  Future<MusicsResposeEntity> searchMusics(String text) async {
+    final musics = await _apiServie.searchMusic(text);
+    return musics.toEntity();
+  }
 }

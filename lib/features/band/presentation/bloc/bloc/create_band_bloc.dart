@@ -99,7 +99,6 @@ class CreatebandBloc extends BaseBloc<CreatebandEvent, CreateBandState> {
           // BandEntity band = BandEntity();
           // final band = await _createbandUsecase.excecute(input);
           appRoute.pop(result: input);
-
           // appRoute.showSuccessSnackBar(t.band.createSuccessMessage);
         },
         onError: (error) async {

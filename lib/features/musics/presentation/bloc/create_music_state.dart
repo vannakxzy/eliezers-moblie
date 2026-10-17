@@ -13,5 +13,6 @@ class CreateMusicState extends BaseState with _$CreateMusicState {
     File? cover,
     @Default('') String lyrics,
     @Default('') String description,
+    @Default([]) List<MusicsEntity> musicSelecte, 
   }) = _Initial;
 }
