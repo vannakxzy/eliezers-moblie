@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../app/base/bloc/bloc.dart';
+import '../../../../core/helper/fuction.dart';
 import '../../../../data/models/event/event_model.dart';
 import '../../domain/entities/event_entity.dart';
 import '../../domain/usecase/get_events_usecase.dart';
@@ -30,6 +31,17 @@ class EventBloc extends BaseBloc<EventEvent, EventState> {
         all.addAll(eventRespose.data.toListEntity());
         emit(state.copyWith(
             events: all, isloading: false, page: state.page + 1));
+        // add address string to entity 
+        final updatedEvents = await Future.wait(
+          state.events.map((event) async {
+            final address =
+                await getAddressFromLatLng(event.latitude, event.longitude);
+            return event.copyWith(
+              location: address,
+            );
+          }),
+        );
+        emit(state.copyWith(events: updatedEvents));
         if (state.page > eventRespose.mate!.lastPage) {
           emit(state.copyWith(isMorePage: false));
         }
@@ -50,6 +62,16 @@ class EventBloc extends BaseBloc<EventEvent, EventState> {
             events: eventRespose.data.toListEntity(),
             isloading: false,
             page: state.page + 1));
+        final updatedEvents = await Future.wait(
+          state.events.map((event) async {
+            final address =
+                await getAddressFromLatLng(event.latitude, event.longitude);
+            return event.copyWith(
+              location: address,
+            );
+          }),
+        );
+        emit(state.copyWith(events: updatedEvents));
         if (state.page > eventRespose.mate!.lastPage) {
           emit(state.copyWith(isMorePage: false));
         }
@@ -68,7 +90,7 @@ class EventBloc extends BaseBloc<EventEvent, EventState> {
   FutureOr<void> _clickJoin(ClickJoin evnet, Emitter<EventState> emit) {
     final events = [...state.events];
     EventEntity currectEvent = events[evnet.index];
-    events[evnet.index] = currectEvent.copyWith(isJoin: true);
+    events[evnet.index] = currectEvent.copyWith(isjoin: true);
 
     emit(state.copyWith(events: events));
     // _joinEvent(currectEvent.id);

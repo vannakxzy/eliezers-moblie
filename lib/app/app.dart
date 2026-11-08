@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import '../config/router/app_router.dart';
 import '../config/theme/theme_controller.dart';
 import '../core/constants/constants.dart';
+import '../core/helper/fuction.dart';
 import '../core/helper/local_data/storge_local.dart';
 import '../core/utils/controllers/app_controller.dart';
 import '../core/utils/log/app_logger.dart';
@@ -53,17 +54,22 @@ class _MyAppState extends BasePageBlocState<MyApp, AppBloc> {
       ],
       child: BlocBuilder<ThemeController, ThemeMode>(
         builder: (context, themeMode) {
-          return MaterialApp.router(
-            debugShowCheckedModeBanner: false,
-            scrollBehavior: const MaterialScrollBehavior(),
-            routerConfig: getIt.get<AppRouter>().config(),
-            theme: context.read<ThemeController>().lightTheme,
-            darkTheme: context.read<ThemeController>().darkTheme,
-            themeMode: themeMode,
-            locale: TranslationProvider.of(context).flutterLocale,
-            supportedLocales: AppLocaleUtils.supportedLocales,
-            localizationsDelegates: GlobalMaterialLocalizations.delegates,
-            builder: (_, child) => child!,
+          return GestureDetector(
+            onTap: () {
+              unFocus();
+            },
+            child: MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              scrollBehavior: const MaterialScrollBehavior(),
+              routerConfig: getIt.get<AppRouter>().config(),
+              theme: context.read<ThemeController>().lightTheme,
+              darkTheme: context.read<ThemeController>().darkTheme,
+              themeMode: themeMode,
+              locale: TranslationProvider.of(context).flutterLocale,
+              supportedLocales: AppLocaleUtils.supportedLocales,
+              localizationsDelegates: GlobalMaterialLocalizations.delegates,
+              builder: (_, child) => child!,
+            ),
           );
         },
       ),

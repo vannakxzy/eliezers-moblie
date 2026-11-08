@@ -43,7 +43,6 @@ class MapDetailState extends State<MapDetail> {
   @override
   void initState() {
     super.initState();
-
     location = maps.LatLng(
       widget.lat,
       widget.long,
@@ -135,200 +134,182 @@ class MapDetailState extends State<MapDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(6),
-                child: Text(
-                  t.common.location,
-                  style: context.moonTypography!.body.text18,
+    return SafeArea(
+      top: false,
+      child: Stack(
+        children: [
+          SizedBox(
+            width: double.infinity,
+            height: double.infinity,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(6),
+                  child: Text(
+                    t.common.location,
+                    style: context.moonTypography!.body.text18,
+                  ),
                 ),
-              ),
 
-              // ---------------------------------------------------------
-              // TEST GOOGLE PLACES
-              // ---------------------------------------------------------
+                Expanded(
+                  child: Stack(
+                    children: [
+                      maps.GoogleMap(
+                        mapType: maps.MapType.normal,
+                        initialCameraPosition: maps.CameraPosition(
+                          target: maps.LatLng(
+                            widget.lat,
+                            widget.long,
+                          ),
+                          zoom: 14.23,
+                        ),
+                        onMapCreated: (maps.GoogleMapController controller) {
+                          if (!_controller.isCompleted) {
+                            _controller.complete(controller);
+                          }
+                        },
+                        onCameraMove: (maps.CameraPosition position) {
+                          location = position.target;
+                        },
+                        zoomControlsEnabled: false,
+                        myLocationEnabled: true,
+                        mapToolbarEnabled: false,
+                        myLocationButtonEnabled: false,
+                        markers: {
+                          if (widget.isSeletcLocation == false)
+                            maps.Marker(
+                              markerId: const maps.MarkerId(
+                                "userLocation",
+                              ),
+                              position: maps.LatLng(
+                                widget.lat,
+                                widget.long,
+                              ),
+                              infoWindow: const maps.InfoWindow(
+                                title: "Current Location",
+                              ),
+                              icon: maps.BitmapDescriptor.defaultMarkerWithHue(
+                                maps.BitmapDescriptor.hueRose,
+                              ),
+                            ),
+                        },
+                      ),
 
-              ElevatedButton(
-                onPressed: () async {
-                  await searchPlace('Koh kong');
-                },
-                child: const Text(
-                  'Search Place',
+                      // ---------------------------------------------------
+                      // CENTER LOCATION PIN
+                      // ---------------------------------------------------
+                      if (widget.isSeletcLocation == true)
+                        const IgnorePointer(
+                          ignoring: true,
+                          child: Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                bottom: 20,
+                              ),
+                              child: Icon(
+                                Icons.location_on,
+                                size: 40,
+                                color: Colors.pink,
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
-              ),
+              ],
+            ),
+          ),
 
-              Expanded(
-                child: Stack(
+          // ---------------------------------------------------------------
+          // TOP + BOTTOM CONTROLS
+          // ---------------------------------------------------------------
+          Container(
+            margin: const EdgeInsets.only(
+              bottom: 10,
+              top: 60,
+              left: 20,
+              right: 20,
+            ),
+            width: double.infinity,
+            child: Column(
+              children: [
+                Row(
                   children: [
-                    maps.GoogleMap(
-                      mapType: maps.MapType.normal,
-                      initialCameraPosition: maps.CameraPosition(
-                        target: maps.LatLng(
+                    const Spacer(),
+
+                    // -----------------------------------------------------
+                    // RETURN TO ORIGINAL LOCATION
+                    // -----------------------------------------------------
+                    GestureDetector(
+                      onTap: () async {
+                        final maps.GoogleMapController controller =
+                            await _controller.future;
+
+                        final originalLocation = maps.LatLng(
                           widget.lat,
                           widget.long,
-                        ),
-                        zoom: 14.23,
-                      ),
-                      onMapCreated: (maps.GoogleMapController controller) {
-                        if (!_controller.isCompleted) {
-                          _controller.complete(controller);
-                        }
-                      },
+                        );
 
-                      onCameraMove: (maps.CameraPosition position) {
-                        location = position.target;
-                      },
+                        setState(() {
+                          location = originalLocation;
+                        });
 
-                      zoomControlsEnabled: false,
-
-                      myLocationEnabled: true,
-
-                      mapToolbarEnabled: false,
-
-                      myLocationButtonEnabled: false,
-
-                      markers: {
-                        if (widget.isSeletcLocation == false)
-                          maps.Marker(
-                            markerId: const maps.MarkerId(
-                              "userLocation",
-                            ),
-                            position: maps.LatLng(
-                              widget.lat,
-                              widget.long,
-                            ),
-                            infoWindow: const maps.InfoWindow(
-                              title: "Current Location",
-                            ),
-                            icon: maps.BitmapDescriptor.defaultMarkerWithHue(
-                              maps.BitmapDescriptor.hueRose,
+                        await controller.animateCamera(
+                          maps.CameraUpdate.newCameraPosition(
+                            maps.CameraPosition(
+                              target: originalLocation,
+                              zoom: 14.4746,
                             ),
                           ),
+                        );
                       },
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: context.moonColors!.piccolo,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Icon(
+                          Icons.pin_drop_rounded,
+                          color: context.moonColors!.piccolo.withOpacity(0.8),
+                        ),
+                      ),
                     ),
-
-                    // ---------------------------------------------------
-                    // CENTER LOCATION PIN
-                    // ---------------------------------------------------
-                    if (widget.isSeletcLocation == true)
-                      const IgnorePointer(
-                        ignoring: true,
-                        child: Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              bottom: 20,
-                            ),
-                            child: Icon(
-                              Icons.location_on,
-                              size: 40,
-                              color: Colors.pink,
-                            ),
-                          ),
-                        ),
-                      ),
                   ],
                 ),
-              ),
-            ],
+
+                const Spacer(),
+
+                // ---------------------------------------------------------
+                // DROP BUTTON
+                // ---------------------------------------------------------
+                CustomButtom(
+                  colors: context.moonColors!.piccolo,
+                  title: widget.isSeletcLocation == false
+                      ? "Get Directions"
+                      : "Drop",
+                  onTap: () {
+                    if (widget.isSeletcLocation == false) {
+                      // Get directions
+                    } else {
+                      // Return selected location
+                    }
+
+                    Navigator.pop(
+                      context,
+                      location,
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-
-        // ---------------------------------------------------------------
-        // TOP + BOTTOM CONTROLS
-        // ---------------------------------------------------------------
-        Container(
-          margin: const EdgeInsets.only(
-            bottom: 10,
-            top: 60,
-            left: 20,
-            right: 20,
-          ),
-          width: double.infinity,
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  const Spacer(),
-
-                  // -----------------------------------------------------
-                  // RETURN TO ORIGINAL LOCATION
-                  // -----------------------------------------------------
-                  GestureDetector(
-                    onTap: () async {
-                      final maps.GoogleMapController controller =
-                          await _controller.future;
-
-                      final originalLocation = maps.LatLng(
-                        widget.lat,
-                        widget.long,
-                      );
-
-                      setState(() {
-                        location = originalLocation;
-                      });
-
-                      await controller.animateCamera(
-                        maps.CameraUpdate.newCameraPosition(
-                          maps.CameraPosition(
-                            target: originalLocation,
-                            zoom: 14.4746,
-                          ),
-                        ),
-                      );
-                    },
-                    child: Container(
-                      height: 30,
-                      width: 30,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: context.moonColors!.piccolo,
-                        ),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.pin_drop_rounded,
-                        color: context.moonColors!.piccolo.withOpacity(0.8),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-
-              const Spacer(),
-
-              // ---------------------------------------------------------
-              // DROP BUTTON
-              // ---------------------------------------------------------
-              CustomButtom(
-                colors: context.moonColors!.piccolo,
-
-                title: widget.isSeletcLocation == false
-                    ? "Get Directions"
-                    : "Drop",
-
-                onTap: () {
-                  if (widget.isSeletcLocation == false) {
-                    // Get directions
-                  } else {
-                    // Return selected location
-                  }
-
-                  Navigator.pop(
-                    context,
-                    location,
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

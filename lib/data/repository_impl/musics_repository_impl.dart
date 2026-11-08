@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../features/musics/domain/entities/music_respose_entity.dart';
@@ -32,5 +33,22 @@ class MusicsRepositoryImpl implements MusicsRepository {
   Future<MusicsResposeEntity> searchMusics(String text) async {
     final musics = await _apiServie.searchMusic(text);
     return musics.toEntity();
+  }
+
+  @override
+  Future<void> createMusic(CreateMusicInput input) async {
+    await _apiServie.createMusic(input: input);
+  }
+
+  @override
+  Future<void> deleteMusic(index) {
+    // TODO: implement deleteMusic
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> editMusic(CreateMusicInput input) {
+    // TODO: implement editMusic
+    throw UnimplementedError();
   }
 }

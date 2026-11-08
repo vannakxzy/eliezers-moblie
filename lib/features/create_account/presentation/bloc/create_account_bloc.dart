@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -51,11 +52,15 @@ class CreateAccountBloc
           if (state.email.isEmpty) return;
           emit(state.copyWith(isLoading: true));
           DeviceInfo deviceInfo = await getDeviceInfo();
+          FirebaseMessaging messaging = FirebaseMessaging.instance;
+
+          String? deviceToken = await messaging.getToken();
+          // debugPrint("device token $token");
           CreateAccountEntity output =
               await _createAccountUsecase.excecute(CreateAccountInput(
             email: state.email,
             name: state.name,
-            device_token: '',
+            device_token: deviceToken ?? "",
             otp_code: "",
             password: state.password,
             manufacturer: deviceInfo.manufacturer,
@@ -65,15 +70,23 @@ class CreateAccountBloc
           await LocalStorage.storeData(
             key: SharedPreferenceKeys.accessToken,
             value: output.token,
-          );
-          LocalStorage.storeData(
+          ).then(
+            (value) {
+              LocalStorage.storeData(
               key: SharedPreferenceKeys.name, value: state.name);
           LocalStorage.storeData(
               key: SharedPreferenceKeys.authType,
               value: SharedPreferenceKeys.password);
+              String token =
+                  LocalStorage.getStringValue(SharedPreferenceKeys.accessToken);
+              debugPrint("accessToken $token");
           appRoute.replaceAll([const AppRouteInfo.home()]);
           debugPrint("loggggggggg  ");
+            },
+          );
         } catch (e) {
+          emit(state.copyWith(isLoading: false));
+
           debugPrint("errriir  $e");
         }
       },

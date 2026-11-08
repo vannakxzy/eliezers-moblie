@@ -32,7 +32,6 @@ class SecurityLoginBloc
   }
   FutureOr<void> _clickHide(
       ClickHideEvent event, Emitter<SecurityLoginState> emit) {
-    appRoute.push(const AppRouteInfo.hide());
   }
 
   FutureOr<void> _clickActiveSession(
@@ -42,7 +41,6 @@ class SecurityLoginBloc
 
   FutureOr<void> _clickBlock(
       ClickBlockEvent event, Emitter<SecurityLoginState> emit) {
-    appRoute.push(const AppRouteInfo.block());
   }
 
   FutureOr<void> _clickChangePassword(

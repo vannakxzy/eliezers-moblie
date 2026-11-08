@@ -11,6 +11,5 @@ class CreateEventUsecase extends BaseUseCase<CreateEventInput, void> {
   @override
   Future<void> excecute(CreateEventInput input) async {
     await _repository.createEvent(input);
-    throw UnimplementedError();
   }
 }

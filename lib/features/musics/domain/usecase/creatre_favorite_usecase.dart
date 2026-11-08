@@ -8,6 +8,6 @@ class CreatreFavoriteUsecase extends BaseUseCase<int, void> {
   CreatreFavoriteUsecase(this._MusicsRepository);
   @override
   Future<void> excecute(int input) async {
-    return await _MusicsRepository.createFavorite(input);
+    await _MusicsRepository.createFavorite(input);
   }
 }

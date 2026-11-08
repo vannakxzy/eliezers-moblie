@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import '../../models/security_login/block_respose_model.dart';
-import '../../models/security_login/hide_respose_model.dart';
 import '../../../features/login/data/model/login_model.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -17,14 +15,10 @@ part 'security_login_api_service.g.dart';
 abstract class SecurityLoginApiService {
   @FactoryMethod()
   factory SecurityLoginApiService(Dio dio) = _SecurityLoginApiService;
-  @GET(ApiEndpoints.block)
-  Future<BlockResposeModel> getBlock({@Query('page') required int page});
   @DELETE(ApiEndpoints.unBlock)
   Future<void> unBlock(@Query('id') int id);
   @POST(ApiEndpoints.createBlock)
   Future<void> createBlock(@Query('block_id') int id);
-  @GET(ApiEndpoints.hide)
-  Future<HideResposeModel> getHide({@Query('page') required int page});
   @GET(ApiEndpoints.activeSession)
   Future<List<ActiveSessionModel>> getActiveSession();
   @DELETE(ApiEndpoints.activeSession)

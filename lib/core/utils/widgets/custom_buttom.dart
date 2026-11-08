@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moon_design/moon_design.dart';
 
-import '../../constants/size_constant.dart';
 
 class CustomButtom extends StatelessWidget {
   final String title;
@@ -13,7 +12,7 @@ class CustomButtom extends StatelessWidget {
   final bool isFullWidth;
   final bool isloading;
   final Widget? trailing;
-
+  
   const CustomButtom({
     super.key,
     required this.title,
@@ -30,11 +29,10 @@ class CustomButtom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MoonFilledButton(
-      height: 50,
-      borderRadius: BorderRadius.circular(15),
+      height: 40,
       trailing: trailing,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(kRadius),
+        // borderRadius: BorderRadius.circular(400),
         color: outline
             ? Colors.transparent
             : disable
@@ -55,7 +53,8 @@ class CustomButtom extends StatelessWidget {
           : Text(
               title,
               style: context.moonTypography!.body.text16
-                  .copyWith(color: Colors.white),
+                  .copyWith(
+                  color: outline ? context.moonColors!.piccolo : Colors.white),
             ),
       onTap: disable == false
           ? () {

@@ -5,7 +5,6 @@ class PersonalInfoState extends BaseState with _$PersonalInfoState {
   const factory PersonalInfoState({
     File? pickedImage,
     @Default(false) bool loading,
-    @Default([]) List<AvartaEntity> avatars,
     @Default(false) bool loadingAvatar,
     ProfileEntity? profileEntity,
     @Default('') String userNameCompea,

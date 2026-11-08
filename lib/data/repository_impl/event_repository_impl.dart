@@ -17,11 +17,26 @@ class EventRepositoryImpl implements EventRepository {
 
   @override
   Future<void> booking(int eventId) async {
-    await _apiService.booking(eventId);
+    await _apiService.booking(input: BookingInput(eventId: eventId));
   }
 
   @override
   Future<void> createEvent(CreateEventInput input) {
     return _apiService.createEvent(input: input);
+  }
+
+  @override
+  Future<void> deleteBooking(int eventId) {
+    return _apiService.deleteBooking(eventId);
+  }
+
+  @override
+  Future<void> deleteEvent(int id) {
+    return _apiService.deleteEvent(id);
+  }
+
+  @override
+  Future<void> update(CreateEventInput input) {
+    return _apiService.putEvent(input: input);
   }
 }

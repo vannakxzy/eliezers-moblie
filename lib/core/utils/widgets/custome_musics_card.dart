@@ -26,6 +26,7 @@ class CustomeMusicsCard extends StatelessWidget {
         avatarSize: MoonAvatarSize.lg,
         borderRadius: BorderRadius.circular(1000),
       ),
+      content: Text(""),
       trailing: MoonCheckbox(
         tapAreaSizeValue: 50,
         value: music.isSelected,

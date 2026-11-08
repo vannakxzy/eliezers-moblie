@@ -10,7 +10,6 @@ import '../../../../core/helper/fuction.dart';
 import '../../../../core/utils/log/app_logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../../../config/router/page_route/app_route_info.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/helper/local_data/storge_local.dart';
 import '../../../../data/data_sources/remotes/create_account_api_service.dart';
@@ -86,7 +85,7 @@ class CreateUserInfoBloc
         LocalStorage.storeData(
             key: SharedPreferenceKeys.authType,
             value: SharedPreferenceKeys.password);
-        appRoute.replaceAll([const AppRouteInfo.selectSubject()]);
+        // appRoute.replaceAll([const AppRouteInfo.selectSubject()]);
       },
       onError: (error) async {
         emit(state.copyWith(isLoading: false));

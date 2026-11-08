@@ -6,13 +6,9 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../data/data_sources/remotes/band_api_service.dart';
 import '../../../../data/data_sources/remotes/notification_api_service.dart';
 import '../../../../data/data_sources/remotes/report_api_service.dart';
 import '../../../../data/models/notification/notification_model.dart';
-import '../../../../data/models/profile/answer_model.dart';
-import '../../../band/domain/usecase/approve_user_in_band_usecase.dart';
-import '../../../band/domain/usecase/reject_user_in_band_usecase.dart';
 import '../../../report/domain/usecase/create_report_usecase.dart';
 import '../../domain/usecase/delete_notification_usecase.dart';
 import '../../domain/usecase/get_notification_usecase.dart';
@@ -32,8 +28,6 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
   final GetNotificationUsecase _getNotificationUsecase;
   final DeleteNotificationUsecase _deleteNotificationUsecase;
   final CreateReportUsecase _createReportUsecase;
-  final RejectUserInbandUsecase _rejectUserInbandUsecase;
-  final ApproveUserInbandUsecase _approveUserInbandUsecase;
   final ReadNotificationUsecase _readNotificationUsecase;
   final ReadAllNotificationUsecase _readAllNotificationUsecase;
   NotificationBloc(
@@ -41,9 +35,7 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
       this._deleteNotificationUsecase,
       this._readNotificationUsecase,
       this._createReportUsecase,
-      this._readAllNotificationUsecase,
-      this._approveUserInbandUsecase,
-      this._rejectUserInbandUsecase)
+      this._readAllNotificationUsecase)
       : super(_Initial()) {
     on<GetNotification>(_getNotification);
     on<RefreshPage>(_refreshPage);
@@ -124,10 +116,10 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
             currentNotification.copyWith(status: "approve");
 
         emit(state.copyWith(notification: notification));
-        await _approveUserInbandUsecase.excecute(BandIdUserIdInput(
-            user_id: currentNotification.user!.id,
-            band_id: currentNotification.bandId,
-            notification_id: currentNotification.id));
+        // await _approveUserInbandUsecase.excecute(BandIdUserIdInput(
+        //     user_id: currentNotification.user!.id,
+        //     band_id: currentNotification.bandId,
+        //     notification_id: currentNotification.id));
       },
       onError: (error) async {
         debugPrint("error $error");
@@ -145,10 +137,10 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
             currentNotification.copyWith(status: "reject");
         notification.removeAt(event.index);
         emit(state.copyWith(notification: notification));
-        await _rejectUserInbandUsecase.excecute(BandIdUserIdInput(
-            user_id: currentNotification.user!.id,
-            band_id: currentNotification.bandId,
-            notification_id: currentNotification.id));
+        // await _rejectUserInbandUsecase.excecute(BandIdUserIdInput(
+        //     user_id: currentNotification.user!.id,
+        //     band_id: currentNotification.bandId,
+        //     notification_id: currentNotification.id));
       },
       onError: (error) async {
         debugPrint("error $error");
@@ -187,17 +179,17 @@ class NotificationBloc extends BaseBloc<NotificationEvent, NotificationState> {
     if (notificaiton.type.contains("band")) {
       appRoute.push(AppRouteInfo.otherProfile(userId: notificaiton.user!.id));
     } else {
-      if (notificaiton.type == "comment_answer") {
-        appRoute.push(AppRouteInfo.commentInAnswer(notificaiton.answerId,
-            notificaiton.answer!.toEntity(), notificaiton.commentId, 0));
-      } else {
-        appRoute.push(AppRouteInfo.questionDetail(
-          id: notificaiton.questionId,
-          questionEntity: null,
-          answerId: notificaiton.answerId,
-          commentId: notificaiton.commentId,
-        ));
-      }
+      // if (notificaiton.type == "comment_answer") {
+      //   appRoute.push(AppRouteInfo.commentInAnswer(notificaiton.answerId,
+      //       notificaiton.answer!.toEntity(), notificaiton.commentId, 0));
+      // } else {
+      //   appRoute.push(AppRouteInfo.questionDetail(
+      //     id: notificaiton.questionId,
+      //     questionEntity: null,
+      //     answerId: notificaiton.answerId,
+      //     commentId: notificaiton.commentId,
+      //   ));
+      // }
     }
     await runAppCatching(
       () async {

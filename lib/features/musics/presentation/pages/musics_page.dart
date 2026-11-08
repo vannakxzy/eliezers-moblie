@@ -5,7 +5,6 @@ import 'package:gap/gap.dart';
 import 'package:moon_design/moon_design.dart';
 
 import '../../../../app/base/page/base_page_bloc_state.dart';
-import '../../../../config/router/app_router.gr.dart';
 import '../../../../config/router/page_route/app_route_info.dart';
 import '../../../../core/constants/size_constant.dart';
 import '../../../../gen/i18n/translations.g.dart';
@@ -42,15 +41,10 @@ class _MusicsPageState extends BasePageBlocState<MusicsPage, MusicsBloc> {
                   Text(t.music.title,
                       style: context.moonTypography!.heading.text20),
                   Spacer(),
-                  // MoonButton(
-                  //   leading: Icon(MoonIcons.generic_search_24_regular),
-                  //   onTap: () {
-                  //     appRoute.push(AppRouteInfo.resultSearch('', 2));
-                  //   },
-                  // ),
+                  
                   MoonButton(
                     onTap: () {
-                      // bloc.add(ClickCreateband());
+                      bloc.add(ClickSearch());
                     }, 
                     leading: Icon(
                       MoonIcons.generic_search_24_regular,
@@ -64,18 +58,20 @@ class _MusicsPageState extends BasePageBlocState<MusicsPage, MusicsBloc> {
                         MoonIcons.controls_plus_24_regular,
                       )),
                 ]),
-                MoonFormTextInput(
-                  borderRadius: BorderRadius.circular(20),
-                  controller: TextEditingController(),
-                  // validator: (String? value) =>
-                  //     value != null && value.length < 5
-                  //         ? "The text should be longer than 5 characters."
-                  //         : null,
-                  hintText: "sdfsfdsfdsdf",
-                  // onTap: () => _textController.clear(),
-                  leading: const Icon(MoonIcons.generic_search_24_light),
-                  trailing: GestureDetector(
-                    child: const Icon(MoonIcons.controls_close_small_24_light),
+                AnimatedContainer(
+                  height: state.isShowSearch ? 40 : 0,
+                  duration: Duration(milliseconds: 300),
+                  child: SingleChildScrollView(
+                    child: MoonFormTextInput(
+                      borderRadius: BorderRadius.circular(20),
+                      controller: TextEditingController(),
+                      hintText: "sdfsfdsfdsdf",
+                      leading: const Icon(MoonIcons.generic_search_24_light),
+                      trailing: GestureDetector(
+                        child:
+                            const Icon(MoonIcons.controls_close_small_24_light),
+                      ),
+                    ),
                   ),
                 ),
                 Expanded(

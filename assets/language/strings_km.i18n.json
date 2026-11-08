@@ -231,14 +231,17 @@
   "event": {
     "free": "ឥតគិតថ្លៃ",
     "join": "ចូលរួម",
-    "title": "Event",
+    "title": "កម្មវិធី",
     "leave": "ចាកចេញ",
     "promptDateTime": "Promp Date Time",
-    "SelectDate": "Select Date",
-    "SelectTime": "Select Time",
+    "SelectDate": "ជ្រើសរើសថ្ងៃខែ",
+    "SelectTime": "ជ្រើសរើសម៉ោង",
     "createEvent": "Create Event",
-    "startFrom": "Start From",
-    "endDate": "End Date"
+    "startFrom": "ពេលវេលាចាប់ផ្ដើម",
+    "endDate": "ពេលវេលាបញ្ចប់",
+    "selectLocation": "ជ្រើសរើសទីតាំង",
+    "pastLatlong": "Past latlong here....",
+    "agenda": "របៀបវារៈ"
   },
   "music": {
     "title": "ចម្រៀង"

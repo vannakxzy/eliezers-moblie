@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import '../../../../data/models/profile/answer_model.dart';
 import 'user_entity.dart';
 
 part 'notification_entity.freezed.dart';
@@ -18,7 +17,6 @@ class NotificationEntity with _$NotificationEntity {
     @Default('') String bandName,
     @Default(0) int bandId,
     @Default(false) bool readAt,
-    AnswerModel? answer,
     UserEntity? user,
   }) = _NotificationEntity;
 }

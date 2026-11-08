@@ -82,6 +82,8 @@ dependencies:
   photo_view: ^0.15.0
   lottie: ^3.0.0
   flutter_native_splash: ^2.4.4
+  map_launcher: ^3.1.0
+
 
   # Logging
   logging: ^1.2.0
@@ -92,6 +94,7 @@ dependencies:
   app_links: ^6.4.0
   pull_to_refresh: ^2.0.0
   audioplayers: ^6.5.1
+  file_picker: ^11.0.3
 
 dev_dependencies:
   flutter_test:
@@ -151,3 +154,9 @@ flutter_native_splash:
   android_gravity: center
   ios_content_mode: center
   fullscreen: true
+targets:
+  $default:
+    builders:
+      retrofit_generator:
+        generate_for:
+          - lib/data/remote/**.dart

@@ -15,7 +15,6 @@ import '../../../../core/utils/widgets/custom_loading.dart';
 import '../bloc/personal_info_bloc.dart';
 import '../bottomsheet/check_email_bottonsheet.dart';
 import '../bottomsheet/check_user_name_buttonsheet.dart';
-import '../bottomsheet/select_avatar_bottomsheet.dart';
 import '../../../verify_email/bottomsheet/verify_email_bottomsheet.dart';
 
 import '../../../../app/base/page/base_page_bloc_state.dart';
@@ -23,7 +22,6 @@ import '../../../../core/constants/icon_constant.dart';
 import '../../../../core/utils/widgets/custom_back.dart';
 import '../../../../gen/i18n/translations.g.dart';
 import '../../../apps/page/display_image_page.dart';
-import '../../../setting/bottomsheet/avatar_tye_buttonsheet.dart';
 import '../bloc/bloc.dart';
 import '../widgets/info_textfield_widget.dart';
 
@@ -103,41 +101,7 @@ class _PersonalInfoPageState
                   ),
                   child: _buildProfileImage(state),
                 ),
-                MoonTextButton(
-                  onTap: () async {
-                    final result = await PickImageType.showBottomSheet(context);
-                    switch (result) {
-                      case ImageType.avatar:
-                        final avatar = await SelectAvatarBottomSheet.show(
-                            context, state.profileEntity?.profile);
-                        if (avatar != null) {
-                          bloc.add(ClickSelectAvatarEvent(avatar));
-                        }
-                        break;
-                      case ImageType.gallery:
-                        final imagePicked = await ImagePicker()
-                            .pickImage(source: ImageSource.gallery);
-                        final file = await cropProfile(File(imagePicked!.path));
-                        bloc.add(SelectProfileImage(file));
-                        break;
-                      case ImageType.camera:
-                        final imagePicked = await ImagePicker()
-                            .pickImage(source: ImageSource.camera);
-                        final file = await cropProfile(File(imagePicked!.path));
-                        bloc.add(SelectProfileImage(file));
-
-                        break;
-                      case null:
-                        break;
-                    }
-                  },
-                  label: Text(
-                    t.profileInfo.editProfile,
-                    style: context.moonTypography!.body.text14.copyWith(
-                        color: context.moonColors!.piccolo,
-                        fontWeight: FontWeight.w500),
-                  ),
-                ),
+              
                 const Gap(kPadding2),
                 InfoTextFieldWidget(
                   enabled: true,

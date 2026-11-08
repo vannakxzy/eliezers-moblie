@@ -11,21 +11,16 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
-        CustomRoute(
-          page: HomeRoute.page,
-        ),
+       
         CustomRoute(
           page: SplashRoute.page,
           initial: true,
         ),
-        CustomRoute(
-          page: LoginRoute.page,
-        ),
+        CustomRoute(page: LoginRoute.page),
         CustomRoute(page: CreateAccountRoute.page),
         CustomRoute(page: SecurityLoginRoute.page),
         CustomRoute(page: CreateAccountRoute.page),
         CustomRoute(page: VerifyEmailCreateaccountRoute.page),
-        CustomRoute(page: CreateEventRoute.page),
         CustomRoute(
           page: ScaffoldWithNavBarRoute.page,
           children: [
@@ -33,15 +28,11 @@ class AppRouter extends RootStackRouter {
                 page: EventRoute.page,
                 transitionsBuilder: (_, __, ___, child) => child,
                 children: []),
-            CustomRoute(
-                page: BandRoute.page,
-                transitionsBuilder: (_, __, ___, child) => child),
+         
             CustomRoute(
                 page: MusicsRoute.page,
                 transitionsBuilder: (_, __, ___, child) => child),
-            CustomRoute(
-                page: FavoriteRoute.page,
-                transitionsBuilder: (_, __, ___, child) => child),
+           
             CustomRoute(
               page: ProfileRoute.page,
               transitionsBuilder: (_, __, ___, child) => child,
@@ -76,10 +67,7 @@ class AppRouter extends RootStackRouter {
           ],
         ),
         CustomRoute(
-            page: CreatebandRoute.page,
-            transitionsBuilder: (_, __, ___, child) => child),
-        CustomRoute(
-            page: SelectMusicRoute.page,
+            page: CreateEventRoute.page,
             transitionsBuilder: (_, __, ___, child) => child),
         CustomRoute(
             page: CreateMusicRoute.page,

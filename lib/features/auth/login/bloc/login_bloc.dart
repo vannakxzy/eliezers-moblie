@@ -95,7 +95,7 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
           emailError: null,
           passwordError: null,
         ));
-        appRoute.push(AppRouteInfo.verifyLogin(state.email, state.password));
+        // appRoute.push(AppRouteInfo.verifyLogin(state.email, state.password));
       },
       onError: (e) async {
         emit(state.copyWith(loading: false));
@@ -139,7 +139,7 @@ class LoginBloc extends BaseBloc<LoginEvent, LoginState> {
           if (loginEnity.isLogin) {
             appRoute.push(const AppRouteInfo.home());
           } else {
-            appRoute.push(const AppRouteInfo.selectSubject());
+            // appRoute.push(const AppRouteInfo.selectSubject());
           }
           emit(state.copyWith(loadingGmail: false));
           emit(state.copyWith(

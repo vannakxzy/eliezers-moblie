@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import '../tab/bottom_tab.dart';
-import 'package:moon_design/moon_design.dart';
 
 class TabBarItem extends StatelessWidget {
   final BottomTab bottomTab;
@@ -26,9 +25,7 @@ class TabBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isActive
-        ? context.moonColors?.piccolo
-        : context.moonColors!.bulma.withOpacity(0.8);
+  
     return InkWell(
       highlightColor: Colors.transparent,
       splashFactory: InkSparkle.splashFactory,

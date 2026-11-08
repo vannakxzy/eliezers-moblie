@@ -4,11 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import '../../../config/router/page_route/app_route_info.dart';
-import '../../../di/di.dart';
-import '../../../features/profile/domain/entities/answer_entity.dart';
-
-import '../../../app/base/navigation/app_navigator.dart';
 import '../local_data/storge_local.dart';
 
 // import 'package:flutter_app_badger/flutter_app_badger.dart';
@@ -106,22 +101,22 @@ void listNotification() async {
 
 void handleRoute(RemoteMessage message) {
   try {
-    var data = message.data;
-    int answerId = int.parse(data['answer_id']);
-    int commentId = int.parse(data['comment_id']);
-    int questionId = int.parse(data['question_id']);
+    // var data = message.data;
+    // int answerId = int.parse(data['answer_id']);
+    // int commentId = int.parse(data['comment_id']);
+    // int questionId = int.parse(data['question_id']);
     debugPrint(" notificationdata ${message.data}");
-    if (commentId != 0 && answerId != 0) {
-      getIt.get<IAppNavigator>().push(AppRouteInfo.commentInAnswer(
-          answerId, AnswertEntity(), commentId, 0));
-    } else {
-      getIt.get<IAppNavigator>().push(AppRouteInfo.questionDetail(
-            id: questionId,
-            questionEntity: null,
-            answerId: answerId,
-            commentId: commentId,
-          ));
-    }
+    // if (commentId != 0 && answerId != 0) {
+    //   getIt.get<IAppNavigator>().push(AppRouteInfo.commentInAnswer(
+    //       answerId, AnswertEntity(), commentId, 0));
+    // } else {
+    //   getIt.get<IAppNavigator>().push(AppRouteInfo.questionDetail(
+    //         id: questionId,
+    //         questionEntity: null,
+    //         answerId: answerId,
+    //         commentId: commentId,
+    //       ));
+    // }
   } catch (value) {
     debugPrint("$value");
   }

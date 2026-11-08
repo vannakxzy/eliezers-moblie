@@ -21,6 +21,7 @@ class MusicsCard extends StatelessWidget {
       },
       leading: MoonAvatar(
         backgroundImage: NetworkImage(entity.cover),
+        backgroundColor: context.moonColors!.piccolo,
         borderRadius: BorderRadius.circular(666),
         avatarSize: MoonAvatarSize.lg,
       ),
@@ -28,6 +29,7 @@ class MusicsCard extends StatelessWidget {
         entity.title,
         style: context.moonTypography!.body.text14,
       ),
+      content: Text(entity.artist),
       trailing: MoonButton.icon(
         onTap: () {
           clickFavorite();

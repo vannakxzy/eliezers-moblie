@@ -25,7 +25,7 @@ const double kbottomSheetTileTitleHeight = 50.0;
 // Screen Padding
 
 const EdgeInsets kScreenPadding =
-    EdgeInsets.only(bottom: kPadding2, left: kPadding2, right: kPadding2);
+    EdgeInsets.only(bottom: kPadding, left: kPadding, right: kPadding);
 
 ///For Screen Padding
 const double kPadding2 = kPadding * 2;

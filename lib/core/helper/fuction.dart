@@ -6,17 +6,18 @@ import 'dart:math';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:hashids2/hashids2.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:map_launcher/map_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../di/di.dart';
-import '../../features/band/domain/entities/band_entity.dart';
-import '../../features/home/domain/entities/question_entity.dart';
 import '../../features/profile/domain/entities/profile_entity.dart';
 import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
@@ -111,13 +112,18 @@ Future unFocus() async {
 }
 
 Future<String> imageToBase64(File? imageFile) async {
-  if (imageFile == null) {
+  try {
+    if (imageFile == null) {
     return '';
   } else {
     String? fileExtension = imageFile.path.split('.').last;
     List<int> imageBytes = await imageFile.readAsBytes();
     String base64Image = base64Encode(imageBytes);
     return "data:image/$fileExtension;base64,$base64Image";
+  }
+  } catch (value) {
+    debugPrint("convert error $value");
+    return "";
   }
 }
 
@@ -271,64 +277,28 @@ Color rendomColors() {
   }
 }
 
-Future<void> shareQuestion(QuestionEntity q) async {
-  try {
-    QuestionEntity question = q;
-    String message = '';
-    final hashids = HashIds(salt: "eliezersSecret", minHashLength: 20);
-    String obfuscated = hashids.encode([question.id]);
-    String url = '${SharedPreferenceKeys.shareQuestion}$obfuscated';
-    String questionMess = '';
-    questionMess =
-        question.title.isEmpty ? question.description : question.title;
-    message = "${t.common.question.toLowerCase()}"
-        " : "
-        "$questionMess\n$url";
-    await Share.share(message);
-    // }
-  } catch (value) {
-    debugPrint("you have been error $value");
-  }
-}
+// Future<void> shareQuestion( ) async {
+//   try {
+//     QuestionEntity question = q;
+//     String message = '';
+//     final hashids = HashIds(salt: "eliezersSecret", minHashLength: 20);
+//     String obfuscated = hashids.encode([question.id]);
+//     String url = '${SharedPreferenceKeys.shareQuestion}$obfuscated';
+//     String questionMess = '';
+//     questionMess =
+//         question.title.isEmpty ? question.description : question.title;
+//     message = "${t.common.question.toLowerCase()}"
+//         " : "
+//         "$questionMess\n$url";
+//     await Share.share(message);
+//     // }
+//   } catch (value) {
+//     debugPrint("you have been error $value");
+//   }
+// }
 
-Future<void> shareband(BandEntity q) async {
-  try {
-    BandEntity communtiy = q;
-    String message = '';
-    final hashids = HashIds(salt: "eliezersSecret", minHashLength: 20);
-    String obfuscated = hashids.encode([communtiy.id]); // Output: "bM9kL0"
-    String url = '${SharedPreferenceKeys.shareband}$obfuscated';
-    String questionMess = '';
-    questionMess =
-        communtiy.name.isEmpty ? communtiy.description : communtiy.name;
-    message = "${t.band.title.toLowerCase()}"
-        " : "
-        "$questionMess\n$url";
-    await Share.share(message);
-    // }
-  } catch (value) {
-    debugPrint("you have been error $value");
-  }
-}
 
-Future<void> shareDiscussion(QuestionEntity q) async {
-  try {
-    QuestionEntity discussion = q;
-    String message = '';
-    final hashids = HashIds(salt: "eliezersSecret", minHashLength: 20);
-    String encodeId = hashids.encode([discussion.id]);
-    String url = '${SharedPreferenceKeys.shareDiscussion}$encodeId';
-    String discussionMess = '';
-    discussionMess =
-        discussion.title.isEmpty ? discussion.description : discussion.title;
-    message = "${t.common.question.toLowerCase()}"
-        " : "
-        "$discussionMess\n$url";
-    await Share.share(message);
-  } catch (value) {
-    debugPrint("you have been error $value");
-  }
-}
+
 
 Future<void> shareUser(ProfileEntity u) async {
   try {
@@ -344,7 +314,69 @@ Future<void> shareUser(ProfileEntity u) async {
     debugPrint("you have been error $value");
   }
 }
-
+void openGoogleMap(
+    {context,
+    required double lat,
+    required double lng,
+    String title = ""}) async {
+  try {
+    final coords = Coords(lat, lng);
+    final availableMaps = await MapLauncher.installedMaps;
+    if (availableMaps.length == 1) {
+      availableMaps.first.showDirections(destination: coords);
+    } else {
+      showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+              child: Container(
+                  width: double.infinity,
+                  height: 200,
+                  padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+                  child: Column(children: [
+                    Text(
+                      "Open In",
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(children: [
+                      for (var map in availableMaps)
+                        GestureDetector(
+                          onTap: () {
+                            map.showMarker(
+                              coords: coords,
+                              title: title,
+                            );
+                          },
+                          child: Container(
+                              margin: const EdgeInsets.only(left: 10),
+                              child: Column(children: [
+                                Container(
+                                  clipBehavior: Clip.antiAlias,
+                                  height: 50.0,
+                                  width: 50.0,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                  ),
+                                  // child: SvgPicture.asset(
+                                  //   map.icon,
+                                  //   fit: BoxFit.contain,
+                                  // ),
+                                ),
+                                Text(map.mapName),
+                              ])),
+                        )
+                    ])
+                  ])));
+        },
+      );
+    }
+  } catch (e) {
+    debugPrint("$e");
+  }
+}
 Future<void> shareSong(ProfileEntity u) async {
   try {
     debugPrint("you shareing the user ");
@@ -382,6 +414,49 @@ Future<DeviceInfo> getDeviceInfo() async {
     debugPrint("dfsdf$vluae");
     return DeviceInfo(
         manufacturer: "unknown", model: "unknown", osVersion: "unknown");
+  }
+}
+Future<String> getAddressFromLatLng(double lat, double long) async {
+  try {
+    final Geocoding geocoding = Geocoding();
+    List<Placemark> placemarks =
+        await geocoding.placemarkFromCoordinates(lat, long);
+    if (placemarks.isNotEmpty) {
+      Placemark place = placemarks[0];
+      String address =
+          "${place.street} ${place.isoCountryCode}, ${place.subLocality}, ${place.locality}, ${place.country}";
+      debugPrint("address $address");
+      return address;
+    } else {
+      return 'No Address Found';
+    }
+  } catch (e) {
+    return 'Not Found';
+  }
+}
+
+Future<PlatformFile?> pickMp3() async {
+  try {
+    debugPrint("Picking...........MP3");
+    final result = await FilePicker.pickFiles(
+      type: FileType.audio,
+      // allowedExtensions: ['mp3'],
+      allowMultiple: false,
+      // withData: false,
+    );
+
+    if (result == null || result.files.isEmpty) {
+      return null;
+    }
+    final file = result.files.single;
+    debugPrint('Name: ${file.name}');
+    debugPrint('Path: ${file.path}');
+    debugPrint('Size: ${file.size}');
+
+    return file;
+  } catch (e) {
+    debugPrint('File picker error: $e');
+    return null;
   }
 }
 

@@ -17,7 +17,6 @@ import '../../../../gen/i18n/translations.g.dart';
 
 import '../../../../app/base/bloc/bloc.dart';
 import '../../../../data/data_sources/remotes/personal_info_api_service.dart';
-import '../../../create_account/domain/entities/avatar_entity.dart';
 import '../../../profile/domain/entities/profile_entity.dart';
 import '../../../profile/domain/usecase/get_profile_usecase.dart';
 

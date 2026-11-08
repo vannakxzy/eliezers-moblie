@@ -8,7 +8,6 @@ import 'package:lottie/lottie.dart';
 import 'package:moon_design/moon_design.dart';
 
 import '../../../../app/base/page/base_page_bloc_state.dart';
-import '../../../bottom_navigationbar/bloc/scaffold_with_navbar_bloc.dart';
 import '../bloc/splash_page_bloc.dart';
 
 @RoutePage()
@@ -24,7 +23,6 @@ class _SplashPageState extends BasePageBlocState<SplashPage, SplashPageBloc> {
   void initState() {
     super.initState();
     // context.read<ScaffoldWithNavbarBloc>().add();
-
     bloc.add(InitSplashPageEvent());
   }
 

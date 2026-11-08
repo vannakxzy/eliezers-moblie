@@ -15,29 +15,45 @@ abstract class EventApiService {
   factory EventApiService(Dio dio) = _EventApiService;
   @GET(ApiEndpoints.events)
   Future<EventResposeModel> getEvents(@Query("page") int page);
-  @POST(ApiEndpoints.booking)
-  Future<void> booking(@Query("event_id") int eventId);
+  @POST(ApiEndpoints.join)
+  Future<void> booking({@Body() required BookingInput input});
+  @DELETE('${ApiEndpoints.deletejoinEvent}/{id}')
+  Future<void> deleteBooking(@Path('id') int eventId);
+  @DELETE('${ApiEndpoints.events}/{id}')
+  Future<void> deleteEvent(@Path('id') int eventId);
+  @PUT(ApiEndpoints.events)
+  Future<void> putEvent({@Body() required CreateEventInput input});
   @POST(ApiEndpoints.events)
   Future<void> createEvent({@Body() required CreateEventInput input});
 }
-
+@JsonSerializable()
+class BookingInput {
+  final int eventId;
+  BookingInput({required this.eventId});
+  Map<String, dynamic> toJson() => {
+        'event_id': eventId,
+      };
+}
 @JsonSerializable(createToJson: true)
 class CreateEventInput {
   final String title;
   final String description;
-  final String? cover;
-  final String location;
+  final List<String>? cover;
   final String start_time;
   final String end_time;
+  final double latitude;
+  final double longitude;
   final List<int>? music_ids;
   CreateEventInput({
     required this.title,
     required this.description,
-    required this.cover,
-    required this.location,
+      required this.cover,
     required this.music_ids,
     required this.start_time,
     required this.end_time,
+      required this.longitude,
+      required this.latitude
+
   });
   Map<String, dynamic> toJson() => _$CreateEventInputToJson(this);
 }

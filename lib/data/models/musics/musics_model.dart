@@ -6,7 +6,18 @@ part 'musics_model.g.dart';
 
 @JsonSerializable()
 class MusicsModel {
-  MusicsModel({this.title, this.cover, this.audio, this.id, this.isFavorite});
+  MusicsModel({
+    this.title,
+    this.cover,
+    this.description,
+    this.bpm,
+    this.lyrics,
+    this.audio,
+    this.id,
+    this.isFavorite,
+    this.artist,
+    this.duration,
+  });
   final int? id;
   @Default('')
   @JsonKey(name: 'title')
@@ -17,10 +28,15 @@ class MusicsModel {
   @Default('')
   @JsonKey(name: 'audio')
   final String? audio;
-
+  @JsonKey(name: 'artist')
+  final String? artist;
   @Default(false)
   @JsonKey(name: "is_favorite")
   final bool? isFavorite;
+  final String? lyrics;
+  final String? description;
+  final int? duration;
+  final int? bpm;
 
   factory MusicsModel.fromJson(Map<String, dynamic> json) =>
       _$MusicsModelFromJson(json);
@@ -35,6 +51,10 @@ extension MusicsModelnEntity on MusicsModel {
         title: title ?? "",
         id: id ?? 0,
         isFavorite: isFavorite ?? false,
+      description: description ?? "",
+      artist: artist ?? "",
+      duration: duration ?? 0,
+      bpm: bpm ?? 0
       );
 }
 

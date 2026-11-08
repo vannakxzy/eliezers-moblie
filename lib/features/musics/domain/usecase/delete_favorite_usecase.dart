@@ -8,6 +8,6 @@ class DeleteFavoriteUsecase extends BaseUseCase<int, void> {
   DeleteFavoriteUsecase(this._MusicsRepository);
   @override
   Future<void> excecute(int input) async {
-    return await _MusicsRepository.deleteFavorite(input);
+    await _MusicsRepository.deleteFavorite(input);
   }
 }

@@ -47,9 +47,9 @@ enum BottomTab {
   PageRouteInfo get route {
     switch (this) {
       case band:
-        return const BandRoute();
+        return const EventRoute();
       case favorite:
-        return FavoriteRoute();
+        return EventRoute();
       case events:
         return const EventRoute();
       case BottomTab.song:

@@ -31,16 +31,18 @@ class _EventPageState extends BasePageBlocState<EventPage, EventBloc> {
   Widget buildPage(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(t.event.title),
+        title: Text(t.common.appname.toUpperCase()),
         automaticallyImplyLeading: false,
         actions: [
-          IconButton(
-            onPressed: () {
+          MoonButton(
+            onTap: () {
               appRoute.push(AppRouteInfo.createEvent());
             },
-            icon: Icon(MoonIcons.generic_share_android_24_light,
-                color: context.moonColors!.textPrimary),
-          )
+            leading: Icon(
+              MoonIcons.controls_plus_24_regular,
+            ),
+          ),
+          
         ],
       ),
       body: BlocBuilder<EventBloc, EventState>(
@@ -48,10 +50,7 @@ class _EventPageState extends BasePageBlocState<EventPage, EventBloc> {
           return Container(
             padding: EdgeInsets.symmetric(horizontal: kPadding),
             child: state.isloading && state.events.isEmpty
-                ? Center(
-                    //  child: MoonC,
-                    child: CircularProgressIndicator(),
-                  )
+                ? Center(child: CircularProgressIndicator())
                 : state.events.isEmpty
                     ? const Center(child: SizedBox())
                     : AppSmartRefreshScrollView(
@@ -66,7 +65,7 @@ class _EventPageState extends BasePageBlocState<EventPage, EventBloc> {
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
                               final events = state.events[index];
-                              return EventCard(
+                              return EventWidget(
                                 event: events,
                                 onTap: () {
                                   appRoute

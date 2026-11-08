@@ -36,13 +36,14 @@ final baseLightTheme = ThemeData(
           heles: colortext,
           frieza: colortext.withOpacity(0.9),
           popo: Colors.white,
-          piccolo: Color.fromARGB(255, 104, 0, 155),
+          piccolo: Color(0xff532b88),
           hit: colortext.withOpacity(0.2),
           jiren: colortext,
           bulma: colortext,
-          gohan: Colors.white,
-          trunks: colortext.withOpacity(0.8),
-          beerus: colortext.withOpacity(0.3),
+          trunks: Color(0xff6c757d),
+          beerus: Color(0xffced4da),
+          gohan: Color(0xffe9ecef),
+          
         ),
 
         // ---------- Typography ----------

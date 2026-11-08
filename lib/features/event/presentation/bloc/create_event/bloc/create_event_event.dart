@@ -71,3 +71,24 @@ class SelectCoverImage extends CreateEventEvent with _$SelectCoverImage {
 class ClickClearImage extends CreateEventEvent with _$ClickClearImage {
   const factory ClickClearImage(int index) = _ClickClearImage;
 }
+
+
+@freezed
+class GetMusic extends CreateEventEvent with _$GetMusic {
+  const factory GetMusic(List<MusicsEntity> music) = _GetMusic;
+}
+
+@freezed
+class ClickRemoveMusic extends CreateEventEvent with _$ClickRemoveMusic {
+  const factory ClickRemoveMusic(int index) = _ClickRemoveMusic;
+}
+
+@freezed
+class ClickCopyLatlong extends CreateEventEvent with _$ClickCopyLatlong {
+  const factory ClickCopyLatlong() = _ClickCopyLatlong;
+}
+
+@freezed
+class CopylatlongChange extends CreateEventEvent with _$CopylatlongChange {
+  const factory CopylatlongChange(String value) = _CopylatlongChange;
+}

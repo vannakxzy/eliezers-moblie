@@ -25,6 +25,7 @@ class MusicsBloc extends BaseBloc<MusicsState, MusicState> {
     on<ClickMusics>(_clickMusics);
     on<ClickFavorite>(_clickFavorite);
     on<ClickRefreshPage>(_clickRefreshpage);
+    on<ClickSearch>(_clickSearch);
   }
   final GetMusicssUsecase _getMusicsUsecase;
   final CreatreFavoriteUsecase _createFavoriteUseCase;
@@ -72,6 +73,10 @@ class MusicsBloc extends BaseBloc<MusicsState, MusicState> {
       ClickMusics event, Emitter<MusicState> emit) async {
     final musics = state.musics[event.index];
     appRoute.push(AppRouteInfo.musicsDetail(musics));
+  }
+
+  FutureOr<void> _clickSearch(ClickSearch event, Emitter<MusicState> emit) {
+    emit(state.copyWith(isShowSearch: !state.isShowSearch));
   }
 
   FutureOr<void> _clickRefreshpage(

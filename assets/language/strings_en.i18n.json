@@ -208,7 +208,10 @@
     "promptDateTime": "Promp Date Time",
     "selectDate": "Select Date",
     "selectTime": "Select Time",
-    "createEvent": "Create Event"
+    "createEvent": "Create Event",
+    "selectLocation": "Select Location",
+    "pastLatlong": "Past latlong here....",
+    "agenda": "Agenda"
   },
   "login": {
     "title": "Login",
@@ -291,7 +294,8 @@
     "title": "Select Avatar"
   },
   "music": {
-    "title": "Music"
+    "title": "Music",
+    "selectMusic": "Select Music"
   },
   "question": {
     "deleteTitle": "Detele Question",

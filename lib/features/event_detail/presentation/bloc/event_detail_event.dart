@@ -13,6 +13,13 @@ class ClickShare extends EventDetailEvent with _$ClickShare {
 }
 
 @freezed
+class ClickDeleteEvent extends EventDetailEvent with _$ClickDeleteEvent {
+  factory ClickDeleteEvent(int id) = _ClickDeleteEvent;
+}
+
+
+
+@freezed
 class ClickPlaySong extends EventDetailEvent with _$ClickPlaySong {
   factory ClickPlaySong(int index) = _ClickPlaySong;
 }

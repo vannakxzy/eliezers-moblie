@@ -43,6 +43,10 @@ class CoverChange extends CreateMusicEvent with _$CoverChange {
 }
 
 @freezed
+class ClickCreate extends CreateMusicEvent with _$ClickCreate {
+  factory ClickCreate() = _ClickCreate;
+}
+@freezed
 class LyricsChange extends CreateMusicEvent with _$LyricsChange {
   factory LyricsChange(String value) = _LyricsChange;
 }
@@ -50,6 +54,10 @@ class LyricsChange extends CreateMusicEvent with _$LyricsChange {
 @freezed
 class DescriptionChange extends CreateMusicEvent with _$DescriptionChange {
   factory DescriptionChange(String value) = _DescriptionChange;
+}
+@freezed
+class AudioChange extends CreateMusicEvent with _$AudioChange {
+  factory AudioChange(PlatformFile value) = _AudioChange;
 }
 
 

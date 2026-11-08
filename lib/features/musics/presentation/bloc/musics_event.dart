@@ -26,3 +26,8 @@ class ClickShare extends MusicsState with _$ClickShare {
 class ClickRefreshPage extends MusicsState with _$ClickRefreshPage {
   factory ClickRefreshPage(int id) = _ClickRefreshPage;
 }
+
+@freezed
+class ClickSearch extends MusicsState with _$ClickSearch {
+  factory ClickSearch() = _ClickSearch;
+}
