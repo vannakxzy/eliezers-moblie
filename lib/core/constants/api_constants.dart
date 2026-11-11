@@ -5,9 +5,9 @@ class BaseUrls {
 
   static const _LOCAL_BASE_URL = 'http://10.0.2.2:8080/';
   static const _DEV_BASE_URL = 'http://dev.eliezers.com/';
-  static const _UAT_BASE_URL = 'http://10.131.232.150:8080/';
+  static const _UAT_BASE_URL = 'http://10.186.88.150:8080/';
   static const _PROD_BASE_URL = 'https://pro.eliezers.com/';
-  static const String baseUrl = _LOCAL_BASE_URL;
+  static const String baseUrl = _UAT_BASE_URL;
 }
 
 // #### PATH ###

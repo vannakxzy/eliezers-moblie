@@ -4,11 +4,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_chord/flutter_chord.dart';
 import 'package:moon_design/moon_design.dart';
 import '../../../../app/base/page/base_page_bloc_state.dart';
 import '../../../../core/constants/constants.dart';
+import '../../../../core/helper/fuction.dart';
 import '../../../musics/domain/entities/musics_entity.dart';
 import '../bloc/musics_detail_bloc.dart';
+import '../widgets/song_chordPage.dart';
 
 @RoutePage()
 class MusicsDetailPage extends StatefulWidget {
@@ -51,75 +54,104 @@ class _MusicsDetailPageState
           if (state.musics == null) return Container();
           return Padding(
             padding: const EdgeInsets.all(kPadding2),
-            child: Column(
-              children: [
-                Container(
-                  height: 150,
-                  width: 150,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColor.primaryColor.withOpacity(0.7),
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                    image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: CachedNetworkImageProvider(
-                        widget.entity!.cover,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    height: 150,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: context.moonColors!.piccolo,
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                        image: CachedNetworkImageProvider(
+                          widget.entity!.cover,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                kPadding2.gap,
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      widget.entity!.title,
-                      style: context.moonTypography!.heading.text18,
-                    ),
-                    Text(
-                      "A nice relaxing track for your mood.",
-                      style: context.moonTypography!.body.text14,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  kPadding2.gap,
+                          
+                  
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          bloc.add(ClickFavorite());
-                        },
-                        icon: Icon(MoonIcons.generic_heart_32_regular,
-                            color: state.musics!.isFavorite
-                                ? Colors.pink
-                                : context.moonColors!.trunks),
+                      Text(
+                        widget.entity!.title,
+                        style: context.moonTypography!.heading.text18,
                       ),
-                      IconButton(
-                        onPressed: () {
-                          bloc.add(ClickDownload());
-                        },
-                        icon: const Icon(MoonIcons.generic_download_32_regular),
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          bloc.add(ClickShare());
-                        },
-                        icon: const Icon(
-                            MoonIcons.generic_share_arrow_32_regular),
+                      Text(
+                        widget.entity!.artist,
+                        style: context.moonTypography!.body.text14,
                       ),
                     ],
                   ),
-                ),
-                PlayerWidget(player: player)
-              ],
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            bloc.add(ClickFavorite());
+                          },
+                          icon: Icon(MoonIcons.generic_heart_32_regular,
+                              color: state.musics!.isFavorite
+                                  ? Colors.pink
+                                  : context.moonColors!.trunks),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            bloc.add(ClickDownload());
+                          },
+                          icon:
+                              const Icon(MoonIcons.generic_download_32_regular),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            bloc.add(ClickShare());
+                          },
+                          icon: const Icon(
+                              MoonIcons.generic_share_arrow_32_regular),
+                        ),
+                      ],
+                    ),
+                  ),
+                  PlayerWidget(player: player),
+                  LyricsRenderer(
+                    capoStyle: context.moonTypography!.body.text14
+                        .copyWith(color: context.moonColors!.piccolo),
+                    chorusStyle: context.moonTypography!.body.text14
+                        .copyWith(color: context.moonColors!.piccolo),
+                    chordStyle: const TextStyle(
+                      color: Color(0xFF16A879),
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    lyrics: widget.entity!.chord_sheet,
+                    textStyle: context.moonTypography!.body.text14.copyWith(
+                      color: context.moonColors!.piccolo,
+                      fontSize: 22,
+                      height: 2.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                    // widgetPadding: 18,
+                    transposeIncrement: 0,
+                    scrollSpeed: 0,
+                    onTapChord: (chord) {
+                      debugPrint('Selected chord: $chord');
+                    },
+                  ),
+                ],
+              ),
             ),
           );
         },
@@ -185,7 +217,7 @@ class _PlayerWidgetState extends State<PlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final color = AppColor.primaryColor;
+    final color = context.moonColors!.piccolo;
 
     return Column(
       mainAxisSize: MainAxisSize.min,

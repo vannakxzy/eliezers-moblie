@@ -18,6 +18,7 @@ final baseLightTheme = ThemeData(
         MoonTypography.typography.heading.text18.copyWith(color: colortext),
     iconTheme: IconThemeData(color: colortext),
   ),
+  textTheme: TextTheme(),
   bottomNavigationBarTheme:
       ThemeConstants.lightBottomNavigationBarTheme.copyWith(
     selectedItemColor: colortext,
@@ -28,7 +29,13 @@ final baseLightTheme = ThemeData(
   // ---------------- MoonTheme extensions ----------------
   extensions: <ThemeExtension<dynamic>>[
     MoonTheme(
+      textInputTheme: MoonTextInputTheme(
+        tokens: MoonTokens.light,
+      ),
+      
+      
       tokens: ThemeConstants.moonLightToken.copyWith(
+        
         // ---------- Colors ----------
         colors: MoonColors.light.copyWith(
           iconPrimary: colortext,
@@ -56,6 +63,7 @@ final baseLightTheme = ThemeData(
         // ---------- Default container style ----------
       ),
     ),
+    
   ],
 
   // ---------------- MoonButtonThemeData for all MoonButtons ----------------

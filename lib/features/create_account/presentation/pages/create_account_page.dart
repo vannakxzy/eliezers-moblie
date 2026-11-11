@@ -49,8 +49,9 @@ class _CreateAccountPageState
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomTextfield(
-                      textInputType: TextInputType.emailAddress,
+                    MoonFormTextInput(
+                      textInputSize: MoonTextInputSize.xl,
+                      borderRadius: KBorderRadius,
                       textInputAction: TextInputAction.next,
                       hintText: t.common.email,
                       validator: (value) => value.isEmptyOrNull
@@ -61,19 +62,21 @@ class _CreateAccountPageState
                       },
                     ),
                     Space.kSpace,
-                    CustomTextfield(
-                      textInputType: TextInputType.text,
+                    MoonFormTextInput(
+                        textInputSize: MoonTextInputSize.xl,
+                        borderRadius: KBorderRadius,
                       textInputAction: TextInputAction.next,
                       hintText: t.common.name,
                       validator: (value) =>
                           value.isEmptyOrNull ? t.common.name : null,
                       onChanged: (value) {
                         bloc.add(NameChangedEvent(value));
-                      },
+                        }
                     ),
                     Space.kSpace,
-                    CustomTextfield(
-                      textInputType: TextInputType.text,
+                    MoonFormTextInput(
+                      textInputSize: MoonTextInputSize.xl,
+                      borderRadius: KBorderRadius,
                       textInputAction: TextInputAction.next,
                       hintText: t.common.password,
                       validator: (value) => value.isEmptyOrNull

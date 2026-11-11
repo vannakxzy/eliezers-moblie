@@ -22,7 +22,7 @@ class MusicsCard extends StatelessWidget {
       leading: MoonAvatar(
         backgroundImage: NetworkImage(entity.cover),
         backgroundColor: context.moonColors!.piccolo,
-        borderRadius: BorderRadius.circular(666),
+        borderRadius: BorderRadius.circular(0),
         avatarSize: MoonAvatarSize.lg,
       ),
       label: Text(
@@ -36,7 +36,9 @@ class MusicsCard extends StatelessWidget {
         },
         icon: Icon(
           MoonIcons.generic_heart_24_regular,
-          color: entity.isFavorite ? Colors.pink : context.moonColors!.trunks,
+          color: entity.isFavorite
+              ? context.moonColors!.piccolo
+              : context.moonColors!.trunks,
         ),
       ),
     );

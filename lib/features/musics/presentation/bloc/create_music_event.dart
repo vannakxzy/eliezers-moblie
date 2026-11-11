@@ -66,3 +66,8 @@ class UpdateSelectedMusics extends CreateMusicEvent
     with _$UpdateSelectedMusics {
   factory UpdateSelectedMusics(List<MusicsEntity> data) = _UpdateSelectedMusics;
 }
+
+@freezed
+class ChordsheetChange extends CreateMusicEvent with _$ChordsheetChange {
+  factory ChordsheetChange(String value) = _ChordsheetChange;
+}

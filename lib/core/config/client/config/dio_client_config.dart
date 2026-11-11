@@ -12,9 +12,9 @@ abstract class DioClientConfig {
     Dio dio = Dio()
       ..options.headers = config.headers
       ..options.baseUrl = config.baseUrl
-      ..options.sendTimeout = const Duration(seconds: 10)
-      ..options.connectTimeout = const Duration(seconds: 10)
-      ..options.receiveTimeout = const Duration(seconds: 10)
+      ..options.sendTimeout = const Duration(minutes: 10)
+      ..options.connectTimeout = const Duration(minutes: 10)
+      ..options.receiveTimeout = const Duration(minutes: 10)
       ..interceptors.addAll([
         AuthorizationInterceptor(),
         CustomLogInterceptor(),

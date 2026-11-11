@@ -36,12 +36,17 @@ class CreateMusicBloc extends BaseBloc<CreateMusicEvent, CreateMusicState> {
     on<LyricsChange>(_lyricsChange);
     on<AudioChange>(_audioChange);
     on<ClickCreate>(_clickCreate);
+    on<ChordsheetChange>(_chordsheetChange);
   }
   final CreateMusicUsecase _createMusicUsecase;
   final GetMusicssUsecase _getMusicUsecase;
   FutureOr<void> _lyricsChange(
       LyricsChange event, Emitter<CreateMusicState> emit) async {
     emit(state.copyWith(title: event.value));
+  }
+  FutureOr<void> _chordsheetChange(
+      ChordsheetChange event, Emitter<CreateMusicState> emit) {
+    emit(state.copyWith(chord_sheet: event.value));
   }
 
   FutureOr<void> _audioChange(
@@ -51,12 +56,14 @@ class CreateMusicBloc extends BaseBloc<CreateMusicEvent, CreateMusicState> {
     final File audioFile = File(event.value.path!);
     try {
       await player.setSource(
-        DeviceFileSource(audioFile.path),
+        DeviceFileSource(audioFile.path)
       );
-
+      final timeMusic = await getAudioDuration(event.value);
+      emit(state.copyWith(timeMusic: timeMusic));
       emit(state.copyWith(
         audio: audioFile,
         audioPlayer: player,
+        platformFile: event.value,
       ));
     } catch (e) {
       debugPrint('Audio error: $e');
@@ -68,25 +75,31 @@ class CreateMusicBloc extends BaseBloc<CreateMusicEvent, CreateMusicState> {
       ClickCreate event, Emitter<CreateMusicState> emit) async {
     await runAppCatching(
       () async {
+        emit(state.copyWith(isloading: true));
+        unFocus();
         try {
-          final String imagesBase64 = await imageToBase64(state.cover);
-          final String audioBase64 = await imageToBase64(state.audio);
-          // debugPrint("audioBase64 $audioBase64");
-          CreateMusicInput input = CreateMusicInput(
+          final coverBase64 = await imageToBase64(state.cover);
+          final String base64Audio = await ddddddd(state.platformFile);
+          debugPrint("base64 : $base64Audio");
+          final input = CreateMusicInput(
             title: state.title,
             description: state.description,
-            cover: "",
+            cover: coverBase64,
             album: state.album,
             artist: state.artist,
-            audio: audioBase64,
-            chord_sheet: "",
-            lead_sheet: '',
+            audio: base64Audio,
+            chord_sheet: state.chord_sheet,
+            lead_sheet: "",
           );
-          debugPrint("input ${input.title}");
           await _createMusicUsecase.excecute(input);
-          debugPrint("5. API request completed");
-        } catch (value) {
-          debugPrint("errrror $value");
+          debugPrint("5. API request completed successfully");
+          emit(state.cleardAll());
+        } catch (e, stackTrace) {
+          debugPrint("Upload error: $e");
+          debugPrint("StackTrace: $stackTrace");
+          rethrow;
+        } finally {
+          emit(state.copyWith(isloading: false));
         }
       },
     );

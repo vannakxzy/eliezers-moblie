@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:file_picker/file_picker.dart';
@@ -63,6 +64,26 @@ bool checkStringIsgmail({required String value}) {
       RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
   return emailRegex.hasMatch(value);
 }
+Future<String> getAudioDuration(PlatformFile file) async {
+  final player = AudioPlayer();
+
+  try {
+    await player.setSource(DeviceFileSource(file.path!));
+
+    final duration = await player.getDuration();
+
+    if (duration == null) return "0:00";
+
+    final minutes = duration.inMinutes;
+    final seconds = duration.inSeconds % 60;
+
+    return "$minutes:${seconds.toString().padLeft(2, '0')}";
+  } catch (e) {
+    return "0:00";
+  } finally {
+    await player.dispose();
+  }
+}
 
 Future<List<File>> pickMultipleImages() async {
   final ImagePicker picker = ImagePicker();
@@ -110,20 +131,87 @@ Future<String?> downloadMp3(String url, String fileName) async {
 Future unFocus() async {
   FocusManager.instance.primaryFocus?.unfocus();
 }
+Future<File> base64ToMp3(String base64String) async {
+  // Remove Data URI prefix
+  final String cleanBase64 =
+      base64String.contains(',') ? base64String.split(',').last : base64String;
 
-Future<String> imageToBase64(File? imageFile) async {
+  // Decode Base64
+  final bytes = base64Decode(cleanBase64);
+
+  // Save MP3
+  final file = File('${Directory.systemTemp.path}/music.mp3');
+
+  await file.writeAsBytes(bytes, flush: true);
+
+  return file;
+}
+
+String getSongTitle(String lyrics) {
+  final match = RegExp(r'\{title:\s*(.*?)\}').firstMatch(lyrics);
+  return match?.group(1) ?? '';
+}
+
+Future<String> audioToBase64(File? audioFile) async {
+  if (audioFile == null) return '';
+
   try {
-    if (imageFile == null) {
+    final bytes = await audioFile.readAsBytes();
+    return base64Encode(bytes); // No Data URI prefix
+  } catch (e) {
+    debugPrint('Audio conversion error: $e');
     return '';
-  } else {
-    String? fileExtension = imageFile.path.split('.').last;
-    List<int> imageBytes = await imageFile.readAsBytes();
-    String base64Image = base64Encode(imageBytes);
-    return "data:image/$fileExtension;base64,$base64Image";
   }
-  } catch (value) {
-    debugPrint("convert error $value");
-    return "";
+}
+
+Future<String> ddddddd(PlatformFile? file) async {
+  try {
+    if (file == null) return '';
+
+    final bytes = file.bytes ??
+        (file.path != null ? await File(file.path!).readAsBytes() : null);
+
+    if (bytes == null) return '';
+
+    return 'data:audio/mpeg;base64,${base64Encode(bytes)}';
+  } catch (e) {
+    debugPrint('Audio convert error: $e');
+    return '';
+  }
+}
+
+Future<String> imageToBase64(File? file) async {
+  try {
+    if (file == null) return '';
+
+    final extension = file.path.split('.').last.toLowerCase();
+    final bytes = await file.readAsBytes();
+    final base64Data = base64Encode(bytes);
+
+    String mimeType;
+
+    switch (extension) {
+      case 'jpg':
+      case 'jpeg':
+        mimeType = 'image/jpeg';
+        break;
+      case 'png':
+        mimeType = 'image/png';
+        break;
+      case 'webp':
+        mimeType = 'image/webp';
+        break;
+      case 'mp3':
+        mimeType = 'audio/mpeg';
+        break;
+      default:
+        mimeType = 'application/octet-stream';
+    }
+
+    return 'data:$mimeType;base64,$base64Data';
+  } catch (e) {
+    debugPrint('Convert error: $e');
+    return '';
   }
 }
 

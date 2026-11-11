@@ -29,6 +29,7 @@ const EdgeInsets kScreenPadding =
 
 ///For Screen Padding
 const double kPadding2 = kPadding * 2;
+BorderRadius KBorderRadius = BorderRadius.circular(0);
 const double s3 = kPadding * 3;
 const double s4 = kPadding * 4;
 const double s5 = kPadding * 5;

@@ -1,5 +1,6 @@
 {
   "common": {
+    "artist": "Artist",
     "close": "Close",
     "location": "Location",
     "exploreNnow": "Explore now",
@@ -163,11 +164,6 @@
   "homeScreen": {
     "title": "For You"
   },
-  "comment": {
-    "seemore": "see the previous comment",
-    "hitText": "write a comment...",
-    "noData": "No comments yet."
-  },
   "activeSession": {
     "title": "Active Session",
     "thisDevice": "This Deveice",
@@ -295,7 +291,8 @@
   },
   "music": {
     "title": "Music",
-    "selectMusic": "Select Music"
+    "selectMusic": "Select Music",
+    "chordSheet": "Chord Sheet"
   },
   "question": {
     "deleteTitle": "Detele Question",

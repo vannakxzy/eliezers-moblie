@@ -8,6 +8,11 @@ class CreateMusicState extends BaseState with _$CreateMusicState {
     @Default('') String artist,
     @Default('') String album,
     @Default('') String genre,
+    @Default('') String timeMusic,
+    TextEditingController? titleCon,
+    TextEditingController? artistCon,
+    TextEditingController? chordSheetCon,
+
     @Default(0) int duration,
     @Default(0) int bpm,
     @Default('') String lead_sheet,
@@ -15,14 +20,25 @@ class CreateMusicState extends BaseState with _$CreateMusicState {
     File? cover,
     File? audio,
     AudioPlayer? audioPlayer,
+    PlatformFile? platformFile,
     @Default('') String description,
   }) = _Initial;
 }
 extension CreateMusicStateExt on CreateMusicState {
   bool get canCreate =>
       title.isNotEmpty &&
-      description.isNotEmpty &&
       artist.isNotEmpty &&
       chord_sheet.isNotEmpty &&
-      lead_sheet.isNotEmpty;
+      timeMusic.isNotEmpty;
+  CreateMusicState cleardAll() => copyWith(
+      title: "",
+      artist: "",
+      chord_sheet: "",
+      cover: null,
+      artistCon: TextEditingController(),
+      titleCon: TextEditingController(),
+      chordSheetCon: TextEditingController(),
+      timeMusic: "",
+      audio: null,
+      audioPlayer: null);
 }

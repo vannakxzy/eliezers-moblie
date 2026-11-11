@@ -10,6 +10,8 @@ class CreateMusicUsecase extends BaseUseCase<CreateMusicInput, void> {
   CreateMusicUsecase(this._repositoty);
   @override
   Future<void> excecute(CreateMusicInput input) async {
+    // debugPrint("resposopory runningggggggg");
     await _repositoty.createMusic(input);
+
   }
 }

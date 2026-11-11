@@ -20,6 +20,7 @@ class MusicsEntity with _$MusicsEntity {
     @Default(false) bool isPlay,
     @Default(0) int id,
     @Default(false) bool isSelected,
+    @Default('') String chord_sheet,
 
   }) = _MusicsEntity;
   factory MusicsEntity.fromJson(Map<String, dynamic> json) =>

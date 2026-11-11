@@ -44,6 +44,7 @@ class _LoginScreenState extends BasePageBlocState<LoginScreen, LoginBloc> {
                   Column(
                     children: [
                       MoonFormTextInput(
+                        borderRadius: KBorderRadius,
                         keyboardType: TextInputType.emailAddress,
                         enabled: !state.loading && !state.loadingGmail
                             ? true
@@ -58,6 +59,8 @@ class _LoginScreenState extends BasePageBlocState<LoginScreen, LoginBloc> {
                       ),
                       const Gap(kPadding),
                       MoonFormTextInput(
+                        borderRadius: KBorderRadius,
+
                         enabled: !state.loading && !state.loadingGmail
                             ? true
                             : false,

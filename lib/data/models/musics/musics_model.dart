@@ -13,6 +13,7 @@ class MusicsModel {
     this.bpm,
     this.lyrics,
     this.audio,
+    this.chord_sheet,
     this.id,
     this.isFavorite,
     this.artist,
@@ -37,6 +38,7 @@ class MusicsModel {
   final String? description;
   final int? duration;
   final int? bpm;
+  final String? chord_sheet;
 
   factory MusicsModel.fromJson(Map<String, dynamic> json) =>
       _$MusicsModelFromJson(json);
@@ -49,6 +51,7 @@ extension MusicsModelnEntity on MusicsModel {
         audio: audio ?? "",
         cover: cover ?? "",
         title: title ?? "",
+      chord_sheet: chord_sheet ?? "",
         id: id ?? 0,
         isFavorite: isFavorite ?? false,
       description: description ?? "",

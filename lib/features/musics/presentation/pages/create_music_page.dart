@@ -40,68 +40,119 @@ class _CreateMusicPageState
               child: Column(
                 children: [
                   Expanded(
-                    child: Column(
-                      children: [
-                        MoonFormTextInput(
-                          borderRadius: BorderRadius.circular(0),
-                          // controller: TextEditingController(),
-                          hintText: "Music title",
-                          onChanged: (value) {
-                            bloc.add(TitleChange(value));
-                          },
-                          leading: const Icon(
-                            MoonIcons.media_music_24_light,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          InkWell(
+                            onTap: () async {
+                              final file = await pickImage();
+                              bloc.add(CoverChange(file));
+                            },
+                            child: Container(
+                              height: MediaQuery.sizeOf(context).width / 3,
+                              width: MediaQuery.sizeOf(context).width / 3,
+                              decoration: BoxDecoration(
+                                  image: state.cover != null
+                                      ? DecorationImage(
+                                          image: FileImage(state.cover!),
+                                          fit: BoxFit.cover,
+                                        )
+                                      : null,
+                                  border: Border.all(
+                                      color: context.moonColors!.beerus)),
+                              child: Center(
+                                child: Text(t.common.photo),
+                              ),
+                            ),
                           ),
-                        ),
-
-                        kPadding.gap,
-
-                        MoonFormTextInput(
-                          borderRadius: BorderRadius.circular(0),
-                          // controller: TextEditingController(),
-                          hintText: "Artist",
-                          onChanged: (value) {
-                            bloc.add(ArtistChange(value));
-                          },
-                          leading: const Icon(
-                            MoonIcons.generic_user_24_light,
+                          kPadding.gap,
+                          MoonFormTextInput(
+                            controller: state.titleCon,
+                            borderRadius: BorderRadius.circular(0),
+                            // controller: TextEditingController(),
+                            hintText: t.common.title,
+                            onChanged: (value) {
+                              bloc.add(TitleChange(value));
+                            },
+                            leading: const Icon(
+                              MoonIcons.media_music_24_light,
+                            ),
                           ),
-                        ),
 
-                        kPadding.gap,
-                        // Pick MP3
-                        MoonButton.icon(
-                          onTap: () async {
-                            final PlatformFile? data = await pickMp3();
+                          kPadding.gap,
 
-                            // debugPrint("${data}");
-                            // if (data == null || data.path == null) return;
-                            // await state.audioPlayer?.setSource(
-                            //   DeviceFileSource(data.path!),
-                            // );
-                            if (data != null) bloc.add(AudioChange(data));
-                            // bloc.add()
-                          },
-                          icon: const Icon(
-                            MoonIcons.files_add_24_regular,
+                          MoonFormTextInput(
+                            controller: state.artistCon,
+                            borderRadius: BorderRadius.circular(0),
+                            // controller: TextEditingController(),
+                            hintText: t.common.artist,
+                            onChanged: (value) {
+                              bloc.add(ArtistChange(value));
+                            },
+                            leading: const Icon(
+                              MoonIcons.generic_user_24_light,
+                            ),
                           ),
-                        ),
-                        Text("${state.audio?.path}"),
-                        kPadding.gap,
-                        if (state.audioPlayer != null)
-                          PlayerWidget(
-                            player: state.audioPlayer!,
-                          )
-                        // PlayerWidget(player: state.audioPlayer),
-                      ],
+                          kPadding.gap,
+                        
+                          InkWell(
+                            onTap: () async {
+                              final result = await FilePicker.pickFiles(
+                                type: FileType.custom,
+                                allowedExtensions: ['mp3'],
+                                withData: true,
+                              );
+                              if (result == null || result.files.isEmpty)
+                                return;
+                              final PlatformFile data = result.files.first;
+                              bloc.add(AudioChange(data));
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: context.moonColors!.beerus)),
+                              padding:
+                                  EdgeInsets.symmetric(horizontal: kPadding),
+                              alignment: Alignment.center,
+                              width: state.audio == null
+                                  ? MediaQuery.sizeOf(context).width / 4
+                                  : MediaQuery.sizeOf(context).width,
+                              height: 70,
+                              // padding: EdgeInsets.all(kPadding2),
+                              child: state.audio != null
+                                  ? PlayerWidget(
+                                      key: ValueKey(state.audio!.path),
+                                      player: state.audioPlayer!,
+                                      audioFile: state.audio!,
+                                    )
+                                  : Text(t.music.title),
+                            ),
+                          ),
+                          kPadding.gap,
+                          Text(t.music.chordSheet.toUpperCase()),
+                          kPadding.gap,
+                          MoonTextArea(
+                            controller: state.chordSheetCon,
+                            height: MediaQuery.sizeOf(context).height / 3,
+                            borderRadius: BorderRadius.circular(0),
+                            // controller: TextEditingController(),
+                            hintText: "...",
+                            onChanged: (value) {
+                              bloc.add(ChordsheetChange(value));
+                            },
+                          ),
+                          kPadding2.gap
+                        ],
+                      ),
                     ),
                   ),
                   CustomButtom(
                     isFullWidth: true,
                     onTap: () {
-                      debugPrint("ddddddddddd");
                       bloc.add(ClickCreate());
                     },
+                    isloading: state.isloading,
                     title: t.common.create,
                   ),
                   kPadding.gap

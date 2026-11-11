@@ -37,7 +37,8 @@ class MusicsRepositoryImpl implements MusicsRepository {
 
   @override
   Future<void> createMusic(CreateMusicInput input) async {
-    await _apiServie.createMusic(input: input);
+    // debugPrint("repo imping");
+    await _apiServie.createMusic(input);
   }
 
   @override
