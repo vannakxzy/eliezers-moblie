@@ -50,9 +50,11 @@ class _CreateMusicPageState
                               bloc.add(CoverChange(file));
                             },
                             child: Container(
+                              
                               height: MediaQuery.sizeOf(context).width / 3,
                               width: MediaQuery.sizeOf(context).width / 3,
                               decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(kRadius),
                                   image: state.cover != null
                                       ? DecorationImage(
                                           image: FileImage(state.cover!),
@@ -61,38 +63,41 @@ class _CreateMusicPageState
                                       : null,
                                   border: Border.all(
                                       color: context.moonColors!.beerus)),
-                              child: Center(
+                              child: state.cover != null
+                                  ? SizedBox()
+                                  : Center(
                                 child: Text(t.common.photo),
                               ),
                             ),
                           ),
                           kPadding.gap,
                           MoonFormTextInput(
+                            keyboardType: TextInputType.emailAddress,
                             controller: state.titleCon,
-                            borderRadius: BorderRadius.circular(0),
+                            borderRadius: BorderRadius.circular(kPadding),
                             // controller: TextEditingController(),
                             hintText: t.common.title,
                             onChanged: (value) {
                               bloc.add(TitleChange(value));
                             },
-                            leading: const Icon(
-                              MoonIcons.media_music_24_light,
-                            ),
+                            // leading: const Icon(
+                            //   MoonIcons.media_music_24_light,
+                            // ),
                           ),
 
                           kPadding.gap,
 
                           MoonFormTextInput(
                             controller: state.artistCon,
-                            borderRadius: BorderRadius.circular(0),
+                            borderRadius: BorderRadius.circular(kPadding),
                             // controller: TextEditingController(),
                             hintText: t.common.artist,
                             onChanged: (value) {
                               bloc.add(ArtistChange(value));
                             },
-                            leading: const Icon(
-                              MoonIcons.generic_user_24_light,
-                            ),
+                            // leading: const Icon(
+                            //   MoonIcons.generic_user_24_light,
+                            // ),
                           ),
                           kPadding.gap,
                         
@@ -109,7 +114,9 @@ class _CreateMusicPageState
                               bloc.add(AudioChange(data));
                             },
                             child: Container(
+                              
                               decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(kRadius),
                                   border: Border.all(
                                       color: context.moonColors!.beerus)),
                               padding:
@@ -135,7 +142,7 @@ class _CreateMusicPageState
                           MoonTextArea(
                             controller: state.chordSheetCon,
                             height: MediaQuery.sizeOf(context).height / 3,
-                            borderRadius: BorderRadius.circular(0),
+                            borderRadius: BorderRadius.circular(kPadding),
                             // controller: TextEditingController(),
                             hintText: "...",
                             onChanged: (value) {
@@ -148,6 +155,7 @@ class _CreateMusicPageState
                     ),
                   ),
                   CustomButtom(
+                    disable: !state.canCreate,
                     isFullWidth: true,
                     onTap: () {
                       bloc.add(ClickCreate());

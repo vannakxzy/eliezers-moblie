@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:moon_design/moon_design.dart';
 
@@ -9,7 +10,13 @@ final baseDarkTheme = ThemeData(
   useMaterial3: true,
   brightness: Brightness.dark,
   fontFamily: FontFamily.sFPro,
-  scaffoldBackgroundColor: MoonColors.dark.gohan,
+
+  scaffoldBackgroundColor: Colors.black,
+  canvasColor: Colors.black,
+  colorScheme: const ColorScheme.dark(
+    surface: Colors.black,
+  ),
+
   appBarTheme: ThemeConstants.darkAppBar,
   pageTransitionsTheme: ThemeConstants.pageTransitionsTheme,
   bottomNavigationBarTheme: ThemeConstants.darkBottomNavigationBarTheme,
@@ -18,14 +25,15 @@ final baseDarkTheme = ThemeData(
       tokens: ThemeConstants.moonDarkToken.copyWith(
         colors: MoonColors.dark.copyWith(
           heles: Colors.black,
-          frieza: Color.fromARGB(255, 37, 37, 37),
+          frieza: const Color.fromARGB(255, 37, 37, 37),
           popo: Colors.white,
           piccolo: AppColor.primaryColor,
           jiren: const Color.fromARGB(255, 237, 62, 50),
           hit: AppColor.primaryColor.withOpacity(0.2),
-          bulma: Colors.white,
-          gohan: Color.fromARGB(255, 37, 37, 37),
+          bulma: Colors.black,
+          gohan: const Color.fromARGB(255, 108, 108, 108),
           trunks: const Color.fromARGB(255, 217, 214, 214),
+          beerus: const Color.fromARGB(255, 19, 21, 22),
         ),
         typography: MoonTypography.typography.copyWith(
           heading: MoonTypography.typography.heading.apply(

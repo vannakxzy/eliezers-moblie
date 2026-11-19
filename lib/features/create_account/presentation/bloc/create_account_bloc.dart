@@ -86,7 +86,6 @@ class CreateAccountBloc
           );
         } catch (e) {
           emit(state.copyWith(isLoading: false));
-
           debugPrint("errriir  $e");
         }
       },
@@ -94,6 +93,7 @@ class CreateAccountBloc
         debugPrint("Error $v");
         emit(state.copyWith(isLoading: false));
       },
+      
       handleError: true,
     );
   }

@@ -21,6 +21,5 @@ class TesthomeBloc extends BaseBloc<TesthomeEvent, TesthomeState> {
   }
 
   FutureOr<void> _initPage(InitPage event, Emitter<TesthomeState> emit) async {
-    // TODO: implement InitPage logic
   }
 }

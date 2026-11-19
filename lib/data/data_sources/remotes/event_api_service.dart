@@ -25,6 +25,10 @@ abstract class EventApiService {
   Future<void> putEvent({@Body() required CreateEventInput input});
   @POST(ApiEndpoints.events)
   Future<void> createEvent({@Body() required CreateEventInput input});
+  @POST('${ApiEndpoints.events}/{id}/save')
+  Future<void> saveEvent(@Path('id') int eventId);
+  @DELETE('${ApiEndpoints.events}/{id}/save')
+  Future<void> deleteSaveEvent(@Path('id') int eventId);
 }
 @JsonSerializable()
 class BookingInput {

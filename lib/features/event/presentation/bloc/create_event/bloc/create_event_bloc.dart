@@ -38,10 +38,7 @@ class CreateEventBloc extends BaseBloc<CreateEventEvent, CreateEventState> {
     on<ClickCopyLatlong>(_clickCopyLatlong);
   }
   final CreateEventUsecase _createEventUsecase;
-  FutureOr<void> _copylatLongChange(
-      CopylatlongChange event, Emitter<CreateEventState> emit) {
-
-  }
+ 
   FutureOr<void> _selectCoverImage(
       SelectCoverImage event, Emitter<CreateEventState> emit) async {
     // await pickImage(source: ImageSource.camera);

@@ -11,11 +11,11 @@ enum AppSettings {
     icon: MoonIcons.generic_user_32_regular,
     trailing: MoonIcons.controls_chevron_right_32_regular,
   ),
-  appearance(
-    route: AppRouteInfo.appearance(),
-    icon: MoonIcons.generic_lightning_bolt_32_regular,
-    trailing: MoonIcons.controls_chevron_right_32_regular,
-  ),
+  // appearance(
+  //   route: AppRouteInfo.appearance(),
+  //   icon: MoonIcons.generic_lightning_bolt_32_regular,
+  //   trailing: MoonIcons.controls_chevron_right_32_regular,
+  // ),
   notification(
     route: AppRouteInfo.settingNotification(),
     icon: MoonIcons.notifications_bell_32_regular,
@@ -72,7 +72,7 @@ enum AppSettings {
 
   static List<AppSettings> get mainSettings => [
         personalInfo,
-        appearance,
+        // appearance,
         notification,
         // privacy,
         security,
@@ -128,8 +128,8 @@ enum AppSettings {
     switch (this) {
       case personalInfo:
         return t.setting.personalInfo;
-      case appearance:
-        return t.appearance.title;
+      // case appearance:
+      //   return t.appearance.title;
       case notification:
         return t.setting.notification;
       // case privacy:
@@ -163,8 +163,8 @@ enum AppSettings {
     switch (this) {
       case personalInfo:
         return t.setting.personalInfoDes;
-      case appearance:
-        return t.setting.appearanceDes;
+      // case appearance:
+      //   return t.setting.appearanceDes;
       case notification:
         return t.setting.notificationDes;
       // case AppSettings.privacy:

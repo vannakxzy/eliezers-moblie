@@ -7,6 +7,7 @@ abstract class MusicsRepository {
   Future<void> deleteFavorite(int id);
   Future<MusicsResposeEntity> searchMusics(String text);
   Future<void> createMusic(CreateMusicInput input);
-  Future<void> editMusic(CreateMusicInput input);
+  Future<void> updateMusic(CreateMusicInput input);
   Future<void> deleteMusic(index);
+
 }

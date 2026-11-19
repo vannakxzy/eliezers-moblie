@@ -10,7 +10,6 @@ import 'package:moon_design/moon_design.dart';
 import '../../../../app/base/page/base_page_bloc_state.dart';
 import '../../../../core/utils/widgets/custom_appbar.dart';
 import '../../../../core/utils/widgets/custom_buttom.dart';
-import '../../../../core/utils/widgets/custom_textfield.dart';
 import '../bloc/bloc.dart';
 
 @RoutePage()
@@ -50,6 +49,7 @@ class _CreateAccountPageState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     MoonFormTextInput(
+                      
                       textInputSize: MoonTextInputSize.xl,
                       borderRadius: KBorderRadius,
                       textInputAction: TextInputAction.next,

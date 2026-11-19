@@ -199,6 +199,7 @@
     "join": "Join",
     "title": "Event",
     "leave": "Leave",
+    "confirmDelete": "Are you sure you want to delete this event? This action cannot be undone.",
     "startFrom": "Start From",
     "endDate": "End Date",
     "promptDateTime": "Promp Date Time",

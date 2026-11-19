@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../app/base/bloc/bloc.dart';
@@ -49,7 +50,7 @@ class MusicsBloc extends BaseBloc<MusicsState, MusicState> {
       },
     );
   }
-
+  
   FutureOr<void> _clickFavorite(
       ClickFavorite event, Emitter<MusicState> emit) async {
     await runAppCatching(
@@ -68,7 +69,7 @@ class MusicsBloc extends BaseBloc<MusicsState, MusicState> {
       },
     );
   }
-
+  
   FutureOr<void> _clickMusics(
       ClickMusics event, Emitter<MusicState> emit) async {
     final musics = state.musics[event.index];

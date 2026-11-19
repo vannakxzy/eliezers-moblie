@@ -15,8 +15,9 @@ class MusicsModel {
     this.audio,
     this.chord_sheet,
     this.id,
-    this.isFavorite,
+    this.isfavorites,
     this.artist,
+    this.isown,
     this.duration,
   });
   final int? id;
@@ -32,13 +33,14 @@ class MusicsModel {
   @JsonKey(name: 'artist')
   final String? artist;
   @Default(false)
-  @JsonKey(name: "is_favorite")
-  final bool? isFavorite;
+  @JsonKey(name: "isfavorites")
+  final bool? isfavorites;
   final String? lyrics;
   final String? description;
   final int? duration;
   final int? bpm;
   final String? chord_sheet;
+  final bool? isown;
 
   factory MusicsModel.fromJson(Map<String, dynamic> json) =>
       _$MusicsModelFromJson(json);
@@ -50,10 +52,11 @@ extension MusicsModelnEntity on MusicsModel {
   MusicsEntity toEntity() => MusicsEntity(
         audio: audio ?? "",
         cover: cover ?? "",
+      isown: isown ?? false,
         title: title ?? "",
       chord_sheet: chord_sheet ?? "",
         id: id ?? 0,
-        isFavorite: isFavorite ?? false,
+      isFavorite: isfavorites ?? false,
       description: description ?? "",
       artist: artist ?? "",
       duration: duration ?? 0,

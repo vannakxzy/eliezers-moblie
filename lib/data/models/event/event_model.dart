@@ -9,6 +9,7 @@ part 'event_model.g.dart';
 @JsonSerializable()
 class EventModel {
   EventModel({
+    this.isown,
     this.id,
     this.title,
       this.description,
@@ -25,7 +26,8 @@ class EventModel {
       this.musics,
       this.covers,
       this.latitude,
-      this.longitude
+      this.longitude,
+      this.isSave
   });
 
   @JsonKey(name: 'id')
@@ -49,6 +51,9 @@ class EventModel {
   final String? createdAt;
   @JsonKey(name: 'updated_at')
   final String? updatedAt;
+  @JsonKey(name: 'issave')
+  final bool? isSave;
+  final bool? isown;
   final double? price;
   final double? latitude;
   final double? longitude;
@@ -69,6 +74,7 @@ extension EventModelToEnity on EventModel {
       startTime: startTime ?? "",
       endTime: endTime ?? "",
       isjoin: isjoin ?? false,
+      isSave: isSave ?? false,
       price: price ?? 0,
       covers: covers ?? [],
       joinedUser: joined_user ?? [],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
+import 'app_colors_constants.dart';
+
 // Material
 const EdgeInsets kTextFieldPadding =
     EdgeInsets.symmetric(horizontal: 10, vertical: 10);
@@ -12,9 +14,18 @@ const double kTextTextFieldHeight = 48.0;
 const double kBorderWidth = 1.0;
 const double kBorderWidthSmall = 0.5;
 
-const double kRadius = 10;
-const double kRadius2 = 20;
-const double kRadiusMax = 100.0;
+const double kRadius = 4;
+const double kRadius2 = 8;
+const double kRadiusMax = 100;
+
+const KDecoration = BoxDecoration(
+  gradient: LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    stops: [0.0, 0.25],
+    colors: [AppColor.primaryColor, Colors.black],
+  ),
+);
 
 const double kBottomSheetRadius = 10.0;
 const double kCardRadius = 16.0;

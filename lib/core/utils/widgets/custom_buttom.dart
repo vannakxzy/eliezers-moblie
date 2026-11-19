@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:moon_design/moon_design.dart';
 
+import '../../constants/constants.dart';
+
 
 class CustomButtom extends StatelessWidget {
   final String title;
@@ -32,7 +34,7 @@ class CustomButtom extends StatelessWidget {
       height: 40,
       trailing: trailing,
       decoration: BoxDecoration(
-        // borderRadius: BorderRadius.circular(400),
+        borderRadius: BorderRadius.circular(kRadius),
         color: outline
             ? Colors.transparent
             : disable

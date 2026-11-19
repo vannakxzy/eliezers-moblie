@@ -1,8 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-
 import '../config/router/app_router.dart';
 import '../config/theme/theme_controller.dart';
 import '../core/constants/constants.dart';
@@ -30,14 +30,20 @@ class _MyAppState extends BasePageBlocState<MyApp, AppBloc> {
   @override
   void initState() {
     super.initState();
+
     bloc.add(AppInitstate());
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      String lang = LocalStorage.getStringValue(SharedPreferenceKeys.languages);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final lang = LocalStorage.getStringValue(
+        SharedPreferenceKeys.languages,
+      );
+
       if (lang == "en") {
         LocaleSettings.instance.setLocale(AppLocale.en);
       } else {
         LocaleSettings.instance.setLocale(AppLocale.km);
       }
+
       AppLocaleUtils.supportedLocales.log();
     });
   }
@@ -46,30 +52,37 @@ class _MyAppState extends BasePageBlocState<MyApp, AppBloc> {
   Widget buildPage(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => getIt.get<MusicsBloc>()),
-        BlocProvider(create: (_) => getIt.get<ThemeController>()),
+        BlocProvider(
+          create: (_) => getIt.get<MusicsBloc>(),
+        ),
+        BlocProvider(
+          create: (_) => getIt.get<ThemeController>(),
+        ),
         BlocProvider<GlobalNotifyBloc>.value(
           value: getIt.get<GlobalNotifyBloc>(),
         ),
       ],
       child: BlocBuilder<ThemeController, ThemeMode>(
         builder: (context, themeMode) {
-          return GestureDetector(
-            onTap: () {
-              unFocus();
+          final appTheme = context.read<ThemeController>().darkTheme.copyWith();
+
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            scrollBehavior: const MaterialScrollBehavior(),
+            routerConfig: getIt.get<AppRouter>().config(),
+            theme: appTheme,
+            darkTheme: appTheme,
+            themeMode: themeMode,
+            locale: TranslationProvider.of(context).flutterLocale,
+            supportedLocales: AppLocaleUtils.supportedLocales,
+            localizationsDelegates: GlobalMaterialLocalizations.delegates,
+            builder: (context, child) {
+              return GestureDetector(
+                  behavior: HitTestBehavior.translucent,
+                  onTap: unFocus,
+                  // child: child
+                  child: child);
             },
-            child: MaterialApp.router(
-              debugShowCheckedModeBanner: false,
-              scrollBehavior: const MaterialScrollBehavior(),
-              routerConfig: getIt.get<AppRouter>().config(),
-              theme: context.read<ThemeController>().lightTheme,
-              darkTheme: context.read<ThemeController>().darkTheme,
-              themeMode: themeMode,
-              locale: TranslationProvider.of(context).flutterLocale,
-              supportedLocales: AppLocaleUtils.supportedLocales,
-              localizationsDelegates: GlobalMaterialLocalizations.delegates,
-              builder: (_, child) => child!,
-            ),
           );
         },
       ),

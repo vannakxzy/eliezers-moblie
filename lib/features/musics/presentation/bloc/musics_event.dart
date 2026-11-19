@@ -29,5 +29,6 @@ class ClickRefreshPage extends MusicsState with _$ClickRefreshPage {
 
 @freezed
 class ClickSearch extends MusicsState with _$ClickSearch {
-  factory ClickSearch() = _ClickSearch;
+  factory ClickSearch(String value) = _ClickSearch;
 }
+

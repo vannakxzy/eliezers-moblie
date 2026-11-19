@@ -29,92 +29,114 @@ class _MusicsPageState extends BasePageBlocState<MusicsPage, MusicsBloc> {
 
   @override
   Widget buildPage(BuildContext context) {
-    return SafeArea(
-      child: BlocBuilder<MusicsBloc, MusicState>(
-        builder: (context, state) {
-          return Container(
-            padding: EdgeInsets.symmetric(horizontal: kPadding),
-            child: Column(
-              children: [
-                Row(children: [
-                  kPadding.gap,
-                  Text(t.music.title,
-                      style: context.moonTypography!.heading.text20),
-                  Spacer(),
-                  
-                  MoonButton(
-                    onTap: () {
-                      bloc.add(ClickSearch());
-                    }, 
-                    leading: Icon(
-                      MoonIcons.generic_search_24_regular,
-                    ),
-                  ),
-                  MoonButton(
+    return Container(
+      decoration: KDecoration,
+      child: SafeArea(
+        child: BlocBuilder<MusicsBloc, MusicState>(
+          builder: (context, state) {
+            return Container(
+              padding: EdgeInsets.symmetric(horizontal: kPadding),
+              child: Column(
+                children: [
+                  Row(children: [
+                    kPadding.gap,
+                    Text(t.music.title,
+                        style: context.moonTypography!.heading.text20),
+                    Spacer(),
+                    MoonButton(
                       onTap: () {
-                        appRoute.push(AppRouteInfo.createMusic());
+                        bloc.add(ClickSearch(""));
                       },
                       leading: Icon(
-                        MoonIcons.controls_plus_24_regular,
-                      )),
-                ]),
-                AnimatedContainer(
-                  height: state.isShowSearch ? 40 : 0,
-                  duration: Duration(milliseconds: 300),
-                  child: SingleChildScrollView(
-                    child: MoonFormTextInput(
-                      borderRadius: BorderRadius.circular(20),
-                      controller: TextEditingController(),
-                      hintText: "sdfsfdsfdsdf",
-                      leading: const Icon(MoonIcons.generic_search_24_light),
-                      trailing: GestureDetector(
-                        child:
-                            const Icon(MoonIcons.controls_close_small_24_light),
+                        MoonIcons.generic_search_24_regular,
+                      ),
+                    ),
+                    MoonButton(
+                        onTap: () {
+                          appRoute.push(AppRouteInfo.createMusic());
+                        },
+                        leading: Icon(
+                          MoonIcons.controls_plus_24_regular,
+                        )),
+                  ]),
+                  AnimatedContainer(
+                    height: state.isShowSearch ? 40 : 0,
+                    duration: Duration(milliseconds: 300),
+                    child: SingleChildScrollView(
+                      child: MoonFormTextInput(
+                        borderRadius: BorderRadius.circular(20),
+                        controller: TextEditingController(),
+                        hintText: "sdfsfdsfdsdf",
+                        leading: const Icon(MoonIcons.generic_search_24_light),
+                        trailing: GestureDetector(
+                          child: const Icon(
+                              MoonIcons.controls_close_small_24_light),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: Container(
-                    child: state.isloading && state.musics.isEmpty
-                        ? Center(
-                            //  child: MoonC,
-                            child: CircularProgressIndicator(),
-                          )
-                        : state.musics.isEmpty
-                            ? const Center(child: SizedBox())
-                            : AppSmartRefreshScrollView(
-                                enableLoadMore: state.isMorePage,
-                                onLoadMore: () async =>
-                                    bloc.add(InitPage(state.page)),
-                                onRefresh: () async {
-                                  bloc.add(ClickRefreshPage(1));
+                  // state.
+                  Expanded(
+                    child: Container(
+                      child: state.isloading && !state.musics.isNotEmpty
+                          ? SizedBox(
+                              child: ListView.builder(
+                                padding: EdgeInsets.only(bottom: kPadding),
+                                itemCount: 30,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.only(
+                                        bottom: kPadding,
+                                        left: kPadding,
+                                        right: kPadding),
+                                    child: MoonMenuItem(
+                                      height: 70,
+                                      menuItemPadding: EdgeInsets.all(kPadding),
+                                      borderRadius:
+                                          BorderRadius.circular(kRadius),
+                                      backgroundColor:
+                                          context.moonColors!.beerus,
+                                      label: Text(''),
+                                    ),
+                                  );
                                 },
-                                child: ListView.separated(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      final musics = state.musics[index];
-                                      return MusicsCard(
-                                        entity: musics,
-                                        ontap: () {
-                                          bloc.add(ClickMusics(index));
-                                        },
-                                        clickFavorite: () {
-                                          bloc.add(ClickFavorite(index));
-                                        },
-                                      );
-                                    },
-                                    separatorBuilder: (context, index) =>
-                                        const Gap(kPadding),
-                                    itemCount: state.musics.length),
                               ),
+                            )
+                          : state.musics.isEmpty
+                              ? const Center(child: SizedBox())
+                              : AppSmartRefreshScrollView(
+                                  enableLoadMore: state.isMorePage,
+                                  onLoadMore: () async =>
+                                      bloc.add(InitPage(state.page)),
+                                  onRefresh: () async {
+                                    bloc.add(ClickRefreshPage(1));
+                                  },
+                                  child: ListView.separated(
+                                      padding: EdgeInsets.zero,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        final musics = state.musics[index];
+                                        return MusicsCard(
+                                          entity: musics,
+                                          ontap: () {
+                                            bloc.add(ClickMusics(index));
+                                          },
+                                          clickFavorite: () {
+                                            bloc.add(ClickFavorite(index));
+                                          },
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) =>
+                                          const Gap(kPadding),
+                                      itemCount: state.musics.length),
+                                ),
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
-        },
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

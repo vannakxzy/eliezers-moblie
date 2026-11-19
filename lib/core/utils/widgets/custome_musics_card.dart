@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:moon_design/moon_design.dart';
 
 import '../../../features/musics/domain/entities/musics_entity.dart';
+import '../../constants/constants.dart';
 
 class CustomeMusicsCard extends StatelessWidget {
   final MusicsEntity music;
@@ -22,20 +23,24 @@ class CustomeMusicsCard extends StatelessWidget {
       label: Text(music.title),
       leading: MoonAvatar(
         backgroundImage: NetworkImage(
-            'https://i.pinimg.com/736x/2e/49/a5/2e49a5b3d05cc4f2643b3e129726ffaa.jpg'),
+             music.cover),
         avatarSize: MoonAvatarSize.lg,
-        borderRadius: BorderRadius.circular(1000),
+        borderRadius: BorderRadius.circular(kRadiusMax),
       ),
-      content: Text(""),
-      trailing: MoonCheckbox(
-        tapAreaSizeValue: 50,
-        value: music.isSelected,
-        onChanged: (value) {
-          if (value != null) {
-            debugPrint('Selected: $value');
-            onTapSelect?.call(value);
-          }
-        },
+      content: Text(music.artist),
+      trailing: Row(
+        children: [
+          MoonCheckbox(
+            tapAreaSizeValue: 50,
+            value: music.isSelected,
+            onChanged: (value) {
+              if (value != null) {
+                debugPrint('Selected: $value');
+                onTapSelect?.call(value);
+              }
+            },
+          ),
+        ],
       ),
     );
   }

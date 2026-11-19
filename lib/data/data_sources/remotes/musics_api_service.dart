@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:retrofit/retrofit.dart';
@@ -33,8 +32,11 @@ abstract class MusicsApiServie {
 
   @POST(ApiEndpoints.musics)
   Future<void> createMusic(
-    @Body() CreateMusicInput input,
-  );
+  @Body() CreateMusicInput input);
+  @DELETE('${ApiEndpoints.musics}/{id}')
+  Future<void> deleteMusic(@Path("id") int id);
+  @PUT(ApiEndpoints.musics)
+  Future<void> updateMusic(@Body() CreateMusicInput input);
 }
 @JsonSerializable()
 class CreateMusicInput {

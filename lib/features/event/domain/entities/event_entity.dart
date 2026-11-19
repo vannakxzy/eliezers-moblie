@@ -23,6 +23,8 @@ class EventEntity with _$EventEntity {
     @Default(0) double latitude,
     @Default(0) double longitude,
     @Default(false) bool isjoin, 
+    @Default(false) bool isSave,
+    @Default(false) bool isown,
     @Default('') String createdAt,
     @Default('') String updatedAt,
   }) = _EventEntity;

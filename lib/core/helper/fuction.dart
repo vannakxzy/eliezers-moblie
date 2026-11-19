@@ -64,6 +64,20 @@ bool checkStringIsgmail({required String value}) {
       RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
   return emailRegex.hasMatch(value);
 }
+Future<Duration?> getAudioDurationurl(String url) async {
+  final player = AudioPlayer();
+
+  try {
+    await player.setSource(UrlSource(url));
+    final duration = await player.getDuration();
+    return duration;
+  } catch (e) {
+    debugPrint('Error getting audio duration: $e');
+    return null;
+  } finally {
+    await player.dispose();
+  }
+}
 Future<String> getAudioDuration(PlatformFile file) async {
   final player = AudioPlayer();
 
@@ -84,6 +98,7 @@ Future<String> getAudioDuration(PlatformFile file) async {
     await player.dispose();
   }
 }
+
 
 Future<List<File>> pickMultipleImages() async {
   final ImagePicker picker = ImagePicker();

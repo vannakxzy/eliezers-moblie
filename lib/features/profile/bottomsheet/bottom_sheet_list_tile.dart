@@ -90,6 +90,9 @@ class BottomSheetListTile extends StatelessWidget {
           Navigator.pop(context, callbackValue);
         },
         child: Ink(
+          decoration: BoxDecoration(
+              color: context.moonColors!.beerus,
+              borderRadius: BorderRadius.circular(kRadius)),
           height: kbottomSheetTileHeight,
           padding: const EdgeInsets.symmetric(horizontal: kPadding2),
           child: Row(

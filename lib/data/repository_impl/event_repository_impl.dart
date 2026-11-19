@@ -39,4 +39,14 @@ class EventRepositoryImpl implements EventRepository {
   Future<void> update(CreateEventInput input) {
     return _apiService.putEvent(input: input);
   }
+
+  @override
+  Future<void> deleteSaveEvent(int id) {
+    return _apiService.deleteSaveEvent(id);
+  }
+
+  @override
+  Future<void> saveEvent(int id) {
+    return _apiService.saveEvent(id);
+  }
 }

@@ -6,6 +6,9 @@ class MusicState extends BaseState with _$MusicState {
     @Default(false) bool isloading,
     @Default(1) int page,
     @Default([]) List<MusicsEntity> musics,
+    @Default([]) List<MusicsEntity> musiceSearch,
+    @Default('') search,
+    TextEditingController? searchCon,
     @Default(true) bool isMorePage,
     @Default(false) bool isShowSearch,
   }) = _Initial;

@@ -6,8 +6,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import '../../../../app/base/bloc/base_bloc.dart';
-import '../../../../app/base/bloc/base_state.dart';
 import '../../../../app/base/bloc/bloc.dart';
 import '../../domain/usecase/get_other_profile_usecase.dart';
 import '../../domain/entities/profile_entity.dart';

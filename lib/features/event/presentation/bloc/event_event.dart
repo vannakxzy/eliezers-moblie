@@ -21,3 +21,9 @@ class ClickJoin extends EventEvent with _$ClickJoin {
 class Refreshpage extends EventEvent with _$Refreshpage {
   factory Refreshpage(int index) = _Refreshpage;
 }
+
+
+@freezed
+class ClickSaveEvent extends EventEvent with _$ClickSaveEvent {
+  factory ClickSaveEvent(int index) = _ClickSaveEvent;
+}

@@ -25,30 +25,29 @@ class CustomCachedImageCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return image.isNotEmptyOrNull
-        ? ClipRRect(
-            borderRadius: borderRadius ?? BorderRadius.circular(kRadiusMax),
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      color: context.moonColors!.beerus, width: 0.5)),
-              child: CachedNetworkImage(
-                imageUrl: image ?? "",
+        ? Container(
+            clipBehavior: Clip.antiAlias,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(kRadius),
+                border:
+                    Border.all(color: context.moonColors!.beerus, width: 0.5)),
+            child: CachedNetworkImage(
+              imageUrl: image ?? "",
+              height: height,
+              width: width,
+              fit: BoxFit.cover,
+              placeholder: (_, __) => SizedBox(
                 height: height,
                 width: width,
-                fit: BoxFit.cover,
-                placeholder: (_, __) => SizedBox(
-                  height: height,
-                  width: width,
-                ),
-                errorWidget: (_, __, error) => Container(
-                  height: 100,
-                  width: width,
-                  color: context.moonColors!.beerus, // Error color
-                  child: Center(
-                      child: Text(
-                    t.common.somethingwasWrong,
-                  )),
-                ),
+              ),
+              errorWidget: (_, __, error) => Container(
+                height: 100,
+                width: width,
+                color: context.moonColors!.beerus, // Error color
+                child: Center(
+                    child: Text(
+                  t.common.somethingwasWrong,
+                )),
               ),
             ),
           )

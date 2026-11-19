@@ -1,13 +1,10 @@
-import 'dart:io';
 
 import 'package:auto_route/annotations.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:image_picker/image_picker.dart';
 import '../../../../core/constants/constants.dart';
-import '../../../../core/helper/fuction.dart';
 import '../../../../data/data_sources/remotes/report_api_service.dart';
 import 'package:moon_design/moon_design.dart';
 import '../../../../core/extension/string_extension.dart';

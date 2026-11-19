@@ -42,14 +42,14 @@ class ThemeConstants {
   /// Dark Token
   static final moonDarkToken = MoonTokens.dark.copyWith(
     colors: MoonColors.dark.copyWith(
-      piccolo: AppColor.primaryColor,
+      piccolo: Colors.black,
       // beerus: ColorConstants.secondaryLight,
     ),
   );
 
   static AppBarTheme darkAppBar = AppBarTheme(
     surfaceTintColor: Colors.transparent,
-    backgroundColor: MoonColors.dark.gohan,
+    backgroundColor: Colors.transparent,
     centerTitle: false,
     // titleTextStyle: moonDarkToken.typography.heading.text20,
   );

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:moon_design/moon_design.dart';
 import 'package:photo_view/photo_view.dart';
 
 import '../../../app/base/page/base_page_bloc_state.dart';
@@ -71,7 +70,7 @@ class _DisplayImagePageState
               minScale: PhotoViewComputedScale.contained,
               maxScale: PhotoViewComputedScale.covered,
               backgroundDecoration:
-                  BoxDecoration(color: context.moonColors!.goku),
+                  BoxDecoration(color: Colors.transparent),
             ),
           ),
         ),

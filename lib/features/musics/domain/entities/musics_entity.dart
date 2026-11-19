@@ -17,6 +17,9 @@ class MusicsEntity with _$MusicsEntity {
     @Default('') String audio,
     @Default('') String lyrics,
     @Default(false) bool isFavorite,
+    @Default(false) bool isown,
+
+
     @Default(false) bool isPlay,
     @Default(0) int id,
     @Default(false) bool isSelected,

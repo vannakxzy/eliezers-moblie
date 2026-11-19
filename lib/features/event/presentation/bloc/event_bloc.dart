@@ -7,6 +7,8 @@ import '../../../../app/base/bloc/bloc.dart';
 import '../../../../core/helper/fuction.dart';
 import '../../../../data/models/event/event_model.dart';
 import '../../domain/entities/event_entity.dart';
+import '../../domain/usecase/create_save_event_usecase.dart';
+import '../../domain/usecase/delete_save_event_usecase.dart';
 import '../../domain/usecase/get_events_usecase.dart';
 part 'event_event.dart';
 part 'event_state.dart';
@@ -14,14 +16,39 @@ part 'event_bloc.freezed.dart';
 
 @Injectable()
 class EventBloc extends BaseBloc<EventEvent, EventState> {
-  EventBloc(this._getEventsUsecase) : super(const EventState()) {
+  EventBloc(this._getEventsUsecase, this._createSaveEventUsecase,
+      this._deleteSaveEventUsecase)
+      : super(const EventState()) {
     on<InitPage>(_initPage);
     on<ClickEvent>(_clickEvents);
     on<Refreshpage>(_refreshPage);
     on<ClickJoin>(_clickJoin);
+    on<ClickSaveEvent>(_clickSaveEvnet);
+
   }
   final GetEventsUsecase _getEventsUsecase;
+  final CreateSaveEventUsecase _createSaveEventUsecase;
+  final DeleteSaveEventUsecase _deleteSaveEventUsecase;
 
+  FutureOr<void> _clickSaveEvnet(
+      ClickSaveEvent event, Emitter<EventState> emit) async {
+    await runAppCatching(
+      () async {
+        final events = [...state.events];
+
+        EventEntity currectEvent = state.events[event.index];
+        if (currectEvent.isSave) {
+          events[event.index] = currectEvent.copyWith(isSave: false);
+          emit(state.copyWith(events: events));
+          await _deleteSaveEventUsecase.excecute(currectEvent.id);
+        } else {
+          events[event.index] = currectEvent.copyWith(isSave: true);
+          emit(state.copyWith(events: events));
+          await _createSaveEventUsecase.excecute(currectEvent.id);
+        }
+      },
+    );
+  }
   FutureOr<void> _initPage(InitPage event, Emitter<EventState> emit) async {
     await runAppCatching(
       () async {

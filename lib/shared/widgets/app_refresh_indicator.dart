@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:moon_design/moon_design.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../core/utils/widgets/custom_loading.dart';
 
@@ -73,18 +74,18 @@ class _AppSmartRefreshScrollViewState extends State<AppSmartRefreshScrollView> {
         header: CustomHeader(
           builder: (_, mode) => const Padding(
             padding: EdgeInsets.all(8.0),
-            child: Center(child: CustomLoading()),
+            child: Center(child: Icon(MoonIcons.arrows_down_24_regular)),
           ),
         ),
         footer: CustomFooter(
           builder: (context, mode) {
             Widget? body;
             if (mode == LoadStatus.loading) {
-              body = const CustomLoading();
+              body = Icon(MoonIcons.arrows_down_24_regular);
             } else if (mode == LoadStatus.failed) {
               body = const Text("Load Failed! Click retry!");
             } else if (mode == LoadStatus.canLoading) {
-              body = const CustomLoading();
+              body = Icon(MoonIcons.arrows_down_24_regular);
             }
             return SizedBox(
               height: 55.0,
