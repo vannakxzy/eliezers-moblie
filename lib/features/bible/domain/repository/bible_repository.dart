@@ -1,9 +1,7 @@
+import '../../../../data/models/bible/bible_content_response_model.dart';
+import '../../../../data/models/bible/bible_passege_model.dart';
+
 abstract class BibleRepository {
-  
-
-  /* eg.
-  Future<Bible> getBible();
-
-  Future<Bible> updateBible();
-  */
+  Future<BibleContentResponseModel> getBibleBook();
+  Future<BiblePassegeModel> getPassageBible(String passage_id);
 }

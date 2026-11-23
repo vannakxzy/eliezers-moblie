@@ -1,24 +1,49 @@
+
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'http_client_config.dart';
-import '../interceptors/authorization_interceptor.dart';
 
-import '../interceptors/custom_log_interceptor.dart';
+import 'http_client_config.dart';
 
 @module
 abstract class DioClientConfig {
-  @singleton
-  Dio dio(IConfig config) {
-    Dio dio = Dio()
-      ..options.headers = config.headers
-      ..options.baseUrl = config.baseUrl
-      ..options.sendTimeout = const Duration(minutes: 10)
-      ..options.connectTimeout = const Duration(minutes: 10)
-      ..options.receiveTimeout = const Duration(minutes: 10)
-      ..interceptors.addAll([
-        AuthorizationInterceptor(),
-        CustomLogInterceptor(),
-      ]);
-    return dio;
+  // Default Main API
+  @lazySingleton
+  Dio mainDio(IConfig config) {
+    return Dio(
+      BaseOptions(
+        baseUrl: config.baseUrl,
+        headers: config.headers,
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+      ),
+    );
+  }
+
+  // Bible API
+  @lazySingleton
+  @Named('bible')
+  Dio bibleDio(IConfig config) {
+    return Dio(
+      BaseOptions(
+        baseUrl: config.bibleUrl,
+        headers: config.headers,
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+      ),
+    );
+  }
+
+  // Music API
+  @lazySingleton
+  @Named('musicDio')
+  Dio musicDio(IConfig config) {
+    return Dio(
+      BaseOptions(
+        baseUrl: config.musicUrl,
+        headers: config.headers,
+        connectTimeout: const Duration(seconds: 30),
+        receiveTimeout: const Duration(seconds: 30),
+      ),
+    );
   }
 }

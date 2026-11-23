@@ -57,6 +57,7 @@ dependencies:
   # Google services and maps
   google_sign_in: ^6.1.5
   google_maps_flutter: ^2.18.1
+  flutter_html: ^3.0.0
   geolocator: 14.0.2
   geocoding: ^5.0.0
   flutter_google_places_sdk: ^0.4.0
@@ -71,7 +72,7 @@ dependencies:
   # State management
   bloc: ^9.0.0
   flutter_bloc: ^9.0.0
-  get: ^4.6.5
+  get: ^4.7.3
 
   # UI and design
   moon_design: ^1.1.0
@@ -100,6 +101,7 @@ dependencies:
   tonic: ^0.2.5
   just_audio: ^0.10.6
   shimmer: ^3.0.0
+  flutter_widget_from_html: ^0.17.4
 
 dev_dependencies:
   flutter_test:

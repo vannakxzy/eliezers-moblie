@@ -133,6 +133,9 @@
     "setAsDefault": "Set as default audience",
     "publicDes": "Everyone can see this question"
   },
+  "bible": {
+    "title": "Bible"
+  },
   "post": {
     "createQuestion": "Create Question",
     "createDiscussion": "Create Discussion",

@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+
 import '../config/router/app_router.dart';
 import '../config/theme/theme_controller.dart';
 import '../core/constants/constants.dart';
 import '../core/helper/fuction.dart';
 import '../core/helper/local_data/storge_local.dart';
-import '../core/utils/controllers/app_controller.dart';
 import '../core/utils/log/app_logger.dart';
 import '../di/di.dart';
 import '../features/musics/presentation/bloc/bloc.dart';
@@ -25,7 +25,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends BasePageBlocState<MyApp, AppBloc> {
-  final controller = Get.put(AppController());
 
   @override
   void initState() {
@@ -38,7 +37,7 @@ class _MyAppState extends BasePageBlocState<MyApp, AppBloc> {
         SharedPreferenceKeys.languages,
       );
 
-      if (lang == "en") {
+      if (lang == 'en') {
         LocaleSettings.instance.setLocale(AppLocale.en);
       } else {
         LocaleSettings.instance.setLocale(AppLocale.km);
@@ -64,24 +63,30 @@ class _MyAppState extends BasePageBlocState<MyApp, AppBloc> {
       ],
       child: BlocBuilder<ThemeController, ThemeMode>(
         builder: (context, themeMode) {
-          final appTheme = context.read<ThemeController>().darkTheme.copyWith();
+          final themeController = context.read<ThemeController>();
+
+          final appTheme = themeController.darkTheme.copyWith();
 
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
             scrollBehavior: const MaterialScrollBehavior(),
+
             routerConfig: getIt.get<AppRouter>().config(),
+
             theme: appTheme,
             darkTheme: appTheme,
             themeMode: themeMode,
+
             locale: TranslationProvider.of(context).flutterLocale,
             supportedLocales: AppLocaleUtils.supportedLocales,
             localizationsDelegates: GlobalMaterialLocalizations.delegates,
+
             builder: (context, child) {
               return GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: unFocus,
-                  // child: child
-                  child: child);
+                behavior: HitTestBehavior.translucent,
+                onTap: unFocus,
+                child: child,
+              );
             },
           );
         },

@@ -11,9 +11,9 @@ enum BottomTab {
     title: 'event',
   ),
   band(
-    icon: MoonIcons.time_calendar_success_24_regular,
-    activeIcon: MoonIcons.generic_home_24_regular,
-    title: 'band',
+    icon: MoonIcons.generic_bookmark_24_regular,
+    activeIcon: MoonIcons.generic_bookmark_24_regular,
+    title: 'bible',
   ),
   song(
     icon: MoonIcons.media_music_24_regular,
@@ -47,7 +47,7 @@ enum BottomTab {
   PageRouteInfo get route {
     switch (this) {
       case band:
-        return const EventRoute();
+        return const BibleRoute();
       case favorite:
         return EventRoute();
       case events:

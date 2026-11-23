@@ -35,9 +35,7 @@ class _ScaffoldWithNavBarScreenState extends BasePageBlocState<
           // backgroundColor: context.moonColors!.goku,
           routes: (appRoute as AppNavigatorImpl).tabRoutes,
           resizeToAvoidBottomInset: true,
-          bottomNavigationBuilder: !state.isShowButton
-              ? null
-              : (context, tabsRouter) {
+          bottomNavigationBuilder: (context, tabsRouter) {
                   (appRoute as AppNavigatorImpl).tabsRouter = tabsRouter;
                   return Container(
                     decoration: BoxDecoration(
@@ -81,19 +79,6 @@ class _ScaffoldWithNavBarScreenState extends BasePageBlocState<
       bloc.add(PressedHomeButtonEvent());
     }
     tabsRouter.setActiveIndex(tabIndex);
-    //   if ((token.isEmpty) &&
-    //       (bottomTab == BottomTab.book ||
-    //           bottomTab == BottomTab.notification ||
-    //           bottomTab == BottomTab.band ||
-    //           bottomTab == BottomTab.profile)) {
-    //     showDialog(
-    //         context: context, builder: (context) => const CustomAnonymousCard());
-    //   } else {
-    //     if (bottomTab == BottomTab.home &&
-    //         tabsRouter.activeIndex == bottomTab.index) {
-    //       bloc.add(PressedHomeButtonEvent());
-    //     }
-    //     tabsRouter.setActiveIndex(tabIndex);
-    //   }
+   
   }
 }

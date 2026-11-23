@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import '../../../features/bible/domain/entities/bible_content_entity.dart';
 import '../../../features/event/domain/entities/event_entity.dart';
 import '../../../features/musics/domain/entities/musics_entity.dart';
 
@@ -10,10 +11,13 @@ part 'app_route_info.freezed.dart';
 class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.testHome() = _TestHome;
   const factory AppRouteInfo.eventDetial(EventEntity event) = _EventDetial;
+  const factory AppRouteInfo.bibleBook() = _BibleContentEntity;
+
   // const factory AppRouteInfo.verifyLogin(String email, String password) =
   //     _VerifyLogin;
   const factory AppRouteInfo.walkThrough() = _WalkThrough;
   const factory AppRouteInfo.splash() = _Splash;
+  const factory AppRouteInfo.bible() = _Bible;
   const factory AppRouteInfo.home() = _BottomNavigationBar;
   const factory AppRouteInfo.notification() = _Notification;
   // const factory AppRouteInfo.search() = _Search;

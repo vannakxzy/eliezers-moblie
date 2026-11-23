@@ -15,6 +15,7 @@ class SharedPreferenceKeys {
   static const name = 'name';
   static const avatar = "avatar";
   static const theme = 'theme';
+  static const bible = 'bible';
   static const languages = "languages";
   static const authType = "authType";
   static const audience = "audience";

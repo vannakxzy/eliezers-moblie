@@ -13,5 +13,4 @@
     "*.dart": "$(capture).g.dart, $(capture).freezed.dart, $(capture).gr.dart",
     "mason.yaml": "mason-lock.json"
   },
-  "dart.flutterSdkPath": ".fvm/versions/3.22.3"
 }

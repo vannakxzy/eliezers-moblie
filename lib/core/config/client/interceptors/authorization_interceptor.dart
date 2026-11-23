@@ -12,7 +12,10 @@ class AuthorizationInterceptor extends Interceptor {
         LocalStorage.getStringValue(SharedPreferenceKeys.accessToken);
 
     if (token.isNotEmptyOrNull) {
-      options.headers.addAll({'Authorization': 'Bearer $token'});
+      options.headers.addAll({
+        'Authorization': 'Bearer $token',
+        'X-YVP-App-Key': 'XvQ97ofN9BGk89y2McGp1gIgNW0xiIQGZLAR1I40bwV4AK2H'
+      });
     }
     super.onRequest(options, handler);
   }

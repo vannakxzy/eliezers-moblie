@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../features/bible/domain/entities/bible_content_entity.dart';
 import '../../../features/musics/domain/entities/musics_entity.dart';
 import '../app_router.gr.dart';
 import 'app_route_info.dart';
@@ -109,7 +110,11 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
       // addbandMember: (BandEntity band) => AddbandMemberRoute(band: band),
       // editQuestion: (QuestionEntity question) =>
       //     EditQuestionRoute(question: question),
-      musicsDetail: (MusicsEntity entity) => MusicsDetailRoute(entity: entity),    
+        musicsDetail: (MusicsEntity entity) =>
+            MusicsDetailRoute(entity: entity),
+        bible: () => BibleRoute(),
+        bibleBook: () =>
+            BibleBookRoute( )
     );
   }
 }

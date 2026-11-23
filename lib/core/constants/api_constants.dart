@@ -2,12 +2,9 @@
 
 class BaseUrls {
   BaseUrls._();
-
-  static const _LOCAL_BASE_URL = 'http://10.0.2.2:8080/';
-  static const _DEV_BASE_URL = 'http://dev.eliezers.com/';
-  static const _UAT_BASE_URL = 'http://10.162.131.151:8080/';
-  static const _PROD_BASE_URL = 'https://pro.eliezers.com/';
-  static const String baseUrl = _LOCAL_BASE_URL;
+  static const String baseUrl = 'http://10.0.2.2:8080';
+  static const String bibleUrl = 'https://api.youversion.com/v1';
+  static const String musicUrl = 'https://music-api.example.com';
 }
 
 // #### PATH ###
@@ -159,4 +156,8 @@ class ApiEndpoints {
 
   static const favoriteMusics = "/api/favorites/music";
   static const deletefavoriteMusics = "/api/favorites/music/";
+
+
+  static const bible = "/bibles/111";
+  static const bibleLanguange = "";
 }

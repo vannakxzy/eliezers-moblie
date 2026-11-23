@@ -20,6 +20,9 @@ class AppRouter extends RootStackRouter {
         CustomRoute(page: CreateAccountRoute.page),
         CustomRoute(page: SecurityLoginRoute.page),
         CustomRoute(page: CreateAccountRoute.page),
+        CustomRoute(page: BibleBookRoute.page),
+
+
         CustomRoute(page: VerifyEmailCreateaccountRoute.page),
         CustomRoute(
           page: ScaffoldWithNavBarRoute.page,
@@ -37,6 +40,11 @@ class AppRouter extends RootStackRouter {
               page: ProfileRoute.page,
               transitionsBuilder: (_, __, ___, child) => child,
             ),
+            CustomRoute(
+              page: BibleRoute.page,
+              transitionsBuilder: (_, __, ___, child) => child,
+            ),
+
           ],
         ),
         CustomRoute(
