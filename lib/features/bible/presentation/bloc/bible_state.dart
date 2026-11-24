@@ -6,6 +6,7 @@ class BibleState extends BaseState with _$BibleState {
     @Default(true) bool isloading,
     @Default([]) List<BibleContentEntity> bible,
     BiblePassageEntity? biblePassageEntity,
+    @Default([]) List<BibleLanguageEntity> bibleLanguage,
     @Default(0) bibleIndex,
     @Default(0) chapterIndex,
   }) = _Initial;

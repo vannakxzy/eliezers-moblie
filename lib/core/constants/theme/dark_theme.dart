@@ -11,11 +11,11 @@ final baseDarkTheme = ThemeData(
   brightness: Brightness.dark,
   fontFamily: FontFamily.sFPro,
 
-  scaffoldBackgroundColor: Colors.black,
-  canvasColor: Colors.black,
-  colorScheme: const ColorScheme.dark(
-    surface: Colors.black,
-  ),
+  scaffoldBackgroundColor: const Color.fromARGB(255, 23, 23, 23),
+  // canvasColor: const Color.fromARGB(255, 39, 39, 39),
+  // colorScheme: const ColorScheme.dark(
+  //   surface: Colors.black,
+  // ),
 
   appBarTheme: ThemeConstants.darkAppBar,
   pageTransitionsTheme: ThemeConstants.pageTransitionsTheme,
@@ -33,7 +33,7 @@ final baseDarkTheme = ThemeData(
           bulma: Colors.black,
           gohan: const Color.fromARGB(255, 108, 108, 108),
           trunks: const Color.fromARGB(255, 217, 214, 214),
-          beerus: const Color.fromARGB(255, 19, 21, 22),
+          beerus: const Color.fromARGB(255, 31, 32, 32),
         ),
         typography: MoonTypography.typography.copyWith(
           heading: MoonTypography.typography.heading.apply(

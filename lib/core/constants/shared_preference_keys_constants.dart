@@ -18,10 +18,13 @@ class SharedPreferenceKeys {
   static const bible = 'bible';
   static const languages = "languages";
   static const authType = "authType";
+  static const bibleIdPath = "bibleIdPath";
   static const audience = "audience";
   static const shareQuestion = 'https://eliezers.com/question/';
   static const shareDiscussion = 'https://eliezers.com/discussion/';
   static const shareband = 'https://eliezers.com/band/';
 
   static const shareUser = 'https://eliezers.com/user/';
+
+
 }

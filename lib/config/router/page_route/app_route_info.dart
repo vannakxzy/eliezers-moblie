@@ -22,6 +22,8 @@ class AppRouteInfo with _$AppRouteInfo {
   const factory AppRouteInfo.notification() = _Notification;
   // const factory AppRouteInfo.search() = _Search;
   const factory AppRouteInfo.createEvent() = _CreateEvent;
+  const factory AppRouteInfo.editEvent(EventEntity event) = _EditEvent;
+
   const factory AppRouteInfo.setting() = _Setting;
   const factory AppRouteInfo.login() = _Login;
   const factory AppRouteInfo.createUserInfo(String email, String otp) =

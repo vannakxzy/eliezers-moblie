@@ -19,12 +19,12 @@ const double kRadius2 = 8;
 const double kRadiusMax = 100;
 
 const KDecoration = BoxDecoration(
-  gradient: LinearGradient(
-    begin: Alignment.topCenter,
-    end: Alignment.bottomCenter,
-    stops: [0.0, 0.25],
-    colors: [AppColor.primaryColor, Colors.black],
-  ),
+    // gradient: LinearGradient(
+    //   begin: Alignment.topCenter,
+    //   end: Alignment.bottomCenter,
+    //   stops: [0.0, 0.25],
+    //   colors: [AppColor.primaryColor, Colors.black],
+    // ),
 );
 
 const double kBottomSheetRadius = 10.0;

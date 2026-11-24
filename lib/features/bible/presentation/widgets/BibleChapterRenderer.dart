@@ -34,7 +34,6 @@ class _BibleChapterRendererState extends State<BibleChapterRenderer> {
         },
         customStylesBuilder: (element) {
           if (element.localName == 'span') {
-            // debugPrint('SPAN CLASS: ${element.attributes['class']}');
             if (element.classes.contains('yv-vlbl')) {
               return {
                 'color': '#FF457b9d',

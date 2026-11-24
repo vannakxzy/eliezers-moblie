@@ -53,16 +53,19 @@ class _EventWidgetState extends State<EventWidget> {
               Stack(
                 children: [
                   if (widget.event.covers.isNotEmpty)
-                    CachedNetworkImage(
-                      imageUrl: widget.event.covers[0],
-                      fit: BoxFit.cover,
-                      alignment: Alignment.topCenter,
-                      placeholder: (context, url) => Container(
-                          height: MediaQuery.sizeOf(context).height / 4,
-                          alignment: Alignment.center,
-                          child: Icon(MoonIcons.media_music_24_regular)),
-                      errorWidget: (context, url, error) => Container(
-                        color: Colors.transparent,
+                    Hero(
+                      tag: widget.event.id,
+                      child: CachedNetworkImage(
+                        imageUrl: widget.event.covers[0],
+                        fit: BoxFit.cover,
+                        alignment: Alignment.topCenter,
+                        placeholder: (context, url) => Container(
+                            height: MediaQuery.sizeOf(context).height / 4,
+                            alignment: Alignment.center,
+                            child: Icon(MoonIcons.media_music_24_regular)),
+                        errorWidget: (context, url, error) => Container(
+                          color: Colors.transparent,
+                        ),
                       ),
                     ),
                   Positioned.fill(

@@ -103,6 +103,7 @@ class _BibleBookPageState
                   itemBuilder: (context, chapterIndex) {
                     final chapter = data.chapters[chapterIndex];
                     return MoonButton(
+                      padding: EdgeInsets.all(kPadding),
                       backgroundColor: context.moonColors!.beerus,
                       borderRadius: BorderRadius.circular(kRadius),
                       buttonSize: MoonButtonSize.xl,
@@ -114,7 +115,10 @@ class _BibleBookPageState
                           'chapterIndex': chapterIndex,
                         });
                       },
-                      label: Text(chapter.title),
+                      label: Text(
+                        chapter.title,
+                        style: context.moonTypography!.body.text14,
+                      ),
                     );
                   },
                 ),

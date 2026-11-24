@@ -1,7 +1,5 @@
-import 'dart:async';
-import 'dart:io';
 
-import 'package:audioplayers/audioplayers.dart';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +11,6 @@ import '../../../../core/constants/constants.dart';
 import '../../../../core/helper/fuction.dart';
 import '../../../../core/utils/widgets/custom_buttom.dart';
 import '../../../../gen/i18n/translations.g.dart';
-import '../bloc/bloc.dart';
 import '../bloc/create_music_bloc.dart';
 import '../widgets/mp3_widget.dart';
 
@@ -54,6 +51,7 @@ class _CreateMusicPageState
                               height: MediaQuery.sizeOf(context).width / 3,
                               width: MediaQuery.sizeOf(context).width / 3,
                               decoration: BoxDecoration(
+                                  color: context.moonColors!.beerus,
                                   borderRadius: BorderRadius.circular(kRadius),
                                   image: state.cover != null
                                       ? DecorationImage(
@@ -72,24 +70,25 @@ class _CreateMusicPageState
                           ),
                           kPadding.gap,
                           MoonFormTextInput(
+                            backgroundColor: context.moonColors!.beerus,
+
                             keyboardType: TextInputType.emailAddress,
                             controller: state.titleCon,
-                            borderRadius: BorderRadius.circular(kPadding),
+                            borderRadius: BorderRadius.circular(kRadius),
                             // controller: TextEditingController(),
                             hintText: t.common.title,
                             onChanged: (value) {
                               bloc.add(TitleChange(value));
                             },
-                            // leading: const Icon(
-                            //   MoonIcons.media_music_24_light,
-                            // ),
                           ),
 
                           kPadding.gap,
 
                           MoonFormTextInput(
+                            backgroundColor: context.moonColors!.beerus,
+
                             controller: state.artistCon,
-                            borderRadius: BorderRadius.circular(kPadding),
+                            borderRadius: BorderRadius.circular(kRadius),
                             // controller: TextEditingController(),
                             hintText: t.common.artist,
                             onChanged: (value) {
@@ -116,6 +115,8 @@ class _CreateMusicPageState
                             child: Container(
                               
                               decoration: BoxDecoration(
+                                  color: context.moonColors!.beerus,
+
                                   borderRadius: BorderRadius.circular(kRadius),
                                   border: Border.all(
                                       color: context.moonColors!.beerus)),
@@ -140,10 +141,11 @@ class _CreateMusicPageState
                           Text(t.music.chordSheet.toUpperCase()),
                           kPadding.gap,
                           MoonTextArea(
+                            backgroundColor: context.moonColors!.beerus,
+
                             controller: state.chordSheetCon,
                             height: MediaQuery.sizeOf(context).height / 3,
-                            borderRadius: BorderRadius.circular(kPadding),
-                            // controller: TextEditingController(),
+                            borderRadius: BorderRadius.circular(kRadius),
                             hintText: "...",
                             onChanged: (value) {
                               bloc.add(ChordsheetChange(value));

@@ -161,6 +161,9 @@ class AppBloc extends BaseBloc<AppEvent, AppState> {
             ),
           );
           break;
+        case DioExceptionType.transformTimeout:
+          // TODO: Handle this case.
+          throw UnimplementedError();
       }
     }
 

@@ -3,6 +3,7 @@ part of 'create_music_bloc.dart';
 @freezed
 class CreateMusicState extends BaseState with _$CreateMusicState {
   const factory CreateMusicState.initial({
+    MusicsEntity? music,
     @Default('') String title,
     @Default(false) bool isloading,
     @Default('') String artist,
@@ -12,7 +13,6 @@ class CreateMusicState extends BaseState with _$CreateMusicState {
     TextEditingController? titleCon,
     TextEditingController? artistCon,
     TextEditingController? chordSheetCon,
-
     @Default(0) int duration,
     @Default(0) int bpm,
     @Default('') String lead_sheet,

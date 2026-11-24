@@ -49,7 +49,7 @@ class MusicsCard extends StatelessWidget {
           clickFavorite();
         },
         icon: Icon(
-        
+    
           MoonIcons.generic_heart_24_regular,
           color: context.moonColors!.trunks,
         ),

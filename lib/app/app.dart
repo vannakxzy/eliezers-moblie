@@ -10,6 +10,7 @@ import '../core/constants/constants.dart';
 import '../core/helper/fuction.dart';
 import '../core/helper/local_data/storge_local.dart';
 import '../core/utils/log/app_logger.dart';
+import '../core/utils/widgets/custom_snackbar.dart';
 import '../di/di.dart';
 import '../features/musics/presentation/bloc/bloc.dart';
 import '../gen/i18n/translations.g.dart';
@@ -68,6 +69,8 @@ class _MyAppState extends BasePageBlocState<MyApp, AppBloc> {
           final appTheme = themeController.darkTheme.copyWith();
 
           return MaterialApp.router(
+            scaffoldMessengerKey: CustomSnackBar.messengerKey,
+
             debugShowCheckedModeBanner: false,
             scrollBehavior: const MaterialScrollBehavior(),
 

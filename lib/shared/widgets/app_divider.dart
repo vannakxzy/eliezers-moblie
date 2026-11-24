@@ -7,7 +7,7 @@ class AppDivider extends Divider {
     super.thickness,
     super.indent = 0,
     super.endIndent = 0,
-    super.color = AppColor.primaryColor, // default is now AppColor.primary
+    super.color = Colors.white, // default is now AppColor.primary
   }) : super(height: 0);
 
   const AppDivider.normal({
@@ -16,7 +16,7 @@ class AppDivider extends Divider {
   }) : this(
           key: key,
           thickness: .2,
-          color: color ?? AppColor.primaryColor,
+          color: color ?? Colors.white,
           indent: 0,
           endIndent: 0,
         );
@@ -27,7 +27,7 @@ class AppDivider extends Divider {
   }) : this(
           key: key,
           thickness: .2,
-          color: color ?? AppColor.primaryColor,
+          color: color ?? Colors.white,
         );
 
   const AppDivider.medium({
@@ -36,7 +36,7 @@ class AppDivider extends Divider {
   }) : this(
           key: key,
           thickness: .5,
-          color: color ?? AppColor.primaryColor,
+          color: color ?? Colors.white,
         );
 
   const AppDivider.large({
@@ -44,6 +44,6 @@ class AppDivider extends Divider {
     Color? color,
   }) : this(
           key: key,
-          color: color ?? AppColor.primaryColor,
+          color: color ?? Colors.white,
         );
 }

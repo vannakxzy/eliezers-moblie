@@ -107,38 +107,45 @@ Future<List<File>> pickMultipleImages() async {
 
   return images.map((image) => File(image.path)).toList();
 }
-
-Future<String?> downloadMp3(String url, String fileName) async {
+Future<String?> downloadMp3({
+  required String url,
+  required String fileName,
+  Function(int received, int total)? onProgress,
+}) async {
   try {
-    String filePath;
+    Directory directory;
 
     if (Platform.isAndroid) {
-      // Request storage permission
-      if (!await Permission.storage.request().isGranted) {
-        debugPrint("Storage permission denied");
-        return null;
-      }
+      // Android Downloads folder
+      directory = Directory('/storage/emulated/0/Download');
 
-      // Save to Downloads folder
-      Directory downloadsDir = Directory("/storage/emulated/0/Download");
-      filePath = "${downloadsDir.path}/$fileName.mp3";
+      if (!await directory.exists()) {
+        await directory.create(recursive: true);
+      }
     } else if (Platform.isIOS) {
-      // Save to app's Documents folder
-      Directory dir = await getApplicationDocumentsDirectory();
-      filePath = "${dir.path}/$fileName.mp3";
+      // iOS app documents folder
+      directory = await getApplicationDocumentsDirectory();
     } else {
-      debugPrint("Unsupported platform");
       return null;
     }
 
-    // Download the file
-    Dio dio = Dio();
-    await dio.download(url, filePath);
+    final safeFileName = fileName.endsWith('.mp3') ? fileName : '$fileName.mp3';
 
-    debugPrint("✅ File saved at: $filePath");
+    final filePath = '${directory.path}/$safeFileName';
+
+    await Dio().download(
+      url,
+      filePath,
+      onReceiveProgress: onProgress,
+      options: Options(
+        responseType: ResponseType.bytes,
+        followRedirects: true,
+      ),
+    );
+
     return filePath;
   } catch (e) {
-    debugPrint("❌ Download failed: $e");
+    print('MP3 Download Error: $e');
     return null;
   }
 }

@@ -52,7 +52,7 @@ class _EventPageState extends BasePageBlocState<EventPage, EventBloc> {
         body: BlocBuilder<EventBloc, EventState>(
           builder: (context, state) {
             return Container(
-             
+          
               padding: EdgeInsets.symmetric(horizontal: kPadding),
               child: state.isloading && state.events.isEmpty
                   ? SizedBox(

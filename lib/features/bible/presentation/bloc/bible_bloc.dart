@@ -14,8 +14,10 @@ import '../../../../data/models/bible/bible_content_response_model.dart';
 import '../../../../data/models/bible/bible_local_model.dart';
 import '../../../../data/models/bible/bible_passege_model.dart';
 import '../../domain/entities/bible_content_entity.dart';
+import '../../domain/entities/bible_language_entity.dart';
 import '../../domain/entities/bible_passage_entity.dart';
 import '../../domain/usecase/get_bible_book_usecase.dart';
+import '../../domain/usecase/get_bible_landuage.dart';
 import '../../domain/usecase/get_passage_bible_usecase.dart';
 
 part 'bible_event.dart';
@@ -24,7 +26,8 @@ part 'bible_bloc.freezed.dart';
 
 @Injectable()
 class BibleBloc extends BaseBloc<BibleEvent, BibleState> {
-  BibleBloc(this._getBibleBookUsecase, this._getPassageBibleUsecase)
+  BibleBloc(this._getBibleBookUsecase, this._getPassageBibleUsecase,
+      this._getBiblelanguage)
       : super(const _Initial()) {
     on<InitPage>(_initPage);
     on<ClickBackChapter>(_clickBackChapter);
@@ -32,6 +35,8 @@ class BibleBloc extends BaseBloc<BibleEvent, BibleState> {
     on<LoadBibleChapter>(_loadBibleChapter);
   }
   final GetBibleBookUsecase _getBibleBookUsecase;
+  final GetBibleLanduage _getBiblelanguage;
+  // final GetBib
   final GetPassageBibleUsecase _getPassageBibleUsecase;
   FutureOr<void> _loadBibleChapter(
       LoadBibleChapter event, Emitter<BibleState> emit) async {
@@ -44,7 +49,8 @@ class BibleBloc extends BaseBloc<BibleEvent, BibleState> {
               .bible[state.bibleIndex].chapters[state.chapterIndex].passage_id;
           debugPrint("chaper index ${state.chapterIndex}");
           final resposebiblecontant =
-              await _getPassageBibleUsecase.excecute(passageId);
+              await _getPassageBibleUsecase.excecute(
+              GetPassageBibleParams(bibleId: 111, passageId: passageId));
           emit(state.copyWith(
               biblePassageEntity: resposebiblecontant.toEntity()));
           emit(state.copyWith(isloading: false));
@@ -67,16 +73,19 @@ class BibleBloc extends BaseBloc<BibleEvent, BibleState> {
         emit(state.copyWith(isloading: true));
         try {
           emit(state.copyWith(isloading: true));
-          final respone = await _getBibleBookUsecase.excecute('');
+          final respone = await _getBibleBookUsecase.excecute(111);
           emit(state.copyWith(bible: respone.data!.toListEntity()));
           final passageId = state.bible[0].chapters[0].passage_id;
           final passageResponse =
-              await _getPassageBibleUsecase.excecute(passageId);
+              await _getPassageBibleUsecase.excecute(
+              GetPassageBibleParams(bibleId: 1111, passageId: passageId));
           emit(state.copyWith(
             biblePassageEntity: passageResponse.toEntity(),
             isloading: false,
           ));
           debugPrint('Bible initialization completed');
+          final biblelanguage = await _getBiblelanguage.excecute('');
+          emit(state.copyWith(bibleLanguage: biblelanguage.toListEntity()));
         } catch (error, stackTrace) {
           debugPrint('Bible initialization error: $error');
           debugPrintStack(stackTrace: stackTrace);
@@ -101,7 +110,8 @@ class BibleBloc extends BaseBloc<BibleEvent, BibleState> {
         emit(state.copyWith(chapterIndex: newChapterIndex));
         debugPrint("chaper index ${state.chapterIndex}");
         final resposebiblecontant =
-            await _getPassageBibleUsecase.excecute(passageId);
+            await _getPassageBibleUsecase.excecute(
+            GetPassageBibleParams(bibleId: 111, passageId: passageId));
         emit(
             state.copyWith(biblePassageEntity: resposebiblecontant.toEntity()));
         emit(state.copyWith(isloading: false));
@@ -111,7 +121,6 @@ class BibleBloc extends BaseBloc<BibleEvent, BibleState> {
       },
     );
   }
-
   FutureOr<void> _clickBackChapter(
       ClickBackChapter event, Emitter<BibleState> emit) async {
     await runAppCatching(
@@ -120,10 +129,10 @@ class BibleBloc extends BaseBloc<BibleEvent, BibleState> {
         String passageId =
             state.bible[state.bibleIndex].chapters[newChapterIndex].passage_id;
         emit(state.copyWith(chapterIndex: newChapterIndex));
-
         debugPrint("chaper index ${state.chapterIndex}");
         final resposebiblecontant =
-            await _getPassageBibleUsecase.excecute(passageId);
+            await _getPassageBibleUsecase.excecute(
+            GetPassageBibleParams(bibleId: 1111, passageId: passageId));
         emit(
             state.copyWith(biblePassageEntity: resposebiblecontant.toEntity()));
         emit(state.copyWith(isloading: false));

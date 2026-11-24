@@ -6,13 +6,23 @@ import '../../../../data/models/bible/bible_passege_model.dart';
 import '../repository/bible_repository.dart';
 
 @Injectable()
-class GetPassageBibleUsecase extends BaseUseCase<String, BiblePassegeModel> {
+class GetPassageBibleUsecase
+    extends BaseUseCase<GetPassageBibleParams, BiblePassegeModel> {
   final BibleRepository _BibleRepository;
   GetPassageBibleUsecase(this._BibleRepository);
 
   @override
-  Future<BiblePassegeModel> excecute(String input) async {
+  Future<BiblePassegeModel> excecute(GetPassageBibleParams input) async {
     final data = await _BibleRepository.getPassageBible(input);
     return data;
   }
+}
+class GetPassageBibleParams {
+  final int bibleId;
+  final String passageId;
+
+  const GetPassageBibleParams({
+    required this.bibleId,
+    required this.passageId,
+  });
 }

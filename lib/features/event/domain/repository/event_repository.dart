@@ -7,7 +7,7 @@ abstract class EventRepository {
   Future<void> deleteBooking(int eventId);
   Future<void> createEvent(CreateEventInput input);
   Future<void> deleteEvent(int id);
-  Future<void> update(CreateEventInput input);
+  Future<void> updateEvent(CreateEventInput input);
   Future<void> saveEvent(int id);
   Future<void> deleteSaveEvent(int id);
 

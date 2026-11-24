@@ -2,7 +2,7 @@
 
 class BaseUrls {
   BaseUrls._();
-  static const String baseUrl = 'http://10.0.2.2:8080';
+  static const String baseUrl = 'http://10.160.21.150:8080';
   static const String bibleUrl = 'https://api.youversion.com/v1';
   static const String musicUrl = 'https://music-api.example.com';
 }
@@ -152,12 +152,12 @@ class ApiEndpoints {
   static const events = "/api/events";
   static const join = "/api/joins";
   static const deletejoinEvent = "/api/joins/event";
-  static const musics = "/api/musics";
+  static const musics = "/api/musics"; 
 
   static const favoriteMusics = "/api/favorites/music";
   static const deletefavoriteMusics = "/api/favorites/music/";
 
 
-  static const bible = "/bibles/111";
-  static const bibleLanguange = "";
+  static const bible = "/bibles/";
+  static const bibleLanguange = "/languages";
 }

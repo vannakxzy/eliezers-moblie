@@ -21,8 +21,9 @@ abstract class EventApiService {
   Future<void> deleteBooking(@Path('id') int eventId);
   @DELETE('${ApiEndpoints.events}/{id}')
   Future<void> deleteEvent(@Path('id') int eventId);
-  @PUT(ApiEndpoints.events)
-  Future<void> putEvent({@Body() required CreateEventInput input});
+  @PUT("${ApiEndpoints.events}/{id}")
+  Future<void> updateEvent(
+      {@Body() required CreateEventInput input, @Path('id') required int id});
   @POST(ApiEndpoints.events)
   Future<void> createEvent({@Body() required CreateEventInput input});
   @POST('${ApiEndpoints.events}/{id}/save')
@@ -30,6 +31,7 @@ abstract class EventApiService {
   @DELETE('${ApiEndpoints.events}/{id}/save')
   Future<void> deleteSaveEvent(@Path('id') int eventId);
 }
+
 @JsonSerializable()
 class BookingInput {
   final int eventId;
@@ -38,8 +40,11 @@ class BookingInput {
         'event_id': eventId,
       };
 }
+
 @JsonSerializable(createToJson: true)
 class CreateEventInput {
+  @Default(0)
+  int id;
   final String title;
   final String description;
   final List<String>? cover;
@@ -48,16 +53,15 @@ class CreateEventInput {
   final double latitude;
   final double longitude;
   final List<int>? music_ids;
-  CreateEventInput({
-    required this.title,
-    required this.description,
+  CreateEventInput(
+      {required this.title,
+      required this.description,
       required this.cover,
-    required this.music_ids,
-    required this.start_time,
-    required this.end_time,
+      required this.music_ids,
+      required this.start_time,
+      required this.end_time,
       required this.longitude,
-      required this.latitude
-
-  });
+      required this.latitude,
+      this.id = 0});
   Map<String, dynamic> toJson() => _$CreateEventInputToJson(this);
 }

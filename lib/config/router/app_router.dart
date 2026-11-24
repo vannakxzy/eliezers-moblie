@@ -51,6 +51,9 @@ class AppRouter extends RootStackRouter {
             page: EventDetailRoute.page,
             transitionsBuilder: (_, __, ___, child) => child),
         CustomRoute(
+            page: EditEventRoute.page,
+            transitionsBuilder: (_, __, ___, child) => child),
+        CustomRoute(
             page: MusicsDetailRoute.page,
             transitionsBuilder: (_, __, ___, child) => child),
         CustomRoute(

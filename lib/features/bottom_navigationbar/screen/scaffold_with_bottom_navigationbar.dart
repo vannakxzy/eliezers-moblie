@@ -9,6 +9,7 @@ import '../../../core/constants/constants.dart';
 import '../../../core/helper/local_data/storge_local.dart';
 import '../bloc/scaffold_with_navbar_bloc.dart';
 
+import '../controller/scroll_visibility_controller.dart';
 import '../tab/bottom_tab.dart';
 import '../widgets/tab_bar_item.dart';
 
@@ -30,42 +31,58 @@ class _ScaffoldWithNavBarScreenState extends BasePageBlocState<
   Widget buildPage(BuildContext context) {
     return BlocBuilder<ScaffoldWithNavbarBloc, ScaffoldWithNavbarState>(
       builder: (_, state) {
-        return AutoTabsScaffold(
-          transitionBuilder: (context, child, animation) => child,
-          // backgroundColor: context.moonColors!.goku,
-          routes: (appRoute as AppNavigatorImpl).tabRoutes,
-          resizeToAvoidBottomInset: true,
-          bottomNavigationBuilder: (context, tabsRouter) {
-                  (appRoute as AppNavigatorImpl).tabsRouter = tabsRouter;
-                  return Container(
-                    decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(
-                                color: context.moonColors!.beerus,
-                                width: 0.5))),
-                    width: context.width,
-                    child: SafeArea(
-                      top: false,
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: BottomTab.values.map(
-                          (e) {
-                            return Expanded(
-                              // flex: e.index == 0 ? 2 : 1,
-                              child: TabBarItem(
-                                bottomTab: e,
-                                onTap: () {
-                                  _onNavigate(e, tabsRouter);
-                                },
-                                tabsRouter: tabsRouter,
+        return SafeArea(
+          child: AutoTabsScaffold(
+            transitionBuilder: (context, child, animation) => child,
+            // backgroundColor: context.moonColors!.goku,
+            routes: (appRoute as AppNavigatorImpl).tabRoutes,
+            resizeToAvoidBottomInset: true,
+            bottomNavigationBuilder: (context, tabsRouter) {
+              (appRoute as AppNavigatorImpl).tabsRouter = tabsRouter;
+          
+              return ValueListenableBuilder<bool>(
+                valueListenable: ScrollVisibilityController.showBottomNav,
+                builder: (context, show, child) {
+                  return AnimatedContainer(
+                    duration: const Duration(milliseconds: 250),
+                    height: show ? kBottomNavigationBarHeight : 0,
+                    child: show
+                        ? SingleChildScrollView(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  top: BorderSide(
+                                    color: context.moonColors!.beerus,
+                                    width: 0.5,
+                                  ),
+                                ),
                               ),
-                            );
-                          },
-                        ).toList(),
-                      ),
-                    ),
+                              width: context.width,
+                              child: SafeArea(
+                                top: false,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: BottomTab.values.map((e) {
+                                    return Expanded(
+                                      child: TabBarItem(
+                                        bottomTab: e,
+                                        onTap: () {
+                                          _onNavigate(e, tabsRouter);
+                                        },
+                                        tabsRouter: tabsRouter,
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
                   );
                 },
+              );
+            },
+          ),
         );
       },
     );

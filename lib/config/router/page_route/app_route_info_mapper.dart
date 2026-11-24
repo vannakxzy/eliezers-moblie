@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../features/bible/domain/entities/bible_content_entity.dart';
+import '../../../features/event/domain/entities/event_entity.dart';
 import '../../../features/musics/domain/entities/musics_entity.dart';
 import '../app_router.gr.dart';
 import 'app_route_info.dart';
@@ -34,6 +35,8 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
       //         notificationcommentId: notiCommentId),
       // postDiscussion: (band) => PostDiscussionRoute(band: band),
       createEvent: () => CreateEventRoute(),
+        // editEvent: () => CreateEventRoute(),
+
       // discussionDetail: (questionEntity, answerId) =>
       //     DiscussionDetailRoute(answerId: answerId, discussion: questionEntity),
       // users: () => UsersRoute(),
@@ -114,7 +117,8 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
             MusicsDetailRoute(entity: entity),
         bible: () => BibleRoute(),
         bibleBook: () =>
-            BibleBookRoute( )
+            BibleBookRoute(),
+        editEvent: (EventEntity event) => EditEventRoute(event: event)
     );
   }
 }

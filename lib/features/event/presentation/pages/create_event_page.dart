@@ -1,4 +1,5 @@
 import 'package:auto_route/annotations.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
@@ -343,7 +344,7 @@ class _CreateEventPageState
                                         return ClipRRect(
                                             borderRadius:
                                                 const BorderRadius.vertical(
-                                              top: Radius.circular(30),
+                                              top: Radius.circular(kRadius),
                                             ),
                                             child: SelectMusicPage());
                                       },
@@ -390,14 +391,47 @@ class _CreateEventPageState
                                 final index = entry.key;
                                 final music = entry.value;
                                 return MoonMenuItem(
+
+                                  leading: MoonAvatar(
+                                    backgroundImage:
+                                        CachedNetworkImageProvider(music.cover),
+                                    backgroundColor: context.moonColors!.bulma,
+                                    borderRadius:
+                                        BorderRadius.circular(kRadius),
+                                    avatarSize: MoonAvatarSize.lg,
+                                    content: music.cover.isNotEmpty
+                                        ? SizedBox()
+                                        : Center(
+                                            child: Icon(MoonIcons
+                                                .media_soundwave_24_regular)),
+                                  ),
                                   onTap: () {},
                                   // absorbGestures: true,
-                                  menuItemPadding: EdgeInsets.zero,
-                                  label: Text(
-                                    music.title,
-                                    style: context.moonTypography!.body.text14
-                                        .copyWith(
-                                            color: context.moonColors!.trunks),
+                                  menuItemPadding:
+                                      EdgeInsets.only(top: kPadding),
+                                  label: Padding(
+                                    padding:
+                                        const EdgeInsets.only(left: kPadding),
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          music.title,
+                                          style: context
+                                              .moonTypography!.body.text14
+                                              .copyWith(
+                                                  color: context
+                                                      .moonColors!.trunks),
+                                        ),
+                                        Text(
+                                          music.description,
+                                          style: context
+                                              .moonTypography!.body.text14
+                                              .copyWith(
+                                                  color: context
+                                                      .moonColors!.trunks),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   trailing: MoonButton.icon(
                                       onTap: () {

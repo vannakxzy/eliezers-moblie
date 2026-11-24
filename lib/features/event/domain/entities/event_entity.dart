@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../musics/domain/entities/musics_entity.dart';
@@ -26,7 +27,7 @@ class EventEntity with _$EventEntity {
     @Default(false) bool isSave,
     @Default(false) bool isown,
     @Default('') String createdAt,
-    @Default('') String updatedAt,
+      @Default('') String updatedAt
   }) = _EventEntity;
   factory EventEntity.fromJson(Map<String, dynamic> json) =>
       _$EventEntityFromJson(json);

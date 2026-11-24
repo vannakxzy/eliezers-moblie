@@ -42,7 +42,6 @@ class EventModel {
   final String? location;
   @JsonKey(name: 'start_time')
   final String? startTime;
-  @JsonKey(name: "is_join")
   @JsonKey(name: 'end_time')
   final String? endTime;
   @JsonKey(name: 'user_id')

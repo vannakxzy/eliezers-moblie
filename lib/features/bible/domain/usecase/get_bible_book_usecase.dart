@@ -5,19 +5,13 @@ import '../../../../data/models/bible/bible_content_response_model.dart';
 import '../repository/bible_repository.dart';
 
 @Injectable()
-class GetBibleBookUsecase extends BaseUseCase<void, BibleContentResponseModel> {
+class GetBibleBookUsecase extends BaseUseCase<int, BibleContentResponseModel> {
   final BibleRepository _BibleRepository;
   GetBibleBookUsecase(this._BibleRepository);
 
   @override
-  Future<BibleContentResponseModel> excecute(void input) async {
-    final rerkkk = await _BibleRepository.getBibleBook();
+  Future<BibleContentResponseModel> excecute(int input) async {
+    final rerkkk = await _BibleRepository.getBibleBook(input);
     return rerkkk;
-    // throw UnimplementedError();
   }
-
-  // @override
-  // Future<BibleContentResponseModel> excecute(void input) async {
-  //   return await _BibleRepository.getBibleBook();
-  // }
 }

@@ -8,6 +8,7 @@ import 'package:flutter_chord/flutter_chord.dart';
 import 'package:moon_design/moon_design.dart';
 import '../../../../app/base/page/base_page_bloc_state.dart';
 import '../../../../core/constants/constants.dart';
+import '../../../../core/utils/widgets/custom_snackbar.dart';
 import '../../../musics/domain/entities/musics_entity.dart';
 import '../bloc/musics_detail_bloc.dart';
 import '../widgets/musics_detail_bottonmsheet.dart';
@@ -51,8 +52,9 @@ class _MusicsDetailPageState
       child: Scaffold(
         appBar: AppBar(
           actions: [
+            if (widget.entity!.isown)
             MoonButton.icon(
-              icon: Icon(MoonIcons.sport_horse_racing_16_light),
+                icon: Icon(Icons.more_horiz_rounded),
               onTap: () async {
                 MusicsDetailBottonmsheet.show(context, (value) {
                   if (musicsdetialEm.delete == value) {
@@ -115,14 +117,25 @@ class _MusicsDetailPageState
                               onPressed: () {
                                 bloc.add(ClickFavorite());
                               },
-                              icon: Icon(MoonIcons.generic_heart_32_regular,
-                                  color: state.musics!.isFavorite
-                                      ? context.moonColors!.piccolo
-                                      : context.moonColors!.trunks),
+                              icon: Icon(MoonIcons.generic_heart_32_regular),
                             ),
                             IconButton(
                               onPressed: () {
-                                bloc.add(ClickDownload());
+                                try {
+                                  debugPrint("dddddddddddddddd");
+                                  CustomSnackBar.info(title: "ddddddddddd");
+                                  // MoonToast.show(
+                                  //   context,
+                                  //   label: const Text('Download successful!'),
+                                  //   displayDuration: const Duration(seconds: 3),
+                                  //   toastAlignment: Alignment.bottomCenter,
+                                  //   isPersistent: false,
+                                  // );
+                                } catch (value) {
+                                  debugPrint("errrooooo $value");
+                                }
+                                // bloc.add(ClickDownload());
+                               
                               },
                               icon: const Icon(
                                   MoonIcons.generic_download_32_regular),

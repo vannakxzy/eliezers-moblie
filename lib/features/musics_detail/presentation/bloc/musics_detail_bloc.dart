@@ -1,10 +1,12 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import '../../../../app/base/bloc/bloc.dart';
 import '../../../../core/helper/fuction.dart';
+import '../../../../core/utils/widgets/custom_snackbar.dart';
 import '../../../musics/domain/entities/musics_entity.dart';
 import '../../../musics/domain/usecase/creatre_favorite_usecase.dart';
 import '../../../musics/domain/usecase/delete_favorite_usecase.dart';
@@ -46,9 +48,12 @@ class MusicsDetailBloc extends BaseBloc<MusicsDetailEvent, MusicsDetailState> {
   FutureOr<void> _clickDownload(
       ClickDownload event, Emitter<MusicsDetailState> emit) async {
     final now = DateTime.now();
+    CustomSnackBar.info(title: "sdssssss");
 
     await downloadMp3(
-      state.musics!.audio, "$now");
+     url: state.musics!.audio, fileName: "$now");
+
+    // CustomSnackBar.info(title: "sdssssss");
   }
 
   FutureOr<void> _clickFavorite(

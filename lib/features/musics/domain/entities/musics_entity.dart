@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'musics_entity.freezed.dart';
@@ -14,12 +16,12 @@ class MusicsEntity with _$MusicsEntity {
     @Default(0) int bpm,
     @Default('') String description,
     @Default('') String cover,
+    @JsonKey(includeFromJson: false, includeToJson: false) File? coverFile,
     @Default('') String audio,
+    @JsonKey(includeFromJson: false, includeToJson: false) File? audioFile,
     @Default('') String lyrics,
     @Default(false) bool isFavorite,
     @Default(false) bool isown,
-
-
     @Default(false) bool isPlay,
     @Default(0) int id,
     @Default(false) bool isSelected,
