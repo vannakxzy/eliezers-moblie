@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 
@@ -5,7 +7,44 @@ import 'http_client_config.dart';
 
 @module
 abstract class DioClientConfig {
-  // Create Dio with automatic logging
+  static const int maxStringLength = 50;
+
+  dynamic _limitLongStrings(dynamic value) {
+    if (value is String) {
+      if (value.length > maxStringLength) {
+        return '${value.substring(0, maxStringLength)}... '
+            '[${value.length} characters]';
+      }
+      return value;
+    }
+
+    if (value is Map) {
+      return value.map(
+        (key, val) => MapEntry(key, _limitLongStrings(val)),
+      );
+    }
+
+    if (value is List) {
+      return value.map(_limitLongStrings).toList();
+    }
+
+    return value;
+  }
+
+  String _formatData(dynamic data) {
+    try {
+      final limitedData = _limitLongStrings(data);
+
+      if (limitedData is String) {
+        return limitedData;
+      }
+
+      return const JsonEncoder.withIndent('  ').convert(limitedData);
+    } catch (_) {
+      return data.toString();
+    }
+  }
+
   Dio _createDio({
     required String baseUrl,
     required Map<String, dynamic> headers,
@@ -20,21 +59,40 @@ abstract class DioClientConfig {
     );
 
     dio.interceptors.add(
-      LogInterceptor(
-        request: false,
-        // requestHeader: true,
-        requestBody: false,
-        // responseHeader: true,
-        responseBody: false,
-        // error: true,
-        logPrint: (object) => print('[API LOG] $object'),
+      InterceptorsWrapper(
+        onRequest: (options, handler) {
+          print('========== REQUEST ==========');
+          print('${options.method} ${options.uri}');
+          print('Headers: ${_formatData(options.headers)}');
+          print('Data: ${_formatData(options.data)}');
+          print('=============================');
+
+          handler.next(options);
+        },
+        onResponse: (response, handler) {
+          print('========== RESPONSE ==========');
+          print('Status: ${response.statusCode}');
+          print('URL: ${response.requestOptions.uri}');
+          print('Data: ${_formatData(response.data)}');
+          print('==============================');
+
+          handler.next(response);
+        },
+        onError: (error, handler) {
+          print('========== ERROR ==========');
+          print('URL: ${error.requestOptions.uri}');
+          print('Message: ${error.message}');
+          print('Response: ${_formatData(error.response?.data)}');
+          print('===========================');
+
+          handler.next(error);
+        },
       ),
     );
 
     return dio;
   }
 
-  // Default Main API
   @lazySingleton
   Dio mainDio(IConfig config) {
     return _createDio(
@@ -43,7 +101,6 @@ abstract class DioClientConfig {
     );
   }
 
-  // Bible API
   @lazySingleton
   @Named('bible')
   Dio bibleDio(IConfig config) {
@@ -53,7 +110,6 @@ abstract class DioClientConfig {
     );
   }
 
-  // Music API
   @lazySingleton
   @Named('musicDio')
   Dio musicDio(IConfig config) {

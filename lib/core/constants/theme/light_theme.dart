@@ -9,7 +9,7 @@ final colortext = Colors.black87;
 final baseLightTheme = ThemeData(
   useMaterial3: true,
   brightness: Brightness.light,
-  fontFamily: FontFamily.sFPro,
+  fontFamily: FontFamily.eBGaramond,
   pageTransitionsTheme: ThemeConstants.pageTransitionsTheme,
   scaffoldBackgroundColor: Colors.white,
   appBarTheme: ThemeConstants.lightAppBar.copyWith(

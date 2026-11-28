@@ -1,5 +1,6 @@
 {
   "common": {
+    "no": "ទេ",
     "artist": "សិល្បករ",
     "close": "ចាកចេញ",
     "location": "ទីតាំង",
@@ -241,11 +242,16 @@
     "endDate": "ពេលវេលាបញ្ចប់",
     "selectLocation": "ជ្រើសរើសទីតាំង",
     "pastLatlong": "Past latlong here....",
-    "agenda": "របៀបវារៈ"
+    "agenda": "របៀបវារៈ",
+    "updateSuccess": "Event have been update successfully"
   },
   "music": {
     "title": "បទចម្រៀង",
-    "chordSheet": "Chord Sheet"
+    "chordSheet": "Chord Sheet",
+    "updateSuccess": "បទចម្រៀងត្រូវបានធ្វើបច្ចុប្បន្នភាពដោយជោគជ័យ",
+    "createSuccess": "បទចម្រៀងត្រូវបានបង្កើយដោយជោគជ័យ",
+    "deleteSuccess": "បទចម្រៀងត្រូវបានលុបដោយជោគជ័យ",
+    "confirmDeleteMusic": "តើអ្នកពិតជាចង់លុបបទចម្រៀងនេះមែនទេ?"
   },
   "notification": {
     "title": "សេចក្តីជូនដំណឹង",

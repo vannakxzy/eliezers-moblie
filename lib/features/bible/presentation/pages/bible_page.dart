@@ -76,60 +76,75 @@ final ScrollController _scrollController = ScrollController();
         return ValueListenableBuilder<bool>(
           valueListenable: ScrollVisibilityController.showBottomNav,
           builder: (context, show, child) => Container(
-            padding: EdgeInsets.symmetric(horizontal: kPadding2),
+            // padding: EdgeInsets.symmetric(horizontal: kPadding2),
             child: SafeArea(
               child: Column(
                 children: [
-                  ClipRect(
-                    child: AnimatedContainer(
-                      height: show ? 50 : 0,
-                      duration: const Duration(milliseconds: 250),
-                      curve: Curves.easeInOut,
-                      child: IgnorePointer(
-                        ignoring: !show,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            MoonButton.icon(
-                              onTap: () {},
-                              icon: Icon(MoonIcons.maps_world_24_regular),
+                  Expanded(
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: kPadding2),
+                      child: Column(
+                        children: [
+                          ClipRect(
+                            child: AnimatedContainer(
+                              height: show ? 50 : 0,
+                              duration: const Duration(milliseconds: 250),
+                              curve: Curves.easeInOut,
+                              child: IgnorePointer(
+                                ignoring: !show,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    MoonButton.icon(
+                                      onTap: () {},
+                                      icon:
+                                          Icon(MoonIcons.maps_world_24_regular),
+                                    ),
+                                    MoonButton.icon(
+                                      onTap: () {},
+                                      icon:
+                                          Icon(MoonIcons.maps_world_24_regular),
+                                    ),
+                                    MoonButton.icon(
+                                      onTap: () {},
+                                      icon:
+                                          Icon(MoonIcons.maps_world_24_regular),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            MoonButton.icon(
-                              onTap: () {},
-                              icon: Icon(MoonIcons.maps_world_24_regular),
-                            ),
-                            MoonButton.icon(
-                              onTap: () {},
-                              icon: Icon(MoonIcons.maps_world_24_regular),
-                            ),
-                          ],
-                        ),
+                          ),
+                          Expanded(
+                              child: SingleChildScrollView(
+                                  controller: _scrollController,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        state.bible[state.bibleIndex].title,
+                                        style: context
+                                            .moonTypography!.heading.text24,
+                                      ),
+                                      BibleChapterRenderer(
+                                        html: state.biblePassageEntity!.content,
+                                        onVerseTap: (verse) {
+                                          debugPrint('Selected verse: $verse');
+                                        },
+                                      ),
+                                    ],
+                                  ))),
+                        ],
                       ),
                     ),
                   ),
-                  Expanded(
-                      child: SingleChildScrollView(
-                          controller: _scrollController,
-                          child: Column(
-                            children: [
-                              Text(
-                                state.bible[state.bibleIndex].title,
-                                style: context.moonTypography!.heading.text24,
-                              ),
-                              BibleChapterRenderer(
-                                html: state.biblePassageEntity!.content,
-                                onVerseTap: (verse) {
-                                  debugPrint('Selected verse: $verse');
-                                },
-                              ),
-                            ],
-                          ))),
                   Container(
                     decoration: BoxDecoration(
                         border: Border(
                             top:
                                 BorderSide(color: context.moonColors!.beerus))),
-                    padding: EdgeInsets.symmetric(vertical: kPadding),
+                    padding: EdgeInsets.symmetric(
+                        vertical: !show ? 0 : kPadding,
+                        horizontal: !show ? 0 : kPadding2),
                     child: Row(
                       children: [
                         AnimatedSwitcher(
@@ -160,6 +175,8 @@ final ScrollController _scrollController = ScrollController();
                                   padding: const EdgeInsets.only(
                                       right: kPadding / 2),
                                   child: MoonButton.icon(
+                                    borderRadius:
+                                        BorderRadius.circular(kRadius),
                                     onTap: () {
                                       bloc.add(ClickBackChapter());
                                     },
@@ -202,6 +219,7 @@ final ScrollController _scrollController = ScrollController();
                               },
                               isFullWidth: true,
                               buttonSize: MoonButtonSize.lg,
+                              borderRadius: BorderRadius.circular(kRadius),
                               backgroundColor: show
                                   ? context.moonColors!.beerus
                                   : Colors.transparent,
@@ -214,6 +232,7 @@ final ScrollController _scrollController = ScrollController();
 
                         // Next button animation
                         AnimatedSwitcher(
+                          
                           duration: const Duration(milliseconds: 350),
                           reverseDuration: const Duration(milliseconds: 250),
                           switchInCurve: Curves.easeOutBack,
@@ -240,6 +259,8 @@ final ScrollController _scrollController = ScrollController();
                                   padding:
                                       const EdgeInsets.only(left: kPadding / 2),
                                   child: MoonButton.icon(
+                                    borderRadius:
+                                        BorderRadius.circular(kRadius),
                                     onTap: () {
                                       bloc.add(ClickNextChapter());
                                     },

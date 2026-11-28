@@ -24,5 +24,5 @@ class ClickFavorite extends MusicsDetailEvent with _$ClickFavorite {
 
 @freezed
 class ClickDeleteMusice extends MusicsDetailEvent with _$ClickDeleteMusice {
-  factory ClickDeleteMusice(int id) = _ClickDeleteMusice;
+  factory ClickDeleteMusice() = _ClickDeleteMusice;
 }

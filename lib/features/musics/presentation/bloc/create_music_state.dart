@@ -3,7 +3,6 @@ part of 'create_music_bloc.dart';
 @freezed
 class CreateMusicState extends BaseState with _$CreateMusicState {
   const factory CreateMusicState.initial({
-    MusicsEntity? music,
     @Default('') String title,
     @Default(false) bool isloading,
     @Default('') String artist,

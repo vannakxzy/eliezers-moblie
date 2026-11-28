@@ -7,10 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_chord/flutter_chord.dart';
 import 'package:moon_design/moon_design.dart';
 import '../../../../app/base/page/base_page_bloc_state.dart';
+import '../../../../config/router/page_route/app_route_info.dart';
 import '../../../../core/constants/constants.dart';
+import '../../../../core/helper/fuction.dart';
 import '../../../../core/utils/widgets/custom_snackbar.dart';
 import '../../../musics/domain/entities/musics_entity.dart';
 import '../bloc/musics_detail_bloc.dart';
+import '../widgets/confirm_delete_musics.dart';
 import '../widgets/musics_detail_bottonmsheet.dart';
 
 @RoutePage()
@@ -56,10 +59,17 @@ class _MusicsDetailPageState
             MoonButton.icon(
                 icon: Icon(Icons.more_horiz_rounded),
               onTap: () async {
-                MusicsDetailBottonmsheet.show(context, (value) {
+                  MusicsDetailBottonmsheet.show(context, (value) async {
+                    Navigator.pop(context);
                   if (musicsdetialEm.delete == value) {
-                    bloc.add(ClickDeleteMusice(1));
-                  }
+                      final result = await ConfirmDeleteMusics.show(context);
+                      if (result) {
+                        bloc.add(ClickDeleteMusice());
+                      }
+                    }
+                    if (musicsdetialEm.edit == value) {
+                      appRoute.push(AppRouteInfo.editMusic(widget.entity!));
+                    }
                 }, true);
               },
             )
@@ -78,20 +88,29 @@ class _MusicsDetailPageState
                         height: 150,
                         width: 150,
                         decoration: BoxDecoration(
+                          color: context.moonColors!.bulma,
+                          borderRadius: BorderRadius.circular(kRadius),
                           boxShadow: [
                             BoxShadow(
-                              color: context.moonColors!.piccolo,
+                              color: context.moonColors!.beerus,
                               blurRadius: 8,
                               offset: const Offset(0, 4),
                             ),
                           ],
-                          image: DecorationImage(
+                          image: widget.entity!.cover.isEmpty
+                              ? null
+                              : DecorationImage(
                             fit: BoxFit.cover,
                             image: CachedNetworkImageProvider(
                               widget.entity!.cover,
                             ),
                           ),
                         ),
+                        child: widget.entity!.cover.isNotEmpty
+                            ? SizedBox()
+                            : Center(
+                                child:
+                                    Icon(MoonIcons.media_soundwave_24_regular)),
                       ),
                       kPadding2.gap,
                       Column(

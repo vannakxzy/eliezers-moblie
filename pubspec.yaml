@@ -17,7 +17,7 @@ dependencies:
   # Local storage and caching
   cached_network_image: ^3.3.0
   shared_preferences: ^2.0.15
-  path_provider: ^2.1.5
+  path_provider: ^2.1.6
 
   # Environment
   flutter_dotenv: ^5.0.2
@@ -30,7 +30,7 @@ dependencies:
 
   # HTTP and API clients
   http: ^1.5.0
-  dio: ^5.4.0
+  dio: ^5.11.1
   retrofit: ^4.1.0
 
   # Serialization annotations
@@ -95,13 +95,15 @@ dependencies:
   # Deep links and notifications
   app_links: ^6.4.0
   pull_to_refresh: ^2.0.0
-  audioplayers: ^6.5.1
+  audioplayers: ^6.7.1
   file_picker: ^11.0.3
   flutter_chord: ^0.1.3
   tonic: ^0.2.5
   just_audio: ^0.10.6
   shimmer: ^3.0.0
   flutter_widget_from_html: ^0.17.4
+  pretty_dio_logger: ^1.4.0
+  just_waveform: ^0.0.7
 
 dev_dependencies:
   flutter_test:
@@ -121,7 +123,6 @@ dev_dependencies:
   slang: ^4.4.1
   slang_flutter: ^4.4.0
   slang_build_runner: ^4.4.2
-  just_waveform: ^0.0.7
 
 flutter_gen:
   output: lib/gen/
@@ -134,13 +135,13 @@ flutter:
   uses-material-design: true
 
   fonts:
-    - family: SFPro
+    - family: EBGaramond
       fonts:
-        - asset: assets/fonts/sfpro/SF-Pro-Display-Regular.otf
+        - asset: assets/fonts/EBGaramond/EBGaramond-Bold.ttf
           weight: 400
-        - asset: assets/fonts/sfpro/SF-Pro-Display-Medium.otf
+        - asset: assets/fonts/EBGaramond/EBGaramond-Italic.ttf
           weight: 500
-        - asset: assets/fonts/sfpro/SF-Pro-Display-Semibold.otf
+        - asset: assets/fonts/EBGaramond/EBGaramond-Regular.ttf
           weight: 700
 
     - family: Kh_Bl_LazySmooth_Regular

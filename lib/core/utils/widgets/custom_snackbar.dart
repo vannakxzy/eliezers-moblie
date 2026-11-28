@@ -1,103 +1,115 @@
 
 import 'package:flutter/material.dart';
+import 'package:moon_design/moon_design.dart';
+
+import '../../../app/base/navigation/app_navigator.dart';
+import '../../../di/di.dart';
+import '../../constants/size_constant.dart';
 
 class CustomSnackBar {
-  static final GlobalKey<ScaffoldMessengerState> messengerKey =
-      GlobalKey<ScaffoldMessengerState>();
+  CustomSnackBar._();
 
   static void info({
     required String? title,
-    bool isTop = false,
+    bool isTop = true,
   }) {
     _show(
       title: title,
       isTop: isTop,
-      backgroundColor: Colors.blueGrey,
-      textColor: Colors.white,
+      backgroundColor: const Color(0xFF172B4D),
+      accentColor: const Color(0xFF60A5FA),
+      icon: Icons.info_rounded,
     );
   }
 
   static void success({
     required String? title,
-    bool isTop = false,
+    bool isTop = true,
   }) {
     _show(
       title: title,
       isTop: isTop,
-      backgroundColor: Colors.green,
-      textColor: Colors.white,
+      backgroundColor: const Color(0xFF123D32),
+      accentColor: const Color(0xFF34D399),
+      icon: Icons.check_circle_rounded,
     );
   }
 
   static void danger({
     required String? title,
-    bool isTop = false,
+    bool isTop = true,
   }) {
     _show(
       title: title,
       isTop: isTop,
-      backgroundColor: Colors.red,
-      textColor: Colors.white,
+      backgroundColor: const Color(0xFF451D25),
+      accentColor: const Color(0xFFFB7185),
+      icon: Icons.error_rounded,
     );
   }
 
   static void warning({
     required String? title,
-    bool isTop = false,
-    Widget icon = const Icon(
-      Icons.warning_amber_rounded,
-      color: Color(0xffdb7c26),
-    ),
+    bool isTop = true,
   }) {
     _show(
       title: title,
       isTop: isTop,
-      backgroundColor: const Color(0xffffe4c3),
-      textColor: const Color(0xffdb7c26),
-      icon: icon,
+      backgroundColor: const Color(0xFF453016),
+      accentColor: const Color(0xFFFBBF24),
+      icon: Icons.warning_rounded,
     );
   }
 
   static void _show({
     required String? title,
     required Color backgroundColor,
-    required Color textColor,
-    bool isTop = false,
-    Widget? icon,
+    required Color accentColor,
+    required IconData icon,
+    bool isTop = true,
   }) {
-    final messenger = messengerKey.currentState;
-    if (messenger == null) return;
+    final message = title?.trim() ?? '';
 
-    messenger
-      ..removeCurrentSnackBar()
-      ..showSnackBar(
-        SnackBar(
-          content: Row(
-            children: [
-              if (icon != null) ...[
-                icon,
-                const SizedBox(width: 8),
-              ],
-              Expanded(
-                child: Text(
-                  title ?? '',
-                  style: TextStyle(color: textColor),
-                ),
-              ),
-            ],
-          ),
-          backgroundColor: backgroundColor,
-          duration: const Duration(milliseconds: 1000),
-          behavior: SnackBarBehavior.floating,
-          dismissDirection: DismissDirection.up,
-          
-          margin: EdgeInsets.only(
-            left: 10,
-            right: 10,
-            top: isTop ? 10 : 0,
-            bottom: isTop ? 0 : 10,
-          ),
+    if (message.isEmpty) return;
+
+    final navigator = getIt<IAppNavigator>();
+    final context = navigator.context;
+
+    if (!context.mounted) return;
+
+    MoonToast.clearToastQueue();
+
+    MoonToast.show(
+      context,
+      toastAlignment: isTop ? Alignment.topCenter : Alignment.bottomCenter,
+      isPersistent: false,
+      useSafeArea: true,
+      displayDuration: const Duration(seconds: 2),
+      transitionDuration: const Duration(milliseconds: 300),
+      transitionCurve: Curves.easeOutCubic,
+      width: MediaQuery.sizeOf(context).width - (kPadding * 2),
+      margin: EdgeInsets.only(
+        left: kPadding,
+        right: kPadding,
+        top: isTop ? 12 : 0,
+        bottom: isTop ? 0 : 12,
+      ),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+        vertical: 14,
+      ),
+      borderRadius: BorderRadius.circular(kRadius),
+      backgroundColor: backgroundColor,
+      label: Text(
+        message,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
         ),
-      );
+      ),
+    );
   }
 }

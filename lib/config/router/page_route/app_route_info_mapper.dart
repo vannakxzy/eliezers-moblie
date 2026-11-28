@@ -118,7 +118,8 @@ class AppRouteInfoMapper extends BaseRouteInfoMapper {
         bible: () => BibleRoute(),
         bibleBook: () =>
             BibleBookRoute(),
-        editEvent: (EventEntity event) => EditEventRoute(event: event)
+        editEvent: (EventEntity event) => EditEventRoute(event: event),
+        editMusic: (MusicsEntity music) => EditMusicRoute(muisc: music)
     );
   }
 }

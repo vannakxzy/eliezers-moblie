@@ -35,11 +35,13 @@ abstract class MusicsApiServie {
   @Body() CreateMusicInput input);
   @DELETE('${ApiEndpoints.musics}/{id}')
   Future<void> deleteMusic(@Path("id") int id);
-  @PUT(ApiEndpoints.musics)
-  Future<void> updateMusic(@Body() CreateMusicInput input);
+  @PUT("${ApiEndpoints.musics}/{id}")
+  Future<void> updateMusic(
+      {@Body() required CreateMusicInput input, @Path('id') required int id});
 }
 @JsonSerializable()
 class CreateMusicInput {
+  final int id;
   final String title;
   final String artist;
   final String album;
@@ -50,6 +52,7 @@ class CreateMusicInput {
   final String description;
 
   CreateMusicInput({
+    this.id = 0,
     required this.title,
     required this.description,
     required this.cover,

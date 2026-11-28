@@ -14,8 +14,6 @@ class MusicsRepositoryImpl implements MusicsRepository {
   Future<MusicsResposeEntity> getMusic(int page) async {
     final musics = await _apiServie.getMusics(page);
     return musics.toEntity();
-    // return MusicsResposeEntity(
-    //     data: musics.data!.toList(), pagination: musics.pagination);
   }
 
   @override
@@ -46,6 +44,6 @@ class MusicsRepositoryImpl implements MusicsRepository {
 
   @override
   Future<void> updateMusic(CreateMusicInput input) async {
-    await _apiServie.updateMusic(input);
+    await _apiServie.updateMusic(input: input, id: input.id);
   }
 }

@@ -12,7 +12,9 @@ import '../../../../app/base/bloc/base_bloc.dart';
 import '../../../../app/base/bloc/base_event.dart';
 import '../../../../app/base/bloc/base_state.dart';
 import '../../../../core/helper/fuction.dart';
+import '../../../../core/utils/widgets/custom_snackbar.dart';
 import '../../../../data/data_sources/remotes/musics_api_service.dart';
+import '../../../../gen/i18n/translations.g.dart';
 import '../../domain/entities/musics_entity.dart';
 import '../../domain/usecase/create_music_usecase.dart';
 import '../../domain/usecase/get_musics_usercase.dart';
@@ -91,9 +93,11 @@ class CreateMusicBloc extends BaseBloc<CreateMusicEvent, CreateMusicState> {
             chord_sheet: state.chord_sheet,
             lead_sheet: "",
           );
-          await _createMusicUsecase.excecute(input);
-          debugPrint("5. API request completed successfully");
           emit(state.cleardAll());
+          await appRoute.pop();
+          await _createMusicUsecase.excecute(input);
+          CustomSnackBar.info(title: t.music.createSuccess);
+          
         } catch (e, stackTrace) {
           debugPrint("Upload error: $e");
           debugPrint("StackTrace: $stackTrace");

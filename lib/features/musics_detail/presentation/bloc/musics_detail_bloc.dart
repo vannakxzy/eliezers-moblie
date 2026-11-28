@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 import '../../../../app/base/bloc/bloc.dart';
 import '../../../../core/helper/fuction.dart';
 import '../../../../core/utils/widgets/custom_snackbar.dart';
+import '../../../../gen/i18n/translations.g.dart';
 import '../../../musics/domain/entities/musics_entity.dart';
 import '../../../musics/domain/usecase/creatre_favorite_usecase.dart';
 import '../../../musics/domain/usecase/delete_favorite_usecase.dart';
@@ -37,11 +38,14 @@ class MusicsDetailBloc extends BaseBloc<MusicsDetailEvent, MusicsDetailState> {
     emit(state.copyWith(musics: event.musics));
   }
   
+  
   FutureOr<void> _deleteMusic(
       ClickDeleteMusice event, Emitter<MusicsDetailState> emit) async {
     await runAppCatching(
       () async {
         await _deleteMusiceUsecase.excecute(state.musics!.id);
+        appRoute.pop();
+        CustomSnackBar.info(title: t.music.deleteSuccess);
       },
     );
   }

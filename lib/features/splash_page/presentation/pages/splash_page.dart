@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
-import 'package:lottie/lottie.dart';
 import 'package:moon_design/moon_design.dart';
-
 import '../../../../app/base/page/base_page_bloc_state.dart';
+import '../../../../gen/i18n/translations.g.dart';
 import '../bloc/splash_page_bloc.dart';
+
 
 @RoutePage()
 class SplashPage extends StatefulWidget {
@@ -37,11 +37,10 @@ class _SplashPageState extends BasePageBlocState<SplashPage, SplashPageBloc> {
               children: [
                 Expanded(
                   child: Center(
-                    child: LottieBuilder.asset(
-                      'assets/animations/splash_question.json',
-                      width: MediaQuery.sizeOf(context).width * .7,
-                      repeat: false,
-                    ),
+                      child: Text(
+                    t.common.appname.toUpperCase(),
+                    style: context.moonTypography!.heading.text32,
+                  )
                   ),
                 ),
                 BlocBuilder<SplashPageBloc, SplashPageState>(

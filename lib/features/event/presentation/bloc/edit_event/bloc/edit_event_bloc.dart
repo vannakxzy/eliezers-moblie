@@ -6,13 +6,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:timezone/timezone.dart';
 
 import '../../../../../../app/base/bloc/base_bloc.dart';
 import '../../../../../../app/base/bloc/base_event.dart';
 import '../../../../../../app/base/bloc/base_state.dart';
 import '../../../../../../core/helper/fuction.dart';
+import '../../../../../../core/utils/widgets/custom_snackbar.dart';
 import '../../../../../../data/data_sources/remotes/event_api_service.dart';
+import '../../../../../../gen/i18n/translations.g.dart';
 import '../../../../../musics/domain/entities/musics_entity.dart';
 import '../../../../domain/entities/event_entity.dart';
 import '../../../../domain/usecase/update_event_use_case.dart';
@@ -165,6 +166,7 @@ class EditEventBloc extends BaseBloc<EditEventEvent, EditEventState> {
             music_ids: musicIds,
           );
           await _updateEventUseCase.excecute(input);
+          CustomSnackBar.info(title: t.event.updateSuccess);
           emit(state.copyWith(isloading: false));
           emit(state.clearAll());
         } catch (value) {

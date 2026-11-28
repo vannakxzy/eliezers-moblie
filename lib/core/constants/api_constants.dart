@@ -2,7 +2,7 @@
 
 class BaseUrls {
   BaseUrls._();
-  static const String baseUrl = 'http://10.160.21.150:8080';
+  static const String baseUrl = 'http://192.168.3.224:8080';
   static const String bibleUrl = 'https://api.youversion.com/v1';
   static const String musicUrl = 'https://music-api.example.com';
 }

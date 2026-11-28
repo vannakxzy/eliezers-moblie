@@ -1,5 +1,6 @@
 {
   "common": {
+    "no": "NO",
     "artist": "Artist",
     "close": "Close",
     "location": "Location",
@@ -211,7 +212,8 @@
     "createEvent": "Create Event",
     "selectLocation": "Select Location",
     "pastLatlong": "Past latlong here....",
-    "agenda": "Agenda"
+    "agenda": "Agenda",
+    "updateSuccess": "Music have beed update successfully"
   },
   "login": {
     "title": "Login",
@@ -296,7 +298,11 @@
   "music": {
     "title": "Music",
     "selectMusic": "Select Music",
-    "chordSheet": "Chord Sheet"
+    "chordSheet": "Chord Sheet",
+    "updateSuccess": "Music have beed update successfully",
+    "createSuccess": "Music have beed create successfully",
+    "deleteSuccess": "Music have beed update deleted",
+    "confirmDeleteMusic": "Are you sure you want to delete this music?"
   },
   "question": {
     "deleteTitle": "Detele Question",

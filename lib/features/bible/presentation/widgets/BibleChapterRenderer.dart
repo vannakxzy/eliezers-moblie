@@ -21,25 +21,30 @@ class BibleChapterRenderer extends StatefulWidget {
 class _BibleChapterRendererState extends State<BibleChapterRenderer> {
   @override
   Widget build(BuildContext context) {
+    final updatedHtml = widget.html.replaceFirstMapped(
+      RegExp(r'(<span\s+class="yv-v"\s+v=")\d+(")'),
+      (match) => '${match.group(1)}66${match.group(2)}',
+    );
     return GestureDetector(
       onTap: () {
         setState(() {});
         debugPrint("dddd");
       },
       child: HtmlWidget(
-        widget.html,
+        updatedHtml,
         textStyle: context.moonTypography!.body.text18,
         customWidgetBuilder: (element) {
           return null;
         },
         customStylesBuilder: (element) {
-          if (element.localName == 'span') {
-            if (element.classes.contains('yv-vlbl')) {
-              return {
-                'color': '#FF457b9d',
-                'font-size': '30px',
-              };
-            }
+          if (element.localName == 'span' &&
+              element.classes.contains('yv-vlbl')) {
+            return {
+              // 'color': '#000000',
+              // 'font-family': 'Garamond',
+              'font-size': '40px',
+              'padding-right': '10px',
+            };
           }
           return null;
         },

@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:get/get.dart';
 
 import '../config/router/app_router.dart';
 import '../config/theme/theme_controller.dart';
@@ -10,7 +10,6 @@ import '../core/constants/constants.dart';
 import '../core/helper/fuction.dart';
 import '../core/helper/local_data/storge_local.dart';
 import '../core/utils/log/app_logger.dart';
-import '../core/utils/widgets/custom_snackbar.dart';
 import '../di/di.dart';
 import '../features/musics/presentation/bloc/bloc.dart';
 import '../gen/i18n/translations.g.dart';
@@ -26,10 +25,24 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends BasePageBlocState<MyApp, AppBloc> {
+  static const Color backgroundColor = Color.fromARGB(255, 23, 23, 23);
+
+  static const SystemUiOverlayStyle systemUiStyle = SystemUiOverlayStyle(
+    statusBarColor: backgroundColor,
+    statusBarIconBrightness: Brightness.light,
+    statusBarBrightness: Brightness.dark,
+    systemNavigationBarColor: backgroundColor,
+    systemNavigationBarIconBrightness: Brightness.light,
+    systemNavigationBarDividerColor: backgroundColor,
+    systemNavigationBarContrastEnforced: false,
+    systemStatusBarContrastEnforced: false,
+  );
 
   @override
   void initState() {
     super.initState();
+
+    SystemChrome.setSystemUIOverlayStyle(systemUiStyle);
 
     bloc.add(AppInitstate());
 
@@ -68,29 +81,36 @@ class _MyAppState extends BasePageBlocState<MyApp, AppBloc> {
 
           final appTheme = themeController.darkTheme.copyWith();
 
-          return MaterialApp.router(
-            scaffoldMessengerKey: CustomSnackBar.messengerKey,
+          return AnnotatedRegion<SystemUiOverlayStyle>(
+            value: systemUiStyle,
+            child: MaterialApp.router(
+              routerConfig: getIt.get<AppRouter>().config(),
 
-            debugShowCheckedModeBanner: false,
-            scrollBehavior: const MaterialScrollBehavior(),
 
-            routerConfig: getIt.get<AppRouter>().config(),
+              debugShowCheckedModeBanner: false,
+              scrollBehavior: const MaterialScrollBehavior(),
 
-            theme: appTheme,
-            darkTheme: appTheme,
-            themeMode: themeMode,
+              // routerConfig: getIt.get<AppRouter>().config(),
 
-            locale: TranslationProvider.of(context).flutterLocale,
-            supportedLocales: AppLocaleUtils.supportedLocales,
-            localizationsDelegates: GlobalMaterialLocalizations.delegates,
+              theme: appTheme,
+              darkTheme: appTheme,
+              themeMode: themeMode,
 
-            builder: (context, child) {
-              return GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: unFocus,
-                child: child,
-              );
-            },
+              locale: TranslationProvider.of(context).flutterLocale,
+              supportedLocales: AppLocaleUtils.supportedLocales,
+              localizationsDelegates: GlobalMaterialLocalizations.delegates,
+
+              builder: (context, child) {
+                return ColoredBox(
+                  color: backgroundColor,
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.translucent,
+                    onTap: unFocus,
+                    child: child ?? const SizedBox.shrink(),
+                  ),
+                );
+              },
+            ),
           );
         },
       ),
